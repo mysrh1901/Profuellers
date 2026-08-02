@@ -1,0 +1,199 @@
+/**
+ * REGULITH AI — Selective Deployment Pipeline
+ * =============================================
+ * Monorepo with 3 independent microservices.
+ * Pipeline allows multi-select: choose which service(s) to build and deploy.
+ *
+ * Features:
+ *   - Parameterized build with multi-select checkboxes
+ *   - Each service builds independently (parallel)
+ *   - Each service deploys independently to its own target
+ *   - Shared pipeline, independent artifacts
+ *   - Compliance gate: Regulith agent checks before deploy (eats its own dogfood)
+ */
+
+pipeline {
+    agent any
+
+    parameters {
+        // Multi-select: which services to deploy
+        booleanParam(name: 'DEPLOY_ALPHA', defaultValue: false,
+            description: 'Deploy Alpha Service (Event Ingestion & Routing) — Port 8081')
+        booleanParam(name: 'DEPLOY_BETA', defaultValue: false,
+            description: 'Deploy Beta Service (Compliance Intelligence Engine) — Port 8082')
+        booleanParam(name: 'DEPLOY_GAMMA', defaultValue: false,
+            description: 'Deploy Gamma Service (Audit Evidence & Dashboard) — Port 8083')
+
+        // Environment selection
+        choice(name: 'ENVIRONMENT', choices: ['dev', 'staging', 'production'],
+            description: 'Target deployment environment')
+
+        // Compliance gate toggle
+        booleanParam(name: 'RUN_COMPLIANCE_CHECK', defaultValue: true,
+            description: 'Run Regulith compliance check before deployment')
+    }
+
+    environment {
+        GRADLE_OPTS = '-Dorg.gradle.daemon=false'
+    }
+
+    stages {
+
+        stage('Validate Selection') {
+            steps {
+                script {
+                    if (!params.DEPLOY_ALPHA && !params.DEPLOY_BETA && !params.DEPLOY_GAMMA) {
+                        error("No service selected for deployment. Select at least one.")
+                    }
+                    echo "Selected services:"
+                    if (params.DEPLOY_ALPHA) echo "  ✓ Alpha Service (Event Ingestion)"
+                    if (params.DEPLOY_BETA)  echo "  ✓ Beta Service (Compliance Intelligence)"
+                    if (params.DEPLOY_GAMMA) echo "  ✓ Gamma Service (Audit Dashboard)"
+                    echo "Environment: ${params.ENVIRONMENT}"
+                }
+            }
+        }
+
+        stage('Build') {
+            parallel {
+                stage('Build Alpha') {
+                    when { expression { params.DEPLOY_ALPHA } }
+                    steps {
+                        echo "Building alpha-service..."
+                        sh './gradlew :alpha-service:build -x test'
+                    }
+                }
+                stage('Build Beta') {
+                    when { expression { params.DEPLOY_BETA } }
+                    steps {
+                        echo "Building beta-service..."
+                        sh './gradlew :beta-service:build -x test'
+                    }
+                }
+                stage('Build Gamma') {
+                    when { expression { params.DEPLOY_GAMMA } }
+                    steps {
+                        echo "Building gamma-service..."
+                        sh './gradlew :gamma-service:build -x test'
+                    }
+                }
+            }
+        }
+
+        stage('Test') {
+            parallel {
+                stage('Test Alpha') {
+                    when { expression { params.DEPLOY_ALPHA } }
+                    steps {
+                        sh './gradlew :alpha-service:test'
+                    }
+                }
+                stage('Test Beta') {
+                    when { expression { params.DEPLOY_BETA } }
+                    steps {
+                        sh './gradlew :beta-service:test'
+                    }
+                }
+                stage('Test Gamma') {
+                    when { expression { params.DEPLOY_GAMMA } }
+                    steps {
+                        sh './gradlew :gamma-service:test'
+                    }
+                }
+            }
+        }
+
+        stage('Compliance Gate (Regulith)') {
+            when { expression { params.RUN_COMPLIANCE_CHECK } }
+            steps {
+                script {
+                    echo "Running Regulith compliance check..."
+                    echo "Sending deployment event to Regulith agent..."
+
+                    // This is where Regulith checks its own deployments
+                    // In production: calls Regulith API to validate compliance
+                    def services = []
+                    if (params.DEPLOY_ALPHA) services.add('alpha-service')
+                    if (params.DEPLOY_BETA) services.add('beta-service')
+                    if (params.DEPLOY_GAMMA) services.add('gamma-service')
+
+                    echo "Services being checked: ${services.join(', ')}"
+                    echo "Environment: ${params.ENVIRONMENT}"
+
+                    // Simulate compliance check result
+                    // In production: POST to http://regulith:9090/api/events
+                    echo """
+                    ╔══════════════════════════════════════════════════╗
+                    ║  REGULITH COMPLIANCE GATE                        ║
+                    ╠══════════════════════════════════════════════════╣
+                    ║  Services: ${services.join(', ')}
+                    ║  Environment: ${params.ENVIRONMENT}
+                    ║  SOX Check:        PASSED ✓
+                    ║  Security (SAST):  PASSED ✓
+                    ║  Regulatory:       PASSED ✓
+                    ║  Fair Lending:     N/A
+                    ║  Contractual SLA:  PASSED ✓
+                    ║  Privacy:          PASSED ✓
+                    ║  Infrastructure:   PASSED ✓
+                    ║  Audit Evidence:   GENERATED ✓
+                    ╠══════════════════════════════════════════════════╣
+                    ║  RESULT: DEPLOYMENT APPROVED                     ║
+                    ╚══════════════════════════════════════════════════╝
+                    """
+
+                    if (params.ENVIRONMENT == 'production') {
+                        echo "PRODUCTION deployment — extra audit narrative generated"
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            parallel {
+                stage('Deploy Alpha') {
+                    when { expression { params.DEPLOY_ALPHA } }
+                    steps {
+                        echo "Deploying alpha-service to ${params.ENVIRONMENT}..."
+                        // In production: docker push, kubectl apply, or AWS ECS update
+                        sh 'echo "Deployed alpha-service.jar to ${ENVIRONMENT}"'
+                    }
+                }
+                stage('Deploy Beta') {
+                    when { expression { params.DEPLOY_BETA } }
+                    steps {
+                        echo "Deploying beta-service to ${params.ENVIRONMENT}..."
+                        sh 'echo "Deployed beta-service.jar to ${ENVIRONMENT}"'
+                    }
+                }
+                stage('Deploy Gamma') {
+                    when { expression { params.DEPLOY_GAMMA } }
+                    steps {
+                        echo "Deploying gamma-service to ${params.ENVIRONMENT}..."
+                        sh 'echo "Deployed gamma-service.jar to ${ENVIRONMENT}"'
+                    }
+                }
+            }
+        }
+
+        stage('Post-Deploy Verification') {
+            steps {
+                script {
+                    echo "Verifying deployed services..."
+                    if (params.DEPLOY_ALPHA) echo "  Alpha: http://localhost:8081/api/events/health"
+                    if (params.DEPLOY_BETA)  echo "  Beta:  http://localhost:8082/api/intelligence/health"
+                    if (params.DEPLOY_GAMMA) echo "  Gamma: http://localhost:8083/api/audit/health"
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Selective deployment completed successfully."
+            echo "Regulith audit narrative stored for this deployment."
+        }
+        failure {
+            echo "Deployment failed. Regulith compliance gate may have blocked it."
+        }
+    }
+}

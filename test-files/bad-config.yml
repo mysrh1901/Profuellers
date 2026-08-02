@@ -1,0 +1,14 @@
+# Application config with exposed secrets
+spring:
+  datasource:
+    url: jdbc:postgresql://prod-db.mortgage.internal:5432/loandb
+    username: admin
+    password: MortgageDB@2024!Prod
+  
+aws:
+  access-key: AKIAIOSFODNN7EXAMPLE
+  secret-key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+  region: us-east-1
+
+encryption:
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.secrettoken

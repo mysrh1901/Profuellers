@@ -1,0 +1,6 @@
+rootProject.name = 'regulith-services'
+
+// Monorepo: 3 independent microservices under one repository
+include 'alpha-service'
+include 'beta-service'
+include 'gamma-service'

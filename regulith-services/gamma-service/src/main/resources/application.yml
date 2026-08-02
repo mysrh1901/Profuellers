@@ -1,0 +1,11 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: gamma-service
+  datasource:
+    url: jdbc:h2:mem:gammadb
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop

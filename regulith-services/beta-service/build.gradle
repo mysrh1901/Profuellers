@@ -1,0 +1,16 @@
+// Beta Service - Compliance Intelligence (Chain Reactor + GraphRAG)
+// Core agent logic: policy evaluation, knowledge graph traversal, causal reasoning
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-activemq'
+    implementation 'org.apache.activemq:activemq-broker'
+    implementation 'org.jgrapht:jgrapht-core:1.5.2'
+}
+
+bootJar {
+    archiveFileName = 'beta-service.jar'
+}
+
+springBoot {
+    mainClass = 'com.regulith.beta.BetaServiceApplication'
+}

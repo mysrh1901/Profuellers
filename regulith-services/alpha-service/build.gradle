@@ -1,0 +1,15 @@
+// Alpha Service - Event Ingestion & Routing
+// Receives events from Git, Jenkins, Jira, Docker, AWS and routes to message queue
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-activemq'
+    implementation 'org.apache.activemq:activemq-broker'
+}
+
+bootJar {
+    archiveFileName = 'alpha-service.jar'
+}
+
+springBoot {
+    mainClass = 'com.regulith.alpha.AlphaServiceApplication'
+}

@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.regulith'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring Boot Core
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // Embedded Message Queue (ActiveMQ - no external install needed)
+    implementation 'org.springframework.boot:spring-boot-starter-activemq'
+    implementation 'org.apache.activemq:activemq-broker'
+
+    // In-memory database (no install needed)
+    runtimeOnly 'com.h2database:h2'
+
+    // WebSocket for real-time dashboard updates
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+    // JSON processing
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+    // AWS Bedrock (Claude) - for LLM-powered reasoning
+    implementation platform('software.amazon.awssdk:bom:2.25.16')
+    implementation 'software.amazon.awssdk:bedrockruntime'
+    implementation 'software.amazon.awssdk:auth'
+
+    // Knowledge Graph (JGraphT) - for compliance relationship mapping
+    implementation 'org.jgrapht:jgrapht-core:1.5.2'
+
+    // Lombok to reduce boilerplate
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // Testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

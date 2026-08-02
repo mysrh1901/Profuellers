@@ -1,0 +1,47 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: regulith-ai
+
+  # Embedded H2 Database (no install needed)
+  datasource:
+    url: jdbc:h2:mem:regulithdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  # Embedded ActiveMQ (no install needed - runs inside the app)
+  activemq:
+    broker-url: vm://embedded?broker.persistent=false
+    in-memory: true
+
+  # AWS Bedrock Configuration (Claude via Anthropic partnership)
+  bedrock:
+    enabled: true
+    region: us-east-1
+    model-id: anthropic.claude-3-sonnet-20240229-v1:0
+    # Set to false to use local rule-based fallback (no AWS credentials needed for demo)
+    use-llm: false
+
+# Actuator endpoints for health monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+  jms:
+    template:
+      default-destination: compliance-events

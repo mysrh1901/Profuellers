@@ -1,0 +1,569 @@
+"""
+Dashboard Utilities — Data provider for the dashboard.
+All methods accept live_findings from the Java scanner so that
+live code issues are reflected across ALL tabs (not just Live Scan).
+
+When live findings exist:
+  - Twin scores decrease (more findings = lower score)
+  - Compliance debt increases (each finding adds $ risk)
+  - Gate risk increases
+  - Audit timeline includes live scan events
+  - Value metrics update
+"""
+
+import os
+from datetime import datetime
+from models.data_models import *
+from simulators.mock_data import *
+from agents.digital_twin_agent import DigitalTwinAgent
+from agents.chain_reactor_agent import ChainReactorAgent
+from agents.audit_narrator_agent import AuditNarratorAgent
+from agents.drift_detector_agent import DriftDetectorAgent
+
+
+# Cost per finding severity (used to compute risk impact)
+RISK_COST = {
+    "CRITICAL": 150000,
+    "HIGH": 50000,
+    "MEDIUM": 15000,
+    "LOW": 5000,
+}
+
+# Score penalty per finding severity
+SCORE_PENALTY = {
+    "CRITICAL": 12,
+    "HIGH": 6,
+    "MEDIUM": 2,
+    "LOW": 0.5,
+}
+
+
+class DashboardData:
+    """Computes all dashboard data from agents + live scan findings."""
+
+    def __init__(self):
+        self.twin_agent = DigitalTwinAgent()
+        self.reactor_agent = ChainReactorAgent()
+        self.narrator_agent = AuditNarratorAgent()
+        self.drift_agent = DriftDetectorAgent()
+
+        # Load baseline data
+        self.clients = get_mock_clients()
+        self.code_change = get_mock_code_change()
+
+        # Compute baseline
+        self.twins = [self.twin_agent.build_twin(c) for c in self.clients]
+        self.chain_reaction = self.reactor_agent.analyze_code_change(
+            self.code_change, self.clients[0]
+        )
+        self.narrative = self.narrator_agent.generate_change_narrative(
+            self.code_change, self.chain_reaction
+        )
+        self.drifts = self.drift_agent._detect_drifts(self.clients[0].client_id)
+
+    def _live_risk_cost(self, live_findings):
+        """Total $ risk from live findings."""
+        return sum(RISK_COST.get(f.severity, 0) for f in live_findings)
+
+    def _live_score_penalty(self, live_findings):
+        """Total score deduction from live findings."""
+        return sum(SCORE_PENALTY.get(f.severity, 0) for f in live_findings)
+
+    def _live_critical_count(self, live_findings):
+        return len([f for f in live_findings if f.severity == "CRITICAL"])
+
+    def _live_high_count(self, live_findings):
+        return len([f for f in live_findings if f.severity == "HIGH"])
+
+    def get_header_metrics(self, live_findings=None):
+        """Compute header metrics — includes live findings in risk."""
+        live_findings = live_findings or []
+        base_risk = sum(t.compliance_debt_usd for t in self.twins)
+        live_risk = self._live_risk_cost(live_findings)
+        total_risk = base_risk + live_risk
+        return {
+            "agents": 5,
+            "domains": self.chain_reaction.total_domains_affected,
+            "analysis_time": "<7s",
+            "audit_saved": f"{int(self.twins[0].audit_readiness_pct)}%",
+            "risk_avoided": f"${total_risk / 1000:.0f}K",
+        }
+
+    def get_twin_cards_html(self, live_findings=None):
+        """Generate twin card for primary client only — cleaner for director demo."""
+        live_findings = live_findings or []
+        penalty = self._live_score_penalty(live_findings)
+        live_cost = self._live_risk_cost(live_findings)
+        live_crit = self._live_critical_count(live_findings)
+        live_risks = len(live_findings)
+
+        twin = self.twins[0]  # Primary engagement only
+        score = max(0, twin.overall_score - penalty)
+        debt = twin.compliance_debt_usd + live_cost
+        risks = twin.open_risks + live_risks
+        critical = len([f for f in twin.security_findings if f.severity == Severity.CRITICAL]) + live_crit
+        high = len([f for f in twin.security_findings if f.severity == Severity.HIGH]) + self._live_high_count(live_findings)
+
+        color = "#10b981" if score >= 80 else "#f59e0b" if score >= 60 else "#ef4444"
+        pct = score * 3.267
+        trend = twin.trend
+
+        html = f"""
+            <div class="twin-card" style="padding:14px 16px;">
+                <div class="tw-top">
+                    <svg width="64" height="64" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
+                        <circle cx="60" cy="60" r="52" fill="none" stroke="{color}" stroke-width="8"
+                            stroke-dasharray="{pct} 326.7" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+                        <text x="60" y="66" text-anchor="middle" fill="{color}" font-size="26" font-weight="800" font-family="Inter">{score:.0f}</text>
+                    </svg>
+                    <div class="tw-info">
+                        <div class="tw-name">{twin.client.client_name}</div>
+                        <div class="tw-tier" style="border-color:{color};color:{color}">{twin.client.risk_tier}</div>
+                        <div style="font-size:8px;color:#64748b;margin-top:3px;">{twin.client.industry}</div>
+                    </div>
+                </div>
+                <div class="tw-row" style="margin-top:8px;">
+                    <span><b>{risks}</b> Risks</span>
+                    <span><b>{critical}</b> Crit</span>
+                    <span><b>{high}</b> High</span>
+                    <span><b>${debt/1000:.0f}K</b> Debt</span>
+                    <span><b>{twin.audit_readiness_pct:.0f}%</b> Audit</span>
+                </div>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">"""
+
+        # Domain scores
+        for domain, dscore in twin.domain_scores.items():
+            dcolor = "#10b981" if dscore >= 80 else "#f59e0b" if dscore >= 60 else "#ef4444"
+            html += f"""<span style="font-size:8px;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,0.3);border:1px solid {dcolor}33;color:{dcolor};">{domain} {dscore:.0f}%</span>"""
+
+        html += f"""
+                </div>
+                <div class="tw-fw" style="margin-top:8px;">{' · '.join(twin.client.applicable_frameworks[:6])}</div>
+                <div style="font-size:8px;color:#64748b;margin-top:4px;">Auditor: {twin.client.auditor} · Trend: {trend}</div>
+            </div>"""
+        return html
+
+    def get_chain_steps_html(self, live_findings=None):
+        """Chain reaction steps — adds live findings as additional impacts."""
+        live_findings = live_findings or []
+        html = ""
+
+        # Baseline chain impacts
+        for impact in self.chain_reaction.impacts[:4]:
+            sev_color = "#ef4444" if impact["severity"] == "CRITICAL" else "#f59e0b" if impact["severity"] == "HIGH" else "#eab308"
+            html += f"""
+            <div class="ch-item">
+                <div class="ch-dot" style="background:{sev_color};box-shadow:0 0 6px {sev_color}"></div>
+                <div class="ch-body">
+                    <span class="ch-domain">{impact['domain']}</span>
+                    <span class="ch-act">{impact['action_required']}</span>
+                </div>
+            </div>"""
+
+        # Add live findings as additional chain impacts (deduplicated by category)
+        seen_categories = set()
+        for f in live_findings:
+            if f.category not in seen_categories:
+                seen_categories.add(f.category)
+                sev_color = "#ef4444" if f.severity == "CRITICAL" else "#f59e0b" if f.severity == "HIGH" else "#eab308"
+                html += f"""
+            <div class="ch-item">
+                <div class="ch-dot" style="background:{sev_color};box-shadow:0 0 6px {sev_color}"></div>
+                <div class="ch-body">
+                    <span class="ch-domain">LIVE: {f.category}</span>
+                    <span class="ch-act">{f.remediation[:55]}</span>
+                </div>
+            </div>"""
+        return html
+
+    def get_gate_data(self, live_findings=None):
+        """Deployment gate — live findings increase risk and add blockers."""
+        live_findings = live_findings or []
+        twin = self.twins[0]
+        cr = self.chain_reaction
+
+        penalty = self._live_score_penalty(live_findings)
+        live_cost = self._live_risk_cost(live_findings)
+
+        current_score = twin.overall_score
+        projected_score = max(0, current_score - cr.risk_score_delta - penalty)
+        total_risk = twin.compliance_debt_usd + live_cost
+
+        # Blocking items: baseline + live critical/high findings
+        blocking_items = list(cr.recommended_actions[:3])
+        for f in live_findings:
+            if f.severity in ("CRITICAL", "HIGH"):
+                blocking_items.append(f"{f.category}: {f.title[:50]}")
+        blocking_items = blocking_items[:6]  # cap at 6
+
+        return {
+            "client_name": twin.client.client_name,
+            "current_score": current_score,
+            "projected_score": projected_score,
+            "score_delta": cr.risk_score_delta + penalty,
+            "blocking_items": blocking_items,
+            "risk_usd": total_risk,
+            "requires_human": cr.requires_human_approval or self._live_critical_count(live_findings) > 0,
+            "domains_affected": cr.total_domains_affected + len(set(f.category for f in live_findings)),
+        }
+
+    def get_narrative_compact(self, live_findings=None):
+        """Compact narrative — appends live scan summary if findings exist."""
+        live_findings = live_findings or []
+        n = self.narrative
+        code = self.code_change
+        sast = code.get("sast_scan_result", {})
+        reviewers = code.get("pr_reviewers", [])
+        author = code["author"]
+
+        controls_lines = "\n".join(
+            f"  {c.split(':')[0]}: ✓" for c in n.controls_satisfied[:4]
+        )
+
+        text = f"""PR #{code['branch'].split('/')[-1]} by {author.split('@')[0]}
+{code['message']}
+
+Justification: {code.get('jira_description', 'N/A')[:50]}
+Jira: {code.get('jira_ticket', 'N/A')}
+
+SAST: {sast.get('tool', 'N/A')} | C:{sast.get('critical', 0)} H:{sast.get('high', 0)} M:{sast.get('medium', 0)}"""
+
+        if sast.get("details"):
+            for d in sast["details"][:2]:
+                text += f"\n  {d['severity']}: {d['title'][:40]}"
+
+        text += f"""
+
+Segregation of Duties:
+  Author:   {author.split('@')[0]}
+  Reviewer: {reviewers[0].split('@')[0] if reviewers else 'N/A'} ✓
+  Approver: {reviewers[1].split('@')[0] if len(reviewers) > 1 else 'N/A'} ✓
+
+Controls:
+{controls_lines}"""
+
+        # Append live findings summary
+        if live_findings:
+            text += f"""
+
+━━━ LIVE SCAN ({datetime.now().strftime('%H:%M:%S')}) ━━━
+Files scanned: recently modified .java
+Findings: {len(live_findings)} total"""
+            for f in live_findings[:4]:
+                text += f"\n  [{f.severity}] {f.title[:45]}"
+            if len(live_findings) > 4:
+                text += f"\n  ... +{len(live_findings)-4} more"
+
+        text += "\n\n— Regulith AI Audit Narrator —"
+        return text
+
+    def get_drift_cards_html(self, live_findings=None):
+        """Drift cards from agent + live findings as new drifts."""
+        live_findings = live_findings or []
+        html = ""
+        sev_class_map = {"CRITICAL": "crit", "HIGH": "high", "MEDIUM": "med", "LOW": "low"}
+        sev_color_map = {"CRITICAL": "#ef4444", "HIGH": "#f59e0b", "MEDIUM": "#eab308", "LOW": "#6366f1"}
+
+        # Show live findings first if they exist (they're the "new drifts")
+        seen = set()
+        for f in live_findings[:2]:
+            if f.category not in seen:
+                seen.add(f.category)
+                cls = sev_class_map.get(f.severity, "med")
+                color = sev_color_map.get(f.severity, "#eab308")
+                html += f"""
+                <div class="drift-item {cls}">
+                    <div class="drift-sev" style="color:{color}">LIVE · {f.severity}</div>
+                    <div class="drift-t">{f.title[:30]}</div>
+                    <div class="drift-d">{f.description[:70]}</div>
+                    <div class="drift-f">✓ {f.remediation[:45]}</div>
+                </div>"""
+
+        # Fill rest with baseline drifts
+        remaining = 4 - len(seen)
+        for drift in self.drifts[:remaining]:
+            sev = drift["severity"]
+            cls = sev_class_map.get(sev, "med")
+            color = sev_color_map.get(sev, "#eab308")
+            html += f"""
+                <div class="drift-item {cls}">
+                    <div class="drift-sev" style="color:{color}">{sev}</div>
+                    <div class="drift-t">{drift['title'][:30]}</div>
+                    <div class="drift-d">{drift['impact'][:70]}</div>
+                    <div class="drift-f">✓ {drift['remediation'][:45]}</div>
+                </div>"""
+        return html
+
+    def get_audit_timeline_html(self, live_findings=None):
+        """Audit timeline — live findings appear as new events at the top."""
+        live_findings = live_findings or []
+        events = []
+
+        # Live findings as most recent events (they just happened)
+        if live_findings:
+            crit_count = self._live_critical_count(live_findings)
+            high_count = self._live_high_count(live_findings)
+            events.append({
+                "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " (LIVE)",
+                "title": f"Live Scan: {len(live_findings)} findings in recently modified code",
+                "meta": f"Critical: {crit_count} · High: {high_count} · Categories: {', '.join(set(f.category for f in live_findings[:3]))}",
+                "status": f"✗ {'DEPLOYMENT BLOCKED' if crit_count > 0 else 'Review Required'} — resolve before merge",
+                "color": "#ef4444" if crit_count > 0 else "#f59e0b",
+            })
+
+        # Baseline events
+        code = self.code_change
+        controls_satisfied = self.narrative.controls_satisfied
+        controls_short = " · ".join(f"✓ {c.split(':')[0]}" for c in controls_satisfied[:4])
+        events.append({
+            "time": code["timestamp"][:16].replace("T", " ") + " UTC",
+            "title": f"PR #{code['branch'].split('/')[-1]} — {code['message'][:40]}",
+            "meta": f"Author: {code['author'].split('@')[0]} · Reviewers: {', '.join(r.split('@')[0] for r in code.get('pr_reviewers', []))}",
+            "status": controls_short,
+            "color": "#10b981",
+        })
+
+        sast = code.get("sast_scan_result", {})
+        if sast.get("high", 0) > 0 or sast.get("critical", 0) > 0:
+            events.append({
+                "time": code["timestamp"][:10] + " (during scan)",
+                "title": f"SAST: {sast.get('critical',0)} Critical, {sast.get('high',0)} High findings",
+                "meta": f"Tool: {sast.get('tool','N/A')}",
+                "status": "⚠ ITGC-SD-01 requires resolution before deploy",
+                "color": "#f59e0b",
+            })
+
+        twin = self.twins[0]
+        for finding in [f for f in twin.security_findings if f.severity == Severity.CRITICAL][:2]:
+            events.append({
+                "time": finding.discovered_at[:16].replace("T", " ") + " UTC" if finding.discovered_at else "Unknown",
+                "title": finding.title[:50],
+                "meta": f"Source: {finding.source_tool} · Component: {finding.affected_component}",
+                "status": f"✗ {finding.severity.value}",
+                "color": "#ef4444",
+            })
+
+        html = ""
+        for ev in events[:5]:
+            html += f"""
+            <div style="background:rgba(0,0,0,0.3);border-radius:6px;padding:10px 12px;border-left:3px solid {ev['color']};">
+                <div style="font-size:9px;color:#64748b;">{ev['time']}</div>
+                <div style="font-size:10px;font-weight:600;color:#f1f5f9;margin:3px 0;">{ev['title']}</div>
+                <div style="font-size:9px;color:#94a3b8;">{ev['meta']}</div>
+                <div style="font-size:8.5px;color:{ev['color']};margin-top:4px;">{ev['status']}</div>
+            </div>"""
+        return html
+
+    def get_drift_view_alerts_html(self, live_findings=None):
+        """Full drift alerts for drift monitor view — includes live."""
+        live_findings = live_findings or []
+        html = ""
+        sev_class_map = {"CRITICAL": "crit", "HIGH": "high", "MEDIUM": "med", "LOW": "low"}
+        sev_color_map = {"CRITICAL": "#ef4444", "HIGH": "#f59e0b", "MEDIUM": "#eab308", "LOW": "#6366f1"}
+
+        # Live findings first
+        for f in live_findings:
+            cls = sev_class_map.get(f.severity, "med")
+            color = sev_color_map.get(f.severity, "#eab308")
+            html += f"""
+            <div class="drift-item {cls}" style="border-left-width:3px;">
+                <div class="drift-sev" style="color:{color}">LIVE · {f.severity} · {f.category}</div>
+                <div class="drift-t">{f.title[:45]}</div>
+                <div class="drift-d">{f.description[:90]}</div>
+                <div class="drift-f">✓ {f.remediation[:55]}</div>
+            </div>"""
+
+        # Baseline drifts
+        for drift in self.drifts:
+            sev = drift["severity"]
+            cls = sev_class_map.get(sev, "med")
+            color = sev_color_map.get(sev, "#eab308")
+            html += f"""
+            <div class="drift-item {cls}" style="border-left-width:3px;">
+                <div class="drift-sev" style="color:{color}">{sev} · {drift['category']}</div>
+                <div class="drift-t">{drift['title'][:45]}</div>
+                <div class="drift-d">{drift['impact'][:90]}</div>
+                <div class="drift-f">✓ {drift['remediation'][:55]}</div>
+            </div>"""
+        return html
+
+    def get_drift_stats(self, live_findings=None):
+        """Drift statistics — includes live findings in counts."""
+        live_findings = live_findings or []
+        total = len(self.drifts) + len(live_findings)
+        auto_fixable = len([d for d in self.drifts if "YES" in d["auto_fixable"]])
+        pending = total - auto_fixable
+
+        by_category = {}
+        for d in self.drifts:
+            cat = d["category"].split("/")[0].strip()[:12]
+            by_category[cat] = by_category.get(cat, 0) + 1
+        for f in live_findings:
+            cat = f.category[:12]
+            by_category[cat] = by_category.get(cat, 0) + 1
+
+        return {
+            "total": total,
+            "auto_fixable": auto_fixable,
+            "pending_review": pending,
+            "by_category": by_category,
+        }
+
+    def get_value_metrics(self, live_findings=None):
+        """Business value metrics — risk increases with live findings."""
+        live_findings = live_findings or []
+        avg_audit_readiness = sum(t.audit_readiness_pct for t in self.twins) / len(self.twins)
+        total_debt = sum(t.compliance_debt_usd for t in self.twins) + self._live_risk_cost(live_findings)
+        domains = self.chain_reaction.total_domains_affected
+
+        audit_time_saved = int(avg_audit_readiness * 0.9)
+        auto_fix = len([d for d in self.drifts if "YES" in d["auto_fixable"]])
+        findings_prevented = int((auto_fix / max(len(self.drifts), 1)) * 100)
+
+        return {
+            "audit_saved": f"{audit_time_saved}%",
+            "debt_avoided": f"${total_debt/1000:.0f}K",
+            "domains_per_commit": str(domains),
+            "findings_prevented": f"{findings_prevented}%",
+            "agents_active": "5",
+            "analysis_time": "<7s",
+        }
+
+    def get_audit_controls(self, live_findings=None):
+        """
+        Fetches controls from Spring Boot backend API in real-time.
+        No hardcoded controls — pulls from CompliancePolicyEngine at localhost:9090.
+        Status (SATISFIED/VIOLATED) is computed from live scan findings.
+        """
+        import urllib.request
+        import json
+
+        live_findings = live_findings or []
+
+        # Fetch policies from Spring Boot API
+        try:
+            url = "http://localhost:9090/api/policies"
+            req = urllib.request.urlopen(url, timeout=3)
+            policies = json.loads(req.read().decode())
+        except Exception:
+            # Fallback if Spring Boot is down
+            return []
+
+        # Determine what violations exist from live findings
+        finding_categories = set(f.category for f in live_findings)
+        finding_severities = set(f.severity for f in live_findings)
+        has_critical = "CRITICAL" in finding_severities
+        has_high = "HIGH" in finding_severities
+        has_secrets = "Hardcoded Secret" in finding_categories
+        has_pii = any("PII" in c or "Sensitive" in c for c in finding_categories)
+        has_sql = "SQL Injection" in finding_categories
+        has_logging = "Insecure Logging" in finding_categories
+        has_weak_crypto = "Weak Cryptography" in finding_categories
+        has_ssl = "SSL/TLS Bypass" in finding_categories
+
+        # Map trigger conditions to live finding violations
+        def evaluate_status(policy):
+            tc = policy.get("triggerCondition", "")
+            if "sastHighCount > 0" in tc and (has_critical or has_high):
+                return "VIOLATED"
+            if "secretsDetected" in tc and has_secrets:
+                return "VIOLATED"
+            if "touchesPii" in tc and has_pii:
+                return "VIOLATED"
+            if "touchesFinancialLogic" in tc and (has_sql or has_logging):
+                return "VIOLATED"
+            if "dataResidencyViolation" in tc:
+                return "SATISFIED"
+            if "eventType" in tc:
+                # Deployment gates violated if any critical/high
+                if policy.get("blocking") and (has_critical or has_secrets):
+                    return "VIOLATED"
+            return "SATISFIED"
+
+        controls = []
+        for p in policies:
+            controls.append({
+                "id": p["id"],
+                "domain": p["domain"],
+                "name": p["name"],
+                "description": p["description"],
+                "controls": p.get("controls", ""),
+                "blocking": p.get("blocking", False),
+                "status": evaluate_status(p),
+                "action": p.get("action", ""),
+                "sla": p.get("sla", ""),
+                "severity": p.get("severity", "MEDIUM"),
+            })
+        return controls
+
+    def get_audit_controls_html(self, live_findings=None):
+        """Generate audit controls HTML table."""
+        controls = self.get_audit_controls(live_findings)
+        satisfied = len([c for c in controls if c["status"] == "SATISFIED"])
+        violated = len([c for c in controls if c["status"] == "VIOLATED"])
+        total = len(controls)
+
+        html = f"""
+        <div style="display:flex;gap:12px;margin-bottom:14px;">
+            <div style="text-align:center;padding:6px 14px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);border-radius:8px;">
+                <div style="font-size:16px;font-weight:800;color:#34d399;">{satisfied}</div>
+                <div style="font-size:7.5px;color:#6b7f99;">SATISFIED</div>
+            </div>
+            <div style="text-align:center;padding:6px 14px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:8px;">
+                <div style="font-size:16px;font-weight:800;color:#f87171;">{violated}</div>
+                <div style="font-size:7.5px;color:#6b7f99;">VIOLATED</div>
+            </div>
+            <div style="text-align:center;padding:6px 14px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);border-radius:8px;">
+                <div style="font-size:16px;font-weight:800;color:#a5b4fc;">{total}</div>
+                <div style="font-size:7.5px;color:#6b7f99;">TOTAL</div>
+            </div>
+        </div>
+        <div style="overflow-y:auto;max-height:calc(100% - 80px);display:flex;flex-direction:column;gap:5px;">"""
+
+        for c in controls:
+            if c["status"] == "VIOLATED":
+                border_color = "#ef4444"
+                status_badge = '<span style="background:rgba(239,68,68,0.15);color:#f87171;font-size:7px;padding:2px 6px;border-radius:3px;font-weight:800;">✗ VIOLATED</span>'
+                bg = "rgba(239,68,68,0.04)"
+            else:
+                border_color = "#34d399"
+                status_badge = '<span style="background:rgba(16,185,129,0.12);color:#34d399;font-size:7px;padding:2px 6px;border-radius:3px;font-weight:800;">✓ SATISFIED</span>'
+                bg = "rgba(16,185,129,0.03)"
+
+            blocking_tag = ' <span style="font-size:6.5px;color:#f87171;border:1px solid rgba(239,68,68,0.3);padding:1px 4px;border-radius:3px;">BLOCKING</span>' if c["blocking"] else ""
+
+            html += f"""
+            <div style="background:{bg};border:1px solid rgba(150,160,180,0.15);border-left:3px solid {border_color};border-radius:6px;padding:8px 10px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
+                    <span style="font-size:8px;font-weight:700;color:#a5b4fc;">{c['id']} · {c['domain']}{blocking_tag}</span>
+                    {status_badge}
+                </div>
+                <div style="font-size:9.5px;font-weight:600;color:#d0d8e8;">{c['name']}</div>
+                <div style="font-size:8px;color:#8a9bb4;margin-top:2px;">{c['description']}</div>
+                <div style="font-size:7.5px;color:#6b7f99;margin-top:3px;">Controls: {c['controls']}</div>"""
+
+            # Show extended fields for HITRUST-style controls
+            if c.get("objective"):
+                html += f"""
+                <div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(150,160,180,0.1);">
+                    <div style="font-size:7.5px;color:#a5b4fc;font-weight:600;">Objective:</div>
+                    <div style="font-size:8px;color:#8a9bb4;">{c['objective']}</div>
+                </div>"""
+            if c.get("test_procedure"):
+                html += f"""
+                <div style="margin-top:3px;">
+                    <div style="font-size:7.5px;color:#a5b4fc;font-weight:600;">Test Procedure:</div>
+                    <div style="font-size:8px;color:#8a9bb4;">{c['test_procedure']}</div>
+                </div>"""
+            if c.get("evidence"):
+                html += f"""
+                <div style="margin-top:3px;">
+                    <div style="font-size:7.5px;color:#a5b4fc;font-weight:600;">Evidence Required:</div>
+                    <div style="font-size:8px;color:#8a9bb4;">{c['evidence']}</div>
+                </div>"""
+
+            html += "</div>"
+
+        html += "</div>"
+        return html

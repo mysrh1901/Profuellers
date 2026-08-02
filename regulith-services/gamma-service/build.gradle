@@ -1,0 +1,15 @@
+// Gamma Service - Audit Evidence & Dashboard
+// Generates narratives, stores results, serves the compliance dashboard
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.h2database:h2'
+}
+
+bootJar {
+    archiveFileName = 'gamma-service.jar'
+}
+
+springBoot {
+    mainClass = 'com.regulith.gamma.GammaServiceApplication'
+}
