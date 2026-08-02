@@ -29,6 +29,13 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from dashboard_utils import DashboardData
 from java_scanner import JavaScanner
 
+# AI-powered scanner (uses Ollama LLM when available, heuristic fallback)
+try:
+    from ai_scanner import AIScanner
+    AI_SCANNER_AVAILABLE = True
+except ImportError:
+    AI_SCANNER_AVAILABLE = False
+
 # Watched directory for Java files
 WATCH_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "watch-folder")
 
@@ -40,10 +47,19 @@ def get_live_scan():
     """
     Scan NOW on every request. No caching, no background thread.
     Always reflects the current state of files on disk.
+
+    INTELLIGENCE MODE:
+      - If Ollama LLM is running → AI-powered reasoning (no hardcoded rules)
+      - If Ollama is unavailable → Falls back to heuristic scanner
     """
-    s = JavaScanner(max_age_minutes=10)
-    s.scan_recent(WATCH_DIR)
-    return s.findings, s.scanned_files, time.strftime("%Y-%m-%d %H:%M:%S")
+    if AI_SCANNER_AVAILABLE:
+        s = AIScanner(max_age_minutes=10)
+        s.scan_recent(WATCH_DIR)
+        return s.findings, s.scanned_files, time.strftime("%Y-%m-%d %H:%M:%S")
+    else:
+        s = JavaScanner(max_age_minutes=10)
+        s.scan_recent(WATCH_DIR)
+        return s.findings, s.scanned_files, time.strftime("%Y-%m-%d %H:%M:%S")
 
 
 # Module-level state (updated on each request by generate_html)
@@ -777,18 +793,34 @@ class DashboardHandler(SimpleHTTPRequestHandler):
 def main():
     port = 8080
     server = HTTPServer(("localhost", port), DashboardHandler)
+
+    # Check AI mode
+    ai_mode = "AI-POWERED (Ollama LLM)" if AI_SCANNER_AVAILABLE else "HEURISTIC (Pattern-based)"
+    try:
+        from ai_scanner import _is_ollama_available
+        ollama_status = "✓ CONNECTED" if _is_ollama_available() else "✗ NOT RUNNING (using heuristic fallback)"
+    except Exception:
+        ollama_status = "✗ NOT AVAILABLE"
+
     print(f"""
     ╔══════════════════════════════════════════════════════════════════╗
-    ║   Regulith AI — Executive Dashboard (Live Scanning)            ║
+    ║   Regulith AI — Executive Dashboard                            ║
     ║   http://localhost:{port}                                       ║
+    ╠══════════════════════════════════════════════════════════════════╣
     ║                                                                ║
-    ║   LIVE CODE SCANNING ON EVERY PAGE LOAD                        ║
-    ║   Scans: watch-folder/*.java (modified in last 10 min)         ║
-    ║   Auto-refreshes every 3 seconds                               ║
+    ║   INTELLIGENCE MODE: {ai_mode:<40}║
+    ║   Ollama LLM Status: {ollama_status:<40}║
+    ║   Spring Boot API:   http://localhost:9090                     ║
     ║                                                                ║
-    ║   TO TEST: Edit watch-folder/bad-code.java, save it.           ║
-    ║   Dashboard picks it up immediately — no restart needed.        ║
+    ║   SCANNING: watch-folder/ (auto-refresh every 3 seconds)       ║
     ║                                                                ║
+    ║   HOW IT WORKS:                                                ║
+    ║   1. File modified → Content sent to LLM for reasoning         ║
+    ║   2. LLM returns compliance findings (domain, severity, reg)   ║
+    ║   3. Findings fire events → Spring Boot agent pipeline         ║
+    ║   4. Chain Reactor → Audit Narrator → Score update             ║
+    ║                                                                ║
+    ║   TO TEST: Edit any .java file in watch-folder/                ║
     ║   Press Ctrl+C to stop                                         ║
     ╚══════════════════════════════════════════════════════════════════╝
     """)
