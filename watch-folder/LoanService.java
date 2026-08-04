@@ -41,14 +41,14 @@ public class LoanService {
     //   → Audit Trail Gap
     // ═══════════════════════════════════════════════════════════════════
 
-    // public void adjustInterestRate(String loanId, double newRate) {
-    //     // SOX VIOLATION: Direct modification of financial-significant data
-    //     // No change ticket, no approval, no segregation of duties
-    //     String sql = "UPDATE INTEREST_RATES SET rate_value = " + newRate
-    //                + " WHERE loan_id = '" + loanId + "'";
-    //     System.out.println("Rate changed to: " + newRate + " for loan: " + loanId);
-    //     // This bypasses all SOX controls — Material Weakness finding
-    // }
+    public void adjustInterestRate(String loanId, double newRate) {
+        // SOX VIOLATION: Direct modification of financial-significant data
+        // No change ticket, no approval, no segregation of duties
+        String sql = "UPDATE INTEREST_RATES SET rate_value = " + newRate
+                   + " WHERE loan_id = '" + loanId + "'";
+        System.out.println("Rate changed to: " + newRate + " for loan: " + loanId);
+        // This bypasses all SOX controls — Material Weakness finding
+    }
 
 
     // ═══════════════════════════════════════════════════════════════════

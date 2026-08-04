@@ -15,7 +15,7 @@ public class Regulith {
         double totalCost = principal + closingCosts;
         double monthlyRate = rate / 12;
         int numPayments = termYears * 12;
-
+System.out.println("SSN--234"+SSN);
         double payment = totalCost * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) /
                          (Math.pow(1 + monthlyRate, numPayments) - 1);
         double totalPaid = payment * numPayments;
