@@ -173,6 +173,172 @@ public class CompliancePolicyEngine {
                 .build());
 
         // ================================================================
+        // SOX ITGC — ACCESS MANAGEMENT CONTROLS
+        // (Per SOX ITGC Testing Framework)
+        // Evidence: Access tickets, approvals, AD logs, role matrix, HR docs
+        // ================================================================
+
+        policies.add(CompliancePolicy.builder()
+                .id("ITGC-AM-01")
+                .domain("ACCESS_CONTROL")
+                .name("User Provisioning — Manager Approval Required")
+                .description("Access granted only after manager approval. Verify request, approval, role and provisioning timing.")
+                .triggerCondition("eventType == 'ACCESS_CHANGE'")
+                .severity("HIGH")
+                .action("Verify access request ticket with manager approval before provisioning. Evidence: access ticket, approval, user access report, role matrix, HR onboarding docs.")
+                .controls("ITGC-AM-01, SOX-404, ISO27001-A.9.2.2")
+                .sla("Before access is granted")
+                .blocking(true)
+                .verticals(List.of("ALL"))
+                .build());
+
+        policies.add(CompliancePolicy.builder()
+                .id("ITGC-AM-02")
+                .domain("ACCESS_CONTROL")
+                .name("Access Modification — Approved Before Implementation")
+                .description("Changes to access/roles approved before implementation. Verify request, approval and updated role.")
+                .triggerCondition("eventType == 'ACCESS_CHANGE'")
+                .severity("HIGH")
+                .action("Verify modification ticket and approval exist BEFORE change. Evidence: modification ticket, approval, access report, HR transfer doc.")
+                .controls("ITGC-AM-02, SOX-404, ISO27001-A.9.2.5")
+                .sla("Before access modification")
+                .blocking(true)
+                .verticals(List.of("ALL"))
+                .build());
+
+        policies.add(CompliancePolicy.builder()
+                .id("ITGC-AM-03")
+                .domain("ACCESS_CONTROL")
+                .name("Access Removal — Timely Termination")
+                .description("Terminate access within defined timeframe. Compare termination date vs disable date.")
+                .triggerCondition("eventType == 'ACCESS_CHANGE'")
+                .severity("CRITICAL")
+                .action("Compare HR termination date against AD/IAM disable date. Flag gap > SLA. Evidence: HR termination report, AD logs, active user list, IAM logs.")
+                .controls("ITGC-AM-03, SOX-404, ISO27001-A.9.2.6")
+                .sla("Within 4 hours of termination")
+                .blocking(true)
+                .verticals(List.of("ALL"))
+                .build());
+
+        policies.add(CompliancePolicy.builder()
+                .id("ITGC-AM-04")
+                .domain("ACCESS_CONTROL")
+                .name("Privileged Access — Justified and Approved")
+                .description("Admin access requires documented justification and approval. No standing admin without business need.")
+                .triggerCondition("eventType == 'ACCESS_CHANGE'")
+                .severity("CRITICAL")
+                .action("Verify privileged access request has justification + manager + security approval. Evidence: admin request, approval, privileged access report.")
+                .controls("ITGC-AM-04, SOX-404, PCI-DSS-7.1, ISO27001-A.9.4.4")
+                .sla("Before privileged access is granted")
+                .blocking(true)
+                .verticals(List.of("ALL"))
+                .build());
+
+        policies.add(CompliancePolicy.builder()
+                .id("ITGC-AM-05")
+                .domain("ACCESS_CONTROL")
+                .name("Quarterly Access Review — Periodic Certification")
+                .description("Periodic review performed. Verify sign-off and remediation of excess access.")
+                .triggerCondition("eventType == 'ACCESS_CHANGE' || eventType == 'DEPLOYMENT'")
+                .severity("HIGH")
+                .action("Verify quarterly review completed with system owner sign-off. Remediate excess access within 5 days. Evidence: user listing, signed review, certification email.")
+                .controls("ITGC-AM-05, SOX-404, PCI-DSS-7.1.2")
+                .sla("Quarterly (every 90 days)")
+                .blocking(false)
+                .verticals(List.of("ALL"))
+                .build());
+
+        // ================================================================
+        // SOX ITGC — CHANGE MANAGEMENT CONTROLS
+        // (Per SOX ITGC Testing Framework)
+        // Evidence: Change tickets, approvals, test plans, deployment logs
+        // ================================================================
+
+        policies.add(CompliancePolicy.builder()
+                .id("ITGC-CM-01A")
+                .domain("CHANGE_MANAGEMENT")
+                .name("Normal Change Approval — Business/Technical/CAB")
+                .description("Changes approved before deployment. Verify business/technical/CAB approvals.")
+                .triggerCondition("eventType == 'CODE_COMMIT' || eventType == 'DEPLOYMENT'")
+                .severity("HIGH")
+                .action("Verify change ticket has business approval + technical review + CAB sign-off. Evidence: change ticket, approvals, CAB minutes.")
+                .controls("ITGC-CM-01, SOX-404, ITIL-CHG")
+                .sla("Before production deployment")
+                .blocking(true)
+                .verticals(List.of("ALL"))
+                .build());
+
+        policies.add(CompliancePolicy.builder()
+                .id("ITGC-CM-03A")
+                .domain("CHANGE_MANAGEMENT")
+                .name("Change Testing — UAT/QA Before Production")
+                .description("Changes tested before production. Verify UAT/QA and signoff.")
+                .triggerCondition("eventType == 'DEPLOYMENT'")
+                .severity("HIGH")
+                .action("Verify test plan exists, UAT executed, QA sign-off obtained before deploy. Evidence: test plan, UAT results, QA signoff, Jira.")
+                .controls("ITGC-CM-03, ITGC-SD-01, SOX-404")
+                .sla("Before production deployment")
+                .blocking(true)
+                .verticals(List.of("ALL"))
+                .build());
+
+        policies.add(CompliancePolicy.builder()
+                .id("ITGC-CM-02A")
+                .domain("CHANGE_MANAGEMENT")
+                .name("Segregation of Duties — Dev Cannot Deploy to Prod")
+                .description("Developers cannot deploy to production. Verify deployment permissions separated from development.")
+                .triggerCondition("eventType == 'DEPLOYMENT'")
+                .severity("CRITICAL")
+                .action("Verify deployer != developer. Check role matrix and prod access report. Evidence: role matrix, prod access report, deployment logs.")
+                .controls("ITGC-CM-02, SOX-404, PCI-DSS-6.4.2")
+                .sla("Before deployment (blocking)")
+                .blocking(true)
+                .verticals(List.of("ALL"))
+                .build());
+
+        policies.add(CompliancePolicy.builder()
+                .id("ITGC-CM-04")
+                .domain("CHANGE_MANAGEMENT")
+                .name("Production Migration — Only Approved/Tested Changes")
+                .description("Only approved and tested changes deployed. Verify deployment logs match approved change.")
+                .triggerCondition("eventType == 'DEPLOYMENT'")
+                .severity("CRITICAL")
+                .action("Cross-reference deployment log against approved ticket. Version deployed must match tested version. Evidence: deployment logs, Azure DevOps/Jenkins, release record.")
+                .controls("ITGC-CM-04, SOX-404, ITIL-Release")
+                .sla("At time of deployment (blocking)")
+                .blocking(true)
+                .verticals(List.of("ALL"))
+                .build());
+
+        policies.add(CompliancePolicy.builder()
+                .id("ITGC-CM-05")
+                .domain("CHANGE_MANAGEMENT")
+                .name("Emergency Changes — Retrospective Review")
+                .description("Emergency changes reviewed after implementation. Verify retrospective CAB approval.")
+                .triggerCondition("eventType == 'DEPLOYMENT'")
+                .severity("HIGH")
+                .action("For emergency changes: verify retrospective CAB review within 5 business days. Evidence: emergency ticket, incident record, CAB review minutes.")
+                .controls("ITGC-CM-05, SOX-404, ITIL-Emergency")
+                .sla("Retrospective review within 5 business days")
+                .blocking(false)
+                .verticals(List.of("ALL"))
+                .build());
+
+        policies.add(CompliancePolicy.builder()
+                .id("ITGC-CM-06")
+                .domain("CHANGE_MANAGEMENT")
+                .name("Code Review — Independent Review Before Merge")
+                .description("Independent code review before merge. Verify PR approval by reviewer != author.")
+                .triggerCondition("eventType == 'CODE_COMMIT'")
+                .severity("HIGH")
+                .action("Verify PR/MR has approval from reviewer different from author. No self-merged PRs. Evidence: GitHub/GitLab PR, reviewer approval.")
+                .controls("ITGC-CM-06, PCI-DSS-6.3.2, SOX-404")
+                .sla("Before merge to main")
+                .blocking(true)
+                .verticals(List.of("ALL"))
+                .build());
+
+        // ================================================================
         // HEALTHCARE POLICIES
         // ================================================================
 

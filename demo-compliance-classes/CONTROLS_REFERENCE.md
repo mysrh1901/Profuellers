@@ -2,15 +2,26 @@
 
 ## 1. SOX (Sarbanes-Oxley) — IT General Controls (ITGC)
 
-| Control ID | Control Name | What It Requires |
-|-----------|-------------|-----------------|
-| ITGC-CM-01 | Dual Approval | All changes to financial systems require 2 approvers |
-| ITGC-CM-02 | Segregation of Duties | Developer ≠ Approver ≠ Deployer |
-| ITGC-CM-03 | Change Documentation | Every change must have ticket + justification + test evidence |
-| ITGC-SD-01 | Security Testing | SAST/DAST scan must pass before production deployment |
-| ITGC-AC-01 | Privileged Access Review | Quarterly review of all prod access |
-| ITGC-AC-02 | Joiner/Mover/Leaver | Access revoked within 4 hours of departure |
-| ITGC-OP-01 | Backup & Recovery | Daily backup + monthly recovery test |
+### Access Management Controls
+
+| Control ID | Control Name | Requirement | Testing Procedure | Evidence Required |
+|-----------|-------------|-------------|-------------------|-------------------|
+| ITGC-AM-01 | User Provisioning | Access granted only after manager approval | Verify request, approval, role and provisioning timing | Access ticket, approval, user access report, role matrix, HR onboarding |
+| ITGC-AM-02 | Access Modification | Changes approved before implementation | Verify request, approval and updated role | Modification ticket, approval, access report, HR transfer |
+| ITGC-AM-03 | Access Removal | Terminate access within defined timeframe | Compare termination date vs disable date | HR termination report, AD logs, active users, IAM logs |
+| ITGC-AM-04 | Privileged Access | Admin access requires approval + justification | Verify justification and approval | Admin request, approval, privileged access report |
+| ITGC-AM-05 | Quarterly Access Review | Periodic review performed with sign-off | Verify sign-off and remediation | User listing, signed review, certification email |
+
+### Change Management Controls
+
+| Control ID | Control Name | Requirement | Testing Procedure | Evidence Required |
+|-----------|-------------|-------------|-------------------|-------------------|
+| ITGC-CM-01 | Normal Change Approval | Changes approved before deployment | Verify business/technical/CAB approvals | Change ticket, approvals, CAB minutes |
+| ITGC-CM-02 | Segregation of Duties | Developers cannot deploy to production | Verify deployment permissions separated | Role matrix, prod access report |
+| ITGC-CM-03 | Change Testing | Changes tested before production | Verify UAT/QA and signoff | Test plan, UAT, QA signoff, Jira |
+| ITGC-CM-04 | Production Migration | Only approved/tested changes deployed | Verify deployment logs after approval | Deployment logs, Azure DevOps/Jenkins, release record |
+| ITGC-CM-05 | Emergency Changes | Emergency changes reviewed retrospectively | Verify retrospective CAB approval | Emergency ticket, incident, CAB review |
+| ITGC-CM-06 | Code Review | Independent review before merge | Verify PR approval by reviewer ≠ author | GitHub/GitLab PR, reviewer approval |
 
 ---
 
