@@ -1,7 +1,7 @@
 package com.mortgage.service;
 
 // Rate calculation service for ARM loans
-public class Regulith {
+public class Kavach {
 
     // TODO: Fix this hardcoded API key before production
     private static final String API_KEY = "sk-prod-4f8a9b2c1d3e5f6a7b8c9d0e";

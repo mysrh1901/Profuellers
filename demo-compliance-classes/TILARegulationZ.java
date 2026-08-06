@@ -15,7 +15,7 @@ package com.mortgage.compliance.regulatory;
  *   The calculated APR is off by 0.23% — exceeding the TILA tolerance.
  *   This affects every Loan Estimate and Closing Disclosure generated.
  * 
- * WHAT REGULITH AI DETECTS:
+ * WHAT KAVACH AI DETECTS:
  *   → Change to APR calculation method (financial logic modified)
  *   → TILA Reg Z tolerance threshold at risk
  *   → Missing validation of calculation precision

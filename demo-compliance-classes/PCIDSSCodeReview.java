@@ -18,7 +18,7 @@ import java.util.Random;
  *   Additionally, the code contains multiple PCI-DSS violations:
  *   storing CVV, logging card numbers, weak encryption, no masking.
  * 
- * WHAT REGULITH AI DETECTS:
+ * WHAT KAVACH AI DETECTS:
  *   → No code review record (PCI-DSS 6.3.2 violation)
  *   → CVV stored after authorization (PCI-DSS 3.2 violation)
  *   → PAN logged without masking (PCI-DSS 3.4 violation)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Create Regulith AI presentation using official PPT Template.
+Create KAVACH AI presentation using official PPT Template.
 Uses proper layouts, placeholders, and positioning from the template.
 """
 
@@ -61,7 +61,7 @@ def add_content_slide(title_text, subtitle_text, body_lines):
 slide = prs.slides.add_slide(prs.slide_layouts[0])  # Cover - Light Background
 for ph in slide.placeholders:
     if ph.placeholder_format.idx == 0:
-        ph.text = "Regulith AI"
+        ph.text = "KAVACH AI"
         ph.text_frame.paragraphs[0].font.size = Pt(36)
         ph.text_frame.paragraphs[0].font.bold = True
 
@@ -69,14 +69,14 @@ for ph in slide.placeholders:
 tb = slide.shapes.add_textbox(Inches(0.9), Inches(4.2), Inches(5.6), Inches(0.5))
 tf = tb.text_frame
 p = tf.paragraphs[0]
-p.text = "Delivery Compliance Intelligence Platform"
+p.text = "Knowledge-driven Audit, Vulnerability Analysis & Compliance Health"
 p.font.size = Pt(16)
 p.font.color.rgb = GRAY
 
 tb = slide.shapes.add_textbox(Inches(0.9), Inches(4.8), Inches(5.6), Inches(0.4))
 tf = tb.text_frame
 p = tf.paragraphs[0]
-p.text = "One commit. Six compliance domains. Zero surprises."
+p.text = "One commit. Six domains. Zero breaches."
 p.font.size = Pt(12)
 p.font.color.rgb = BLUE
 
@@ -117,7 +117,7 @@ add_content_slide(
 # SLIDE 3: Solution Overview
 # ================================================================
 add_content_slide(
-    "Solution: Regulith AI",
+    "Solution: KAVACH AI",
     "An autonomous agent that monitors the ecosystem and triggers all compliance checks",
     [
         "An agent that sits on the delivery ecosystem (Git, Jenkins, Jira, Docker, AWS)",
@@ -300,7 +300,7 @@ for ph in slide.placeholders:
 slide = prs.slides.add_slide(prs.slide_layouts[11])  # Thank You layout
 for ph in slide.placeholders:
     if ph.placeholder_format.idx == 0:
-        ph.text = "Regulith AI"
+        ph.text = "KAVACH AI"
         ph.text_frame.paragraphs[0].font.size = Pt(28)
         ph.text_frame.paragraphs[0].font.bold = True
 
@@ -308,9 +308,9 @@ tb = slide.shapes.add_textbox(Inches(0.9), Inches(3.2), Inches(5.5), Inches(1.5)
 tf = tb.text_frame
 tf.word_wrap = True
 lines = [
-    "Delivery Compliance Intelligence Platform",
+    "Knowledge-driven Audit, Vulnerability Analysis & Compliance Health",
     "",
-    "One commit. Six compliance domains. Zero surprises.",
+    "One commit. Six domains. Zero breaches.",
     "",
     "Working prototype ready for demo.",
 ]
@@ -326,7 +326,7 @@ for i, line in enumerate(lines):
 # SAVE
 # ================================================================
 import os
-path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Regulith_AI_Arena.pptx")
+path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "KAVACH_AI_Arena.pptx")
 prs.save(path)
 print(f"Saved: {path}")
 print(f"Slides: {len(prs.slides)}")

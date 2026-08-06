@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate Regulith AI presentation deck with professional styling.
+Generate KAVACH AI presentation deck with professional styling.
 Uses python-pptx library.
 """
 
@@ -92,15 +92,15 @@ add_shape_bg(slide, Inches(0), Inches(0), Inches(13.333), Inches(0.08), ACCENT_P
 
 # Product name
 add_text_box(slide, Inches(1.5), Inches(2.0), Inches(10), Inches(1.2),
-             "REGULITH AI", font_size=54, bold=True, color=WHITE)
+             "KAVACH AI", font_size=54, bold=True, color=WHITE)
 
 # Subtitle
 add_text_box(slide, Inches(1.5), Inches(3.2), Inches(10), Inches(0.8),
-             "Delivery Compliance Intelligence Platform", font_size=28, color=ACCENT_LIGHT)
+             "Knowledge-driven Audit, Vulnerability Analysis & Compliance Health", font_size=28, color=ACCENT_LIGHT)
 
 # Tagline
 add_text_box(slide, Inches(1.5), Inches(4.2), Inches(10), Inches(0.6),
-             '"One commit. Six compliance domains. Zero surprises."',
+             '"One commit. Six domains. Zero breaches."',
              font_size=20, color=MEDIUM_GRAY)
 
 # Category badge
@@ -149,21 +149,21 @@ add_text_box(slide, Inches(0.8), Inches(6.5), Inches(11), Inches(0.6),
 
 
 # ============================================================
-# SLIDE 3: What is Regulith AI
+# SLIDE 3: What is KAVACH AI
 # ============================================================
 slide = prs.slides.add_slide(prs.slide_layouts[6])
 set_slide_bg(slide, DARK_BG)
 add_shape_bg(slide, Inches(0), Inches(0), Inches(13.333), Inches(0.08), ACCENT_PURPLE)
 
 add_text_box(slide, Inches(0.8), Inches(0.4), Inches(10), Inches(0.7),
-             "WHAT IS REGULITH AI?", font_size=32, bold=True, color=WHITE)
+             "WHAT IS KAVACH AI?", font_size=32, bold=True, color=WHITE)
 
 desc_lines = [
     "A multi-agent AI platform that maintains a live compliance",
     "digital twin for each client engagement.",
     "",
     "When any event occurs (code commit, infrastructure change,",
-    "new regulation, personnel change) — Regulith propagates the",
+    "new regulation, personnel change) — KAVACH propagates the",
     "compliance impact across ALL domains simultaneously:",
     "",
     "SOX  +  Security  +  Regulatory  +  Contractual  +  Fair Lending  +  Privacy  +  Audit",
@@ -218,7 +218,7 @@ add_text_box(slide, Inches(1.7), Inches(4.4), Inches(10), Inches(0.8),
 
 # Bottom description
 add_text_box(slide, Inches(0.8), Inches(5.6), Inches(11), Inches(1.5),
-             "Regulith does not replace any existing tool.\n"
+             "KAVACH does not replace any existing tool.\n"
              "It sits above them as the orchestration, reasoning, and action layer\n"
              "that makes them all work together intelligently.",
              font_size=16, color=LIGHT_GRAY)
@@ -301,7 +301,7 @@ add_multi_text(slide, Inches(1.2), Inches(2.1), Inches(11), Inches(3.8),
                sim_lines, font_size=15, color=LIGHT_GRAY)
 
 add_text_box(slide, Inches(0.8), Inches(6.4), Inches(11), Inches(0.5),
-             "Every existing tool is reactive. Regulith is the only platform that simulates consequences before action.",
+             "Every existing tool is reactive. KAVACH is the only platform that simulates consequences before action.",
              font_size=15, bold=True, color=ACCENT_LIGHT)
 
 
@@ -387,7 +387,7 @@ for product, does, misses in competitors:
     y += 0.62
 
 add_text_box(slide, Inches(0.8), Inches(6.2), Inches(11), Inches(0.6),
-             "Regulith sits ABOVE all these tools as the orchestration and reasoning layer.\n"
+             "KAVACH sits ABOVE all these tools as the orchestration and reasoning layer.\n"
              "It does not replace them — it makes them work together intelligently.",
              font_size=15, bold=True, color=ACCENT_LIGHT)
 
@@ -539,7 +539,7 @@ add_text_box(slide, Inches(1.2), Inches(5.4), Inches(11), Inches(1.5),
              "reasons across compliance domains, and tells you — before you deploy —\n"
              "that this one code commit will violate three different clients' contracts\n"
              "in three different ways.\n\n"
-             "That brain is Regulith AI.",
+             "That brain is KAVACH AI.",
              font_size=15, color=LIGHT_GRAY)
 
 
@@ -552,14 +552,14 @@ add_shape_bg(slide, Inches(0), Inches(0), Inches(13.333), Inches(0.08), ACCENT_P
 add_shape_bg(slide, Inches(0), Inches(7.42), Inches(13.333), Inches(0.08), ACCENT_PURPLE)
 
 add_text_box(slide, Inches(1.5), Inches(2.2), Inches(10), Inches(1.2),
-             "REGULITH AI", font_size=54, bold=True, color=WHITE, alignment=PP_ALIGN.CENTER)
+             "KAVACH AI", font_size=54, bold=True, color=WHITE, alignment=PP_ALIGN.CENTER)
 
 add_text_box(slide, Inches(1.5), Inches(3.5), Inches(10), Inches(0.8),
-             "Delivery Compliance Intelligence Platform", font_size=24, color=ACCENT_LIGHT,
+             "Knowledge-driven Audit, Vulnerability Analysis & Compliance Health", font_size=24, color=ACCENT_LIGHT,
              alignment=PP_ALIGN.CENTER)
 
 add_text_box(slide, Inches(1.5), Inches(4.5), Inches(10), Inches(0.6),
-             '"One commit. Six compliance domains. Zero surprises."',
+             '"One commit. Six domains. Zero breaches."',
              font_size=20, color=MEDIUM_GRAY, alignment=PP_ALIGN.CENTER)
 
 add_text_box(slide, Inches(1.5), Inches(5.8), Inches(10), Inches(0.5),
@@ -574,7 +574,7 @@ add_text_box(slide, Inches(1.5), Inches(6.4), Inches(10), Inches(0.5),
 # ============================================================
 # SAVE
 # ============================================================
-output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Regulith_AI_Presentation.pptx")
+output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "KAVACH_AI_Presentation.pptx")
 prs.save(output_path)
 print(f"\nPresentation saved: {output_path}")
 print(f"Total slides: {len(prs.slides)}")

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate final Regulith AI presentation for panel review."""
+"""Generate final KAVACH AI presentation for panel review."""
 
 from pptx import Presentation
 from pptx.util import Inches, Pt
@@ -55,9 +55,9 @@ def multi(slide, l, t, w, h, lines, size=15, color=GRAY):
 
 # SLIDE 1: Title
 s = prs.slides.add_slide(prs.slide_layouts[6]); bg(s); bar(s)
-txt(s, Inches(1.5), Inches(2.0), Inches(10), Inches(1), "REGULITH AI", 54, True, WHITE, PP_ALIGN.CENTER)
-txt(s, Inches(1.5), Inches(3.3), Inches(10), Inches(0.7), "Delivery Compliance Intelligence Platform", 26, False, LIGHT_PURPLE, PP_ALIGN.CENTER)
-txt(s, Inches(1.5), Inches(4.3), Inches(10), Inches(0.5), '"One commit. Six compliance domains. Zero surprises."', 18, False, DIM, PP_ALIGN.CENTER)
+txt(s, Inches(1.5), Inches(2.0), Inches(10), Inches(1), "KAVACH AI", 54, True, WHITE, PP_ALIGN.CENTER)
+txt(s, Inches(1.5), Inches(3.3), Inches(10), Inches(0.7), "Knowledge-driven Audit, Vulnerability Analysis & Compliance Health", 26, False, LIGHT_PURPLE, PP_ALIGN.CENTER)
+txt(s, Inches(1.5), Inches(4.3), Inches(10), Inches(0.5), '"One commit. Six domains. Zero breaches."', 18, False, DIM, PP_ALIGN.CENTER)
 txt(s, Inches(1.5), Inches(5.8), Inches(10), Inches(0.4), "Agentic Arena 2026 | Autonomous Security, Compliance & Audit Intelligence", 13, False, DIM, PP_ALIGN.CENTER)
 
 # SLIDE 2: Problem Statement
@@ -86,7 +86,7 @@ txt(s, Inches(0.8), Inches(6.7), Inches(11), Inches(0.4), "This is not hypotheti
 
 # SLIDE 3: Solution
 s = prs.slides.add_slide(prs.slide_layouts[6]); bg(s); bar(s)
-txt(s, Inches(0.8), Inches(0.3), Inches(10), Inches(0.6), "SOLUTION: REGULITH AI", 30, True, WHITE)
+txt(s, Inches(0.8), Inches(0.3), Inches(10), Inches(0.6), "SOLUTION: KAVACH AI", 30, True, WHITE)
 txt(s, Inches(0.8), Inches(0.9), Inches(11), Inches(0.5), "An autonomous agent that sits on the ecosystem, monitors every change, and triggers all compliance checks", 15, False, DIM)
 multi(s, Inches(0.8), Inches(1.5), Inches(11.5), Inches(5.5), [
     "WHAT IT IS:",
@@ -316,7 +316,7 @@ competitors = [
 y = 1.4
 txt(s, Inches(0.8), Inches(y), Inches(3.5), Inches(0.3), "Product", 11, True, PURPLE)
 txt(s, Inches(4.3), Inches(y), Inches(3.5), Inches(0.3), "What It Does", 11, True, PURPLE)
-txt(s, Inches(7.8), Inches(y), Inches(5), Inches(0.3), "What It Misses (Regulith fills this)", 11, True, PURPLE)
+txt(s, Inches(7.8), Inches(y), Inches(5), Inches(0.3), "What It Misses (KAVACH fills this)", 11, True, PURPLE)
 y += 0.4
 
 for prod, does, misses in competitors:
@@ -401,12 +401,12 @@ multi(s, Inches(1.5), Inches(2.5), Inches(10), Inches(3.5), [
     "      Live demo available. Git commit → agents react → evidence generated in <1 second.",
 ], 14, GRAY, )
 
-txt(s, Inches(1.5), Inches(6.2), Inches(10), Inches(0.5), "REGULITH AI — \"One commit. Six compliance domains. Zero surprises.\"", 18, True, PURPLE, PP_ALIGN.CENTER)
+txt(s, Inches(1.5), Inches(6.2), Inches(10), Inches(0.5), "KAVACH AI — \"One commit. Six domains. Zero breaches.\"", 18, True, PURPLE, PP_ALIGN.CENTER)
 
 
 # SAVE
 import os
-path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Regulith_AI_Final_Presentation.pptx")
+path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "KAVACH_AI_Final_Presentation.pptx")
 prs.save(path)
 print(f"Saved: {path}")
 print(f"Slides: {len(prs.slides)}")

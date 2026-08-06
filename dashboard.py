@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Regulith AI — Executive Dashboard (Live Code Scanning)
+KAVACH AI — Executive Dashboard (Live Code Scanning)
 Watches Java files in watch-folder/ and updates dashboard in real-time.
 No restart needed — just edit a .java file and the dashboard reflects it.
 
@@ -226,7 +226,7 @@ def _build_html(metrics, twin_cards, chain_steps, gate, gate_items_html,
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Regulith AI</title>
+<title>KAVACH AI</title>
 <meta name="auto-refresh" content="3">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -420,8 +420,8 @@ body{{
             <circle cx="24" cy="24" r="10" fill="none" stroke="url(#g1)" stroke-width="1" opacity="0.3" stroke-dasharray="3 3"/>
         </svg>
         <div class="brand-text">
-            <div class="brand-name">Regulith AI</div>
-            <div class="brand-sub">Compliance Intelligence Platform</div>
+            <div class="brand-name">KAVACH AI</div>
+            <div class="brand-sub">Knowledge-driven Audit, Vulnerability Analysis & Compliance Health</div>
         </div>
     </div>
     <div class="nav">
@@ -518,7 +518,7 @@ body{{
             <div class="val-item"><div class="val-num">{values['analysis_time']}</div><div class="val-lbl">Per Analysis</div></div>
         </div>
         <div style="margin-top:16px;text-align:center;font-size:9px;color:#6b7f99;font-style:italic;">
-            "One commit. {values['domains_per_commit']} compliance domains. Zero surprises."
+            "One commit. {values['domains_per_commit']} domains. Zero breaches."
             <div style="margin-top:6px;font-style:normal;font-size:8px;color:#8a9bb4;letter-spacing:0.5px;">
                 SOX · PCI-DSS · TILA/RESPA · ECOA/Fair Lending · GDPR/CCPA · MSA/SLA
             </div>
@@ -804,7 +804,7 @@ def main():
 
     print(f"""
     ╔══════════════════════════════════════════════════════════════════╗
-    ║   Regulith AI — Executive Dashboard                            ║
+    ║   KAVACH AI — Executive Dashboard                              ║
     ║   http://localhost:{port}                                       ║
     ╠══════════════════════════════════════════════════════════════════╣
     ║                                                                ║

@@ -17,7 +17,7 @@ import java.util.Random;
  *   mortgage system, this means borrowers could receive wrong rates —
  *   a TILA violation AND a security vulnerability.
  * 
- * WHAT REGULITH AI DETECTS:
+ * WHAT KAVACH AI DETECTS:
  *   → SAST finding: Race condition (HIGH severity)
  *   → Non-thread-safe shared mutable state
  *   → Financial calculation affected by concurrency bug

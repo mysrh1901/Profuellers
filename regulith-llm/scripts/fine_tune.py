@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Regulith LLM — Fine-Tuning Script (QLoRA)
+KAVACH LLM — Fine-Tuning Script (QLoRA)
 ==========================================
 
 Fine-tunes Llama 3.2 on Hexaware's compliance training data using QLoRA
@@ -70,7 +70,7 @@ def format_training_example(item: dict) -> str:
     """Format a single training example into the chat template."""
     return f"""<|begin_of_text|><|start_header_id|>system<|end_header_id|>
 
-You are Regulith AI, a compliance intelligence agent specialized in mortgage/financial services compliance. You analyze code and identify violations across SOX, Security, TILA, ECOA, PCI-DSS, and contractual domains. Always reference specific regulation sections.<|eot_id|><|start_header_id|>user<|end_header_id|>
+You are KAVACH AI, a compliance intelligence agent specialized in mortgage/financial services compliance. You analyze code and identify violations across SOX, Security, TILA, ECOA, PCI-DSS, and contractual domains. Always reference specific regulation sections.<|eot_id|><|start_header_id|>user<|end_header_id|>
 
 {item['instruction']}
 
@@ -93,7 +93,7 @@ def fine_tune(args):
     from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 
     print("\n╔══════════════════════════════════════════════════════════╗")
-    print("║  REGULITH LLM — Fine-Tuning (QLoRA)                     ║")
+    print("║  KAVACH LLM — Fine-Tuning (QLoRA)                        ║")
     print("╚══════════════════════════════════════════════════════════╝\n")
 
     # ── Step 1: Load base model in 4-bit quantization ────────────────
@@ -191,7 +191,7 @@ def fine_tune(args):
 ╔══════════════════════════════════════════════════════════╗
 ║  ✓ TRAINING COMPLETE                                     ║
 ╠══════════════════════════════════════════════════════════╣
-║  Model: regulith-compliance-v1                           ║
+║  Model: kavach-compliance-v1                             ║
 ║  Base: {args.base_model:<45}║
 ║  Epochs: {args.epochs}                                             ║
 ║  LoRA Rank: {args.lora_r}                                           ║
@@ -199,14 +199,14 @@ def fine_tune(args):
 ║                                                          ║
 ║  Next steps:                                             ║
 ║    1. python export_to_ollama.py                         ║
-║    2. ollama create regulith-compliance-v1 -f Modelfile  ║
-║    3. ollama run regulith-compliance-v1                  ║
+║    2. ollama create kavach-compliance-v1 -f Modelfile    ║
+║    3. ollama run kavach-compliance-v1                    ║
 ╚══════════════════════════════════════════════════════════╝
 """)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Fine-tune Regulith Compliance LLM")
+    parser = argparse.ArgumentParser(description="Fine-tune KAVACH Compliance LLM")
     parser.add_argument("--base_model", default="meta-llama/Llama-3.2-1B",
                         help="Base model to fine-tune")
     parser.add_argument("--training_data", default="../training-data/compliance_training.jsonl",

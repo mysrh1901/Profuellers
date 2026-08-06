@@ -17,7 +17,7 @@ package com.mortgage.compliance.fairlending;
  *   gender/marital status) as decision factors — creating disparate
  *   impact on protected groups.
  * 
- * WHAT REGULITH AI DETECTS:
+ * WHAT KAVACH AI DETECTS:
  *   → Eligibility logic modified (touches borrower PII)
  *   → Protected characteristic proxies used in decision logic
  *   → No disparate impact testing performed

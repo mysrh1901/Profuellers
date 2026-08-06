@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Export fine-tuned Regulith LLM to Ollama format for local deployment.
+Export fine-tuned KAVACH LLM to Ollama format for local deployment.
 
 After fine-tuning, this script:
 1. Merges LoRA adapters back into the base model
@@ -9,7 +9,7 @@ After fine-tuning, this script:
 4. Registers the model with Ollama
 
 Usage:
-  python export_to_ollama.py --model_path ../model-output --model_name regulith-compliance-v1
+  python export_to_ollama.py --model_path ../model-output --model_name kavach-compliance-v1
 """
 
 import argparse
@@ -61,14 +61,14 @@ def convert_to_gguf(model_path: str, output_file: str):
 
 def create_modelfile(model_name: str, gguf_path: str, output_dir: str):
     """Create Ollama Modelfile for the custom model."""
-    modelfile_content = f"""# Regulith Compliance LLM — Custom Fine-Tuned Model
+    modelfile_content = f"""# KAVACH Compliance LLM — Custom Fine-Tuned Model
 # Hexaware Profuellers Team — Agentic Arena 2026
 
 FROM {gguf_path}
 
 # System prompt baked into the model
 SYSTEM \"\"\"
-You are Regulith AI, a compliance intelligence agent specialized in mortgage/financial services compliance.
+You are KAVACH AI, a compliance intelligence agent specialized in mortgage/financial services compliance.
 
 Your capabilities:
 1. Analyze source code and identify compliance violations
@@ -117,19 +117,19 @@ TEMPLATE \"\"\"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Export Regulith LLM to Ollama")
+    parser = argparse.ArgumentParser(description="Export KAVACH LLM to Ollama")
     parser.add_argument("--model_path", default="../model-output",
                         help="Path to fine-tuned model (LoRA adapters)")
     parser.add_argument("--base_model", default="meta-llama/Llama-3.2-1B",
                         help="Base model used during fine-tuning")
-    parser.add_argument("--model_name", default="regulith-compliance-v1",
+    parser.add_argument("--model_name", default="kavach-compliance-v1",
                         help="Name for the Ollama model")
     parser.add_argument("--output_dir", default="../",
                         help="Output directory for Modelfile and GGUF")
     args = parser.parse_args()
 
     print("\n╔══════════════════════════════════════════════════════════╗")
-    print("║  REGULITH LLM — Export to Ollama                         ║")
+    print("║  KAVACH LLM — Export to Ollama                            ║")
     print("╚══════════════════════════════════════════════════════════╝\n")
 
     merged_path = os.path.join(args.model_path, "merged")

@@ -125,10 +125,11 @@ class ComplianceTwinOrchestrator:
         print("""
 ╔══════════════════════════════════════════════════════════════════════════╗
 ║                                                                          ║
-║          🛡️  REGULITH AI                                                 ║
-║          Delivery Compliance Intelligence Platform                        ║
+║          🛡️  KAVACH AI                                                   ║
+║          Knowledge-driven Audit, Vulnerability Analysis &                ║
+║          Compliance Health                                               ║
 ║                                                                          ║
-║          "One commit. Six compliance domains. Zero surprises."           ║
+║          "One commit. Six domains. Zero breaches."                       ║
 ║                                                                          ║
 ║          For: Hexaware Agentic Arena Competition 2026                    ║
 ║          Category: Autonomous Security, Compliance & Audit Intelligence  ║
@@ -257,7 +258,7 @@ class ComplianceTwinOrchestrator:
   • UI: Real-time dashboard with compliance scores, SLA timers, agent feed
 
 {separator}
-  💡 REGULITH AI — "One commit. Six compliance domains. Zero surprises."
+  💡 KAVACH AI — "One commit. Six domains. Zero breaches."
       It's the compliance BRAIN for IT services companies.
 {separator}
 """)

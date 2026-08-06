@@ -1,7 +1,7 @@
-# 🛡️ REGULITH AI
-## Delivery Compliance Intelligence Platform
+# 🛡️ KAVACH AI
+## Knowledge-driven Audit, Vulnerability Analysis & Compliance Health
 
-### *"The Compliance Brain for IT Services Companies"*
+### *"One commit. Six domains. Zero breaches."*
 
 ---
 
@@ -15,13 +15,13 @@
 
 # 1. PRODUCT NAME & IDENTITY
 
-## **REGULITH AI**
+## **KAVACH AI**
 
-**Regulith** = *Regula* (Latin: Rule/Regulation) + *Lith* (Greek: Foundation/Stone)
+**KAVACH** = *Knowledge-driven Audit, Vulnerability Analysis & Compliance Health*
 
 > "The foundational intelligence layer for regulatory and compliance governance."
 
-**Tagline:** *"One commit. Six compliance domains. Zero surprises."*
+**Tagline:** *"One commit. Six domains. Zero breaches."*
 
 **Category:** Agentic Compliance Intelligence Platform (NEW CATEGORY — does not exist today)
 
@@ -35,7 +35,7 @@
 
 > Hexaware delivers software for 100+ clients in regulated industries — mortgage, banking, insurance. Today, a single code change can silently violate SOX, SAST security standards, TILA regulations, client contractual SLAs, and fair lending rules simultaneously. These violations are discovered months later during EY/Deloitte audits — costing $50K-$500K per incident.
 >
-> **Regulith AI** is an agentic platform that creates a real-time compliance digital twin for every client engagement. It reasons across SOX, security, regulatory, and contractual domains simultaneously — predicting compliance impact BEFORE code ships, not months later during audits.
+> **KAVACH AI** is an agentic platform that creates a real-time compliance digital twin for every client engagement. It reasons across SOX, security, regulatory, and contractual domains simultaneously — predicting compliance impact BEFORE code ships, not months later during audits.
 >
 > No product in the market does this. Not Vanta. Not ServiceNow. Not Panther. Not Checkmarx.
 
@@ -43,7 +43,7 @@
 
 ## What It Is (One Paragraph)
 
-Regulith AI is a **multi-agent AI platform** that maintains a live "compliance digital twin" for each client engagement. When any event occurs — a code commit, an infrastructure change, a new regulation, a personnel change — Regulith propagates the compliance impact across ALL domains simultaneously (SOX, Security, Regulatory, Contractual, Fair Lending, Privacy, Audit). It generates autonomous audit evidence, detects silent compliance drift, and parses client contracts into machine-readable obligations. It turns Hexaware from a company that gets audited into a company that is **continuously audit-ready by design**.
+KAVACH AI is a **multi-agent AI platform** that maintains a live "compliance digital twin" for each client engagement. When any event occurs — a code commit, an infrastructure change, a new regulation, a personnel change — KAVACH propagates the compliance impact across ALL domains simultaneously (SOX, Security, Regulatory, Contractual, Fair Lending, Privacy, Audit). It generates autonomous audit evidence, detects silent compliance drift, and parses client contracts into machine-readable obligations. It turns Hexaware from a company that gets audited into a company that is **continuously audit-ready by design**.
 
 ---
 
@@ -118,17 +118,17 @@ Result: Material weakness finding. Client penalty. Remediation costs.
 
 ---
 
-# 4. SOLUTION: REGULITH AI
+# 4. SOLUTION: KAVACH AI
 
 ## How It Works
 
 ### 4.1 The Core Innovation: Compliance Digital Twin
 
-For EACH client engagement, Regulith maintains a **live digital twin** — a real-time model of that engagement's compliance state across all domains:
+For EACH client engagement, KAVACH maintains a **live digital twin** — a real-time model of that engagement's compliance state across all domains:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                    REGULITH AI — Architecture                         │
+│                    KAVACH AI — Architecture                           │
 ├─────────────────────────────────────────────────────────────────────┤
 │                                                                       │
 │   ┌─────────────────────────────────────────────────────────────┐   │
@@ -212,7 +212,7 @@ EVENT: Developer modifies ARM rate calculation logic
 
 ### 4.3 The Compliance Simulation (Pre-Deployment Gate)
 
-Before ANY deployment to production, Regulith runs a **compliance simulation**:
+Before ANY deployment to production, KAVACH runs a **compliance simulation**:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -238,7 +238,7 @@ Before ANY deployment to production, Regulith runs a **compliance simulation**:
 
 # 5. WHY THIS IS UNIQUE (Market Differentiation)
 
-## 5.1 What Exists vs. What Regulith Does
+## 5.1 What Exists vs. What KAVACH Does
 
 | Existing Solutions | What They Do | What They DON'T Do |
 |-------------------|--------------|-------------------|
@@ -266,7 +266,7 @@ Existing categories:
 - "AppSec" = Find vulnerabilities (Snyk, Checkmarx)
 - "SOAR" = Automate incident response (Splunk SOAR)
 
-**Regulith creates a NEW category: "Delivery Compliance Intelligence"**
+**KAVACH creates a NEW category: "Delivery Compliance Intelligence"**
 - Understands the SERVICES COMPANY context (multi-client, multi-framework)
 - REASONS across domains (not just aggregates)
 - PREDICTS impact (not just detects)
@@ -325,7 +325,7 @@ ROI: 175% in Year 1
 
 ## 7.1 Aligns with Agentverse™
 
-Regulith AI would be a **specialized agent cluster** within Hexaware's Agentverse™ platform:
+KAVACH AI would be a **specialized agent cluster** within Hexaware's Agentverse™ platform:
 - Uses the same orchestration infrastructure
 - Leverages existing governance capabilities (RBAC, audit trails)
 - Extends the "600+ agents" story with high-value, domain-specific agents
@@ -338,17 +338,17 @@ Hexaware already serves:
 - **Financial services** (banking, insurance, capital markets)
 - **Clients with EY/Deloitte audits** (already working within audit frameworks)
 
-Regulith isn't a new market — it's **selling more to existing clients**.
+KAVACH isn't a new market — it's **selling more to existing clients**.
 
 ## 7.3 Builds on Hexaware's ISG Leadership
 
-- ISG Leader in ServiceNow Ecosystem (Regulith integrates with ServiceNow)
-- ISG Leader in GenAI Services (Regulith is agentic AI applied to compliance)
+- ISG Leader in ServiceNow Ecosystem (KAVACH integrates with ServiceNow)
+- ISG Leader in GenAI Services (KAVACH is agentic AI applied to compliance)
 - ISG Leader in Manufacturing Services (compliance is universal across industries)
 
 ## 7.4 Carlyle / IPO Value
 
-Post-IPO, Regulith represents:
+Post-IPO, KAVACH represents:
 - **Platform revenue** (high-margin, recurring)
 - **IP differentiation** (defensible, patentable)
 - **Category creation** (analysts love category-creating platforms)
@@ -458,9 +458,9 @@ Post-IPO, Regulith represents:
 
 # 12. SUMMARY
 
-## Why Regulith AI Wins
+## Why KAVACH AI Wins
 
-| Criteria | Regulith AI |
+| Criteria | KAVACH AI |
 |----------|-------------|
 | **Unique?** | YES — No product does per-engagement compliance intelligence with cross-domain causal reasoning |
 | **Value to Hexaware?** | YES — Saves $3.85M/year, creates new revenue, differentiates from competitors |
@@ -475,13 +475,13 @@ Post-IPO, Regulith represents:
 
 > *"Every IT services company has Checkmarx. Every one has ServiceNow. Every one has Wiz. None of them have a brain that connects all these tools, reasons across compliance domains, and tells you — before you deploy — that this one code commit will violate three different clients' contracts in three different ways.*
 >
-> *That brain is Regulith AI. And whoever builds it first wins the regulated services market."*
+> *That brain is KAVACH AI. And whoever builds it first wins the regulated services market."*
 
 ---
 
-**Product:** Regulith AI
+**Product:** KAVACH AI
 **Category:** Delivery Compliance Intelligence (NEW)
-**Tagline:** *"One commit. Six compliance domains. Zero surprises."*
+**Tagline:** *"One commit. Six domains. Zero breaches."*
 **Team:** Hexaware Profuellers
 **Competition:** Agentic Arena 2026
 

@@ -1,4 +1,4 @@
-# Regulith Agents — Reusable AI Agent Library
+# KAVACH Agents — Reusable AI Agent Library
 
 ## What This Is
 

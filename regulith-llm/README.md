@@ -1,4 +1,4 @@
-# 🧠 Regulith LLM — Custom Compliance Intelligence Model
+# 🧠 KAVACH LLM — Custom Compliance Intelligence Model
 
 ## What Is This?
 
@@ -8,7 +8,7 @@ This is Hexaware's **own fine-tuned LLM** for compliance reasoning. It's not a w
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│              REGULITH LLM PIPELINE                       │
+│              KAVACH LLM PIPELINE                        │
 ├─────────────────────────────────────────────────────────┤
 │                                                         │
 │   Base Model: Meta Llama 3.2 (open-source, MIT)         │
@@ -26,7 +26,7 @@ This is Hexaware's **own fine-tuned LLM** for compliance reasoning. It's not a w
 │        │  └── 50+ audit narrative examples              │
 │        │                                                │
 │        ▼                                                │
-│   Output: regulith-compliance-v1 (our model weights)    │
+│   Output: kavach-compliance-v1 (our model weights)      │
 │        │                                                │
 │        ▼                                                │
 │   Deployment: Ollama / vLLM on our infrastructure       │
@@ -37,7 +37,7 @@ This is Hexaware's **own fine-tuned LLM** for compliance reasoning. It's not a w
 
 ## Why Fine-Tune Instead of Using GPT/Claude Directly?
 
-| Concern | GPT-4 / Claude API | Regulith LLM (Fine-Tuned) |
+| Concern | GPT-4 / Claude API | KAVACH LLM (Fine-Tuned) |
 |---------|-------------------|---------------------------|
 | Data Privacy | Client code sent to OpenAI/Anthropic | Runs locally, data never leaves |
 | Cost | $0.03-0.06 per call × 1000s of events/day | One-time training, free inference |
@@ -76,11 +76,11 @@ python scripts/fine_tune.py \
 # 3. Export to Ollama format
 python scripts/export_to_ollama.py \
   --model_path ./model-output \
-  --model_name regulith-compliance-v1
+  --model_name kavach-compliance-v1
 
 # 4. Run with Ollama
-ollama create regulith-compliance-v1 -f Modelfile
-ollama run regulith-compliance-v1
+ollama create kavach-compliance-v1 -f Modelfile
+ollama run kavach-compliance-v1
 ```
 
 ## Model Capabilities (What It's Trained To Do)

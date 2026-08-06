@@ -2,10 +2,11 @@
 """
 ╔══════════════════════════════════════════════════════════════════════════╗
 ║                                                                          ║
-║   🛡️ COMPLIANCE TWIN                                                     ║
-║   Delivery Compliance Digital Twin Platform                              ║
+║   🛡️ KAVACH AI                                                           ║
+║   Knowledge-driven Audit, Vulnerability Analysis & Compliance Health     ║
 ║                                                                          ║
-║   Autonomous Security, Compliance & Audit Intelligence                   ║
+║   "One commit. Six domains. Zero breaches."                              ║
+║                                                                          ║
 ║   For: Hexaware Agentic Arena Competition 2026                          ║
 ║                                                                          ║
 ╚══════════════════════════════════════════════════════════════════════════╝
@@ -54,7 +55,7 @@ def run_quick_demo(orchestrator):
 
     print("""
 ╔══════════════════════════════════════════════════════════════════════════╗
-║   🛡️ COMPLIANCE TWIN — Quick Demo                                       ║
+║   🛡️ KAVACH AI — Quick Demo                                             ║
 ╚══════════════════════════════════════════════════════════════════════════╝
 """)
     from simulators.mock_data import get_mock_clients, get_mock_code_change
@@ -80,7 +81,7 @@ def run_scenario_menu(orchestrator):
 
     print("""
 ╔══════════════════════════════════════════════════════════════════════════╗
-║   🛡️ COMPLIANCE TWIN — Scenario Selection                               ║
+║   🛡️ KAVACH AI — Scenario Selection                                     ║
 ╠══════════════════════════════════════════════════════════════════════════╣
 ║                                                                          ║
 ║   [1] Build Digital Twins for all client engagements                    ║

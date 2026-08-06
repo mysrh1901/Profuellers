@@ -16,7 +16,7 @@ import java.util.*;
 /**
  * CHAIN REACTOR AGENT
  * ====================
- * The core intelligence of Regulith AI.
+ * The core intelligence of KAVACH AI.
  * 
  * HOW IT WORKS:
  * 1. Listens to ActiveMQ queue for compliance events

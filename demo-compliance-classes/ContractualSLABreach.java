@@ -17,7 +17,7 @@ package com.mortgage.compliance.contractual;
  *   If not fixed within 48h, Hexaware faces $50K penalty AND the
  *   client can terminate the $4.2M/year engagement.
  * 
- * WHAT REGULITH AI DETECTS:
+ * WHAT KAVACH AI DETECTS:
  *   → Critical vulnerability (SQL injection) — SLA clock starts
  *   → MSA §7.2 48-hour remediation window activated
  *   → $50,000 penalty exposure per incident

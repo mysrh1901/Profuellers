@@ -104,7 +104,7 @@ public class DetailController {
         long calculatedDebtK = (critCount * 100) + (highCount * 25) + soxRisk + 50 + (blockCount * 25);
 
         StringBuilder html = new StringBuilder();
-        html.append("<!DOCTYPE html><html><head><title>Regulith AI - Detail</title>");
+        html.append("<!DOCTYPE html><html><head><title>KAVACH AI - Detail</title>");
         html.append("<style>");
         html.append("*{margin:0;padding:0;box-sizing:border-box}");
         html.append("body{font-family:-apple-system,sans-serif;background:#0a0e1a;color:#e0e0e0}");

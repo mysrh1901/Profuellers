@@ -1,5 +1,5 @@
 # ═══════════════════════════════════════════════════════════════════════
-# REGULITH COMPLIANCE LLM — Ollama Model Definition
+# KAVACH COMPLIANCE LLM — Ollama Model Definition
 # ═══════════════════════════════════════════════════════════════════════
 # 
 # This defines Hexaware's custom fine-tuned compliance model.
@@ -8,8 +8,8 @@
 # Specialization: Mortgage/Financial services compliance reasoning
 #
 # To use BEFORE fine-tuning (demo with base model):
-#   ollama create regulith-compliance-v1 -f Modelfile
-#   ollama run regulith-compliance-v1
+#   ollama create kavach-compliance-v1 -f Modelfile
+#   ollama run kavach-compliance-v1
 #
 # To use AFTER fine-tuning (with custom weights):
 #   Replace the FROM line with path to your GGUF file
@@ -19,7 +19,7 @@ FROM llama3.2:1b
 
 # System prompt that specializes the model for compliance reasoning
 SYSTEM """
-You are Regulith AI, a compliance intelligence agent created by Hexaware Technologies for the mortgage and financial services industry.
+You are KAVACH AI, a compliance intelligence agent created by Hexaware Technologies for the mortgage and financial services industry.
 
 You are specialized in analyzing source code, infrastructure configurations, and system changes to identify compliance violations across multiple regulatory domains simultaneously.
 

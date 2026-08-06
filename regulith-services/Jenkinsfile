@@ -1,5 +1,5 @@
 /**
- * REGULITH AI — Selective Deployment Pipeline
+ * KAVACH AI — Selective Deployment Pipeline
  * =============================================
  * Monorepo with 3 independent microservices.
  * Pipeline allows multi-select: choose which service(s) to build and deploy.
@@ -9,7 +9,7 @@
  *   - Each service builds independently (parallel)
  *   - Each service deploys independently to its own target
  *   - Shared pipeline, independent artifacts
- *   - Compliance gate: Regulith agent checks before deploy (eats its own dogfood)
+ *   - Compliance gate: KAVACH agent checks before deploy (eats its own dogfood)
  */
 
 pipeline {
@@ -30,7 +30,7 @@ pipeline {
 
         // Compliance gate toggle
         booleanParam(name: 'RUN_COMPLIANCE_CHECK', defaultValue: true,
-            description: 'Run Regulith compliance check before deployment')
+            description: 'Run KAVACH compliance check before deployment')
     }
 
     environment {
@@ -103,15 +103,15 @@ pipeline {
             }
         }
 
-        stage('Compliance Gate (Regulith)') {
+        stage('Compliance Gate (KAVACH)') {
             when { expression { params.RUN_COMPLIANCE_CHECK } }
             steps {
                 script {
-                    echo "Running Regulith compliance check..."
-                    echo "Sending deployment event to Regulith agent..."
+                    echo "Running KAVACH compliance check..."
+                    echo "Sending deployment event to KAVACH agent..."
 
-                    // This is where Regulith checks its own deployments
-                    // In production: calls Regulith API to validate compliance
+                    // This is where KAVACH checks its own deployments
+                    // In production: calls KAVACH API to validate compliance
                     def services = []
                     if (params.DEPLOY_ALPHA) services.add('alpha-service')
                     if (params.DEPLOY_BETA) services.add('beta-service')
@@ -121,10 +121,10 @@ pipeline {
                     echo "Environment: ${params.ENVIRONMENT}"
 
                     // Simulate compliance check result
-                    // In production: POST to http://regulith:9090/api/events
+                    // In production: POST to http://kavach:9090/api/events
                     echo """
                     ╔══════════════════════════════════════════════════╗
-                    ║  REGULITH COMPLIANCE GATE                        ║
+                    ║  KAVACH COMPLIANCE GATE                          ║
                     ╠══════════════════════════════════════════════════╣
                     ║  Services: ${services.join(', ')}
                     ║  Environment: ${params.ENVIRONMENT}
@@ -190,10 +190,10 @@ pipeline {
     post {
         success {
             echo "Selective deployment completed successfully."
-            echo "Regulith audit narrative stored for this deployment."
+            echo "KAVACH audit narrative stored for this deployment."
         }
         failure {
-            echo "Deployment failed. Regulith compliance gate may have blocked it."
+            echo "Deployment failed. KAVACH compliance gate may have blocked it."
         }
     }
 }

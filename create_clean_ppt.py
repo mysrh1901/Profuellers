@@ -71,9 +71,9 @@ def arrow(slide, l, t, w, h):
 # ===================== SLIDE 1: Title =====================
 s = prs.slides.add_slide(prs.slide_layouts[6]); bg(s)
 box(s, Inches(0), Inches(0), Inches(13.333), Inches(0.12), BLUE)
-txt(s, Inches(2), Inches(2.5), Inches(9), Inches(1), "Regulith AI", 52, True, BLACK, PP_ALIGN.CENTER)
-txt(s, Inches(2), Inches(3.7), Inches(9), Inches(0.6), "Delivery Compliance Intelligence Platform", 24, False, GRAY, PP_ALIGN.CENTER)
-txt(s, Inches(2), Inches(4.8), Inches(9), Inches(0.5), "One commit. Six compliance domains. Zero surprises.", 18, False, BLUE, PP_ALIGN.CENTER)
+txt(s, Inches(2), Inches(2.5), Inches(9), Inches(1), "KAVACH AI", 52, True, BLACK, PP_ALIGN.CENTER)
+txt(s, Inches(2), Inches(3.7), Inches(9), Inches(0.6), "Knowledge-driven Audit, Vulnerability Analysis & Compliance Health", 24, False, GRAY, PP_ALIGN.CENTER)
+txt(s, Inches(2), Inches(4.8), Inches(9), Inches(0.5), "One commit. Six domains. Zero breaches.", 18, False, BLUE, PP_ALIGN.CENTER)
 txt(s, Inches(2), Inches(6.2), Inches(9), Inches(0.4), "Agentic Arena 2026", 14, False, GRAY, PP_ALIGN.CENTER)
 
 # ===================== SLIDE 2: Problem =====================
@@ -347,8 +347,8 @@ multi(s, Inches(0.8), Inches(3.2), Inches(11.5), Inches(3.5), [
 s = prs.slides.add_slide(prs.slide_layouts[6]); bg(s)
 box(s, Inches(0), Inches(0), Inches(13.333), Inches(0.12), BLUE)
 
-txt(s, Inches(2), Inches(2.2), Inches(9), Inches(0.8), "Regulith AI", 48, True, BLACK, PP_ALIGN.CENTER)
-txt(s, Inches(2), Inches(3.2), Inches(9), Inches(0.6), "Delivery Compliance Intelligence Platform", 22, False, GRAY, PP_ALIGN.CENTER)
+txt(s, Inches(2), Inches(2.2), Inches(9), Inches(0.8), "KAVACH AI", 48, True, BLACK, PP_ALIGN.CENTER)
+txt(s, Inches(2), Inches(3.2), Inches(9), Inches(0.6), "Knowledge-driven Audit, Vulnerability Analysis & Compliance Health", 22, False, GRAY, PP_ALIGN.CENTER)
 
 box(s, Inches(2.5), Inches(4.2), Inches(8.3), Inches(1.5), LIGHT_BLUE, BLUE)
 multi(s, Inches(2.8), Inches(4.4), Inches(7.8), Inches(1.3), [
@@ -359,12 +359,12 @@ multi(s, Inches(2.8), Inches(4.4), Inches(7.8), Inches(1.3), [
 ], 14, BLACK)
 
 txt(s, Inches(2), Inches(6.0), Inches(9), Inches(0.5), "Working prototype available for live demo.", 15, True, GREEN, PP_ALIGN.CENTER)
-txt(s, Inches(2), Inches(6.5), Inches(9), Inches(0.4), "One commit. Six compliance domains. Zero surprises.", 16, False, BLUE, PP_ALIGN.CENTER)
+txt(s, Inches(2), Inches(6.5), Inches(9), Inches(0.4), "One commit. Six domains. Zero breaches.", 16, False, BLUE, PP_ALIGN.CENTER)
 
 
 # ===================== SAVE =====================
 import os
-path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Regulith_AI_Clean.pptx")
+path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "KAVACH_AI_Clean.pptx")
 prs.save(path)
 print(f"Saved: {path}")
 print(f"Slides: {len(prs.slides)}")

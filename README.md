@@ -1,8 +1,8 @@
-# 🛡️ Regulith AI — Delivery Compliance Intelligence Platform
+# 🛡️ KAVACH AI — Knowledge-driven Audit, Vulnerability Analysis & Compliance Health
 
-> **"One commit. Six compliance domains. Zero surprises."**
+> **"One commit. Six domains. Zero breaches."**
 
-Regulith AI is an **Agentic AI platform** that creates real-time compliance digital twins for every client engagement. It reasons across Security, SOX, Regulatory, Contractual, Privacy, and Fair Lending domains — predicting compliance impact before code ships.
+KAVACH AI is an **Agentic AI platform** that creates real-time compliance digital twins for every client engagement. It reasons across Security, SOX, Regulatory, Contractual, Privacy, and Fair Lending domains — predicting compliance impact before code ships.
 
 **Team:** Hexaware Profuellers  
 **Competition:** Agentic Arena 2026  
@@ -14,7 +14,7 @@ Regulith AI is an **Agentic AI platform** that creates real-time compliance digi
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         REGULITH AI PLATFORM                                │
+│                         KAVACH AI PLATFORM                                  │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
 │   ┌──────────────────────────────────────────────────────────────────┐     │
@@ -357,7 +357,7 @@ When `use-llm: false`, the platform uses rule-based fallback logic (no AWS accou
 
 ## 💡 What Makes This Unique
 
-| Existing Tools | Limitation | Regulith AI Difference |
+| Existing Tools | Limitation | KAVACH AI Difference |
 |----------------|-----------|----------------------|
 | Vanta / Drata | Single-company compliance | **Per-engagement** compliance twin |
 | ServiceNow | Aggregation without reasoning | **Causal chain** across 6 domains |

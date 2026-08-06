@@ -127,7 +127,7 @@ def _fire_event_to_backend(file_path: str, findings: List[AIFinding]):
         payload = json.dumps({
             "engagementId": "ENG-001",
             "description": f"[AI Scanner] {os.path.basename(file_path)}: {len(findings)} compliance findings",
-            "author": "ai-scanner@regulith.ai",
+            "author": "ai-scanner@kavach.ai",
             "commitId": f"scan-{int(time.time())}",
             "touchesFinancialLogic": has_financial,
             "touchesPii": has_pii,

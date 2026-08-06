@@ -6,7 +6,7 @@ import org.springframework.jms.annotation.EnableJms;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * Regulith AI - Delivery Compliance Intelligence Platform
+ * KAVACH AI - Knowledge-driven Audit, Vulnerability Analysis & Compliance Health
  * 
  * Spring Boot application with embedded ActiveMQ message broker
  * and H2 in-memory database. Zero external dependencies needed.
@@ -23,8 +23,9 @@ public class RegulithApplication {
         System.out.println("""
             
             =====================================================
-              REGULITH AI - Delivery Compliance Intelligence
-              "One commit. Six compliance domains. Zero surprises."
+              KAVACH AI - Knowledge-driven Audit, Vulnerability
+              Analysis & Compliance Health
+              "One commit. Six domains. Zero breaches."
             =====================================================
               Server starting on http://localhost:9090
               H2 Console: http://localhost:9090/h2-console

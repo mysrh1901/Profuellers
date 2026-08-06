@@ -79,7 +79,7 @@ public class HomeController {
         }
         // Build the page using StringBuilder (avoids String.format issues with % in content)
         StringBuilder page = new StringBuilder();
-        page.append("<!DOCTYPE html><html><head><title>Regulith AI</title><style>");
+        page.append("<!DOCTYPE html><html><head><title>KAVACH AI</title><style>");
         page.append("*{margin:0;padding:0;box-sizing:border-box}");
         page.append("body{font-family:-apple-system,sans-serif;background:#0a0e1a;color:#e0e0e0}");
         page.append(".header{background:linear-gradient(135deg,#1a1f36,#2d1b69);padding:25px 40px;border-bottom:3px solid #6c63ff}");
@@ -109,7 +109,7 @@ public class HomeController {
         page.append(".info-bar{background:#161b30;border:1px solid #2a2f4a;border-radius:8px;padding:15px 20px;margin-bottom:25px;display:flex;gap:30px;flex-wrap:wrap}");
         page.append(".info-item{text-align:center}.info-val{font-size:1.5em;font-weight:bold;color:#6c63ff}.info-label{font-size:0.75em;color:#888}");
         page.append("</style></head><body>");
-        page.append("<div class='header'><h1>Regulith AI</h1><p>Delivery Compliance Intelligence Platform (Spring Boot + ActiveMQ + H2)</p></div>");
+        page.append("<div class='header'><h1>KAVACH AI</h1><p>Knowledge-driven Audit, Vulnerability Analysis & Compliance Health (Spring Boot + ActiveMQ + H2)</p></div>");
         page.append("<div class='container'>");
 
         // Info bar

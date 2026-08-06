@@ -264,7 +264,7 @@ class DashboardData:
                 text += f"\nFindings: {len(live_findings)} total"
                 for f in live_findings[:4]:
                     text += f"\n  [{f.severity}] {f.title[:45]}"
-            text += "\n\n— Regulith AI Audit Narrator (LLM) —"
+            text += "\n\n— KAVACH AI Audit Narrator (LLM) —"
             return text
 
         # Fallback: local narrative generation
@@ -312,7 +312,7 @@ Findings: {len(live_findings)} total"""
             if len(live_findings) > 4:
                 text += f"\n  ... +{len(live_findings)-4} more"
 
-        text += "\n\n— Regulith AI Audit Narrator —"
+        text += "\n\n— KAVACH AI Audit Narrator —"
         return text
 
     def get_drift_cards_html(self, live_findings=None):

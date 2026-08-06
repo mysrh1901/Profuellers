@@ -10,10 +10,10 @@ import java.util.*;
 /**
  * COMPLIANCE POLICY ENGINE
  * ========================
- * This is the heart of Regulith AI's domain-agnostic design.
+ * This is the heart of KAVACH AI's domain-agnostic design.
  * 
  * Policies define WHAT to check. The engine is the same regardless of industry.
- * To use Regulith in a new vertical (healthcare, retail, manufacturing),
+ * To use KAVACH in a new vertical (healthcare, retail, manufacturing),
  * you only add new policies here — zero code changes to the agents.
  * 
  * ARCHITECTURE:

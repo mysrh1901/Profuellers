@@ -14,7 +14,7 @@ package com.mortgage.compliance.sox;
  *   the SOX ITGC control requiring both Dev Lead and Release Manager
  *   sign-off before production deployment.
  * 
- * WHAT REGULITH AI DETECTS:
+ * WHAT KAVACH AI DETECTS:
  *   → Change to financial calculation logic
  *   → No approval trail (missing PR reviewers)
  *   → Direct commit to main branch (bypasses gate)

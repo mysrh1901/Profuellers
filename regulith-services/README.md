@@ -1,4 +1,4 @@
-# Regulith Services — Monorepo with Selective Deployment
+# KAVACH Services — Monorepo with Selective Deployment
 
 ## Architecture
 
@@ -17,7 +17,7 @@ regulith-services/          (one repository)
 The Jenkins pipeline provides parameterized builds:
 - Checkbox: Deploy Alpha? Deploy Beta? Deploy Gamma?
 - Dropdown: Environment (dev / staging / production)
-- Toggle: Run Regulith compliance check before deploy?
+- Toggle: Run KAVACH compliance check before deploy?
 
 You can deploy any combination: just Alpha, Alpha + Gamma, all three, etc.
 

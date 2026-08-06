@@ -42,8 +42,8 @@ public class ControlIngestionAgent {
 
     private final CompliancePolicyEngine policyEngine;
     private static final String OLLAMA_URL = "http://localhost:11434/api/generate";
-    // Custom fine-tuned model (use "regulith-compliance-v1" after training, or "llama3.2:1b" for base)
-    private static final String MODEL = "regulith-compliance-v1";
+    // Custom fine-tuned model (use "kavach-compliance-v1" after training, or "llama3.2:1b" for base)
+    private static final String MODEL = "kavach-compliance-v1";
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final ObjectMapper objectMapper = new ObjectMapper();
 

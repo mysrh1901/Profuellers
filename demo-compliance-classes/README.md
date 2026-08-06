@@ -1,6 +1,6 @@
 # 🎯 Demo Compliance Classes
 
-These 6 Java classes demonstrate **each compliance domain** that Regulith AI's Chain Reactor detects from a single code commit. Use them during the demo to show how one event triggers cross-domain compliance analysis.
+These 6 Java classes demonstrate **each compliance domain** that KAVACH AI's Chain Reactor detects from a single code commit. Use them during the demo to show how one event triggers cross-domain compliance analysis.
 
 ---
 
@@ -25,7 +25,7 @@ Open http://localhost:8080 → **Live Scan** tab to see findings appear in real-
 Open each file and explain the compliance violation. The class headers contain:
 - **Compliance domain** and specific regulation
 - **Violation scenario** (what the developer did wrong)
-- **What Regulith AI detects** (agent reasoning)
+- **What KAVACH AI detects** (agent reasoning)
 - **Chain reaction** (causal propagation across domains)
 
 ---
@@ -59,7 +59,7 @@ Open each file and explain the compliance violation. The class headers contain:
 
 4. **Show Live Detection:** Copy files to `watch-folder/` one by one, show dashboard updating.
 
-5. **Key Takeaway:** "One commit. Six compliance domains. Zero surprises. That's Regulith AI."
+5. **Key Takeaway:** "One commit. Six domains. Zero breaches. That's KAVACH AI."
 
 ---
 

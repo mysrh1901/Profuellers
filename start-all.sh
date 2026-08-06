@@ -1,31 +1,31 @@
 #!/bin/bash
-# Regulith AI — Start All Services
+# KAVACH AI — Start All Services
 # Usage: ./start-all.sh
 
 cd "$(dirname "$0")"
 
 echo "╔══════════════════════════════════════════════╗"
-echo "║   Regulith AI — Starting All Services       ║"
+echo "║   KAVACH AI — Starting All Services         ║"
 echo "╚══════════════════════════════════════════════╝"
 echo ""
 
 # 1. Start Spring Boot backend (port 9090)
 echo "▸ Starting Spring Boot backend (port 9090)..."
 cd regulith-springboot
-./gradlew bootRun > /tmp/regulith-springboot.log 2>&1 &
+./gradlew bootRun > /tmp/kavach-springboot.log 2>&1 &
 SPRING_PID=$!
 echo "  PID: $SPRING_PID"
 cd ..
 
 # 2. Start Dashboard UI (port 8080)
 echo "▸ Starting Dashboard UI (port 8080)..."
-python3 dashboard.py > /tmp/regulith-dashboard.log 2>&1 &
+python3 dashboard.py > /tmp/kavach-dashboard.log 2>&1 &
 DASH_PID=$!
 echo "  PID: $DASH_PID"
 
 # Save PIDs for stop script
-echo "$SPRING_PID" > /tmp/regulith-spring.pid
-echo "$DASH_PID" > /tmp/regulith-dashboard.pid
+echo "$SPRING_PID" > /tmp/kavach-spring.pid
+echo "$DASH_PID" > /tmp/kavach-dashboard.pid
 
 echo ""
 echo "╔══════════════════════════════════════════════╗"
@@ -36,8 +36,8 @@ echo "║   Dashboard:    http://localhost:8080       ║"
 echo "║   H2 Console:   http://localhost:9090/h2-console ║"
 echo "║                                             ║"
 echo "║   Logs:                                     ║"
-echo "║     /tmp/regulith-springboot.log            ║"
-echo "║     /tmp/regulith-dashboard.log             ║"
+echo "║     /tmp/kavach-springboot.log              ║"
+echo "║     /tmp/kavach-dashboard.log               ║"
 echo "║                                             ║"
 echo "║   Stop all: ./stop-all.sh                   ║"
 echo "╚══════════════════════════════════════════════╝"

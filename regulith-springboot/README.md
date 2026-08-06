@@ -1,4 +1,4 @@
-# Regulith AI — Spring Boot Enterprise Edition
+# KAVACH AI — Spring Boot Enterprise Edition
 
 ## Zero License Required. Everything Embedded.
 
