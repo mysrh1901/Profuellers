@@ -280,52 +280,59 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div class="slide" id="slide6">
   <div class="label">Agentic Architecture</div>
-  <h2>5 Autonomous Agents — Perceive, Reason, Act</h2>
-  <div class="grid-3" style="margin-top:24px;">
-    <div class="card" style="border-left:3px solid #818cf8;">
-      <h3>🏗️ Digital Twin Agent</h3>
-      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
-        Maintains live compliance state for each client engagement. Aggregates findings from Snyk, Checkmarx, Wiz, ServiceNow into a unified compliance score.
+  <h2 style="margin-bottom:6px;">6 Autonomous Agents — Perceive, Reason, Act</h2>
+  <div style="font-size:12px;color:#94a3b8;margin-bottom:14px;">Each agent operates independently — perceives events, reasons about compliance impact, and takes action without human intervention. Together they cover the full compliance lifecycle.</div>
+  <div class="grid-3" style="gap:14px;">
+    <div class="card" style="border-left:3px solid #818cf8;padding:16px;">
+      <h3 style="font-size:14px;">🏗️ Digital Twin Agent</h3>
+      <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
+        <strong style="color:#e2e8f0;">What:</strong> Live "digital twin" of each client's compliance posture — a real-time score reflecting current risk across all frameworks.<br>
+        <strong style="color:#e2e8f0;">How:</strong> Aggregates Snyk, Checkmarx, Wiz, ServiceNow, Git into one unified view. Updates on every event.<br>
+        <strong style="color:#e2e8f0;">Why:</strong> Without this, nobody knows actual compliance state until audit day — too late.
       </p>
-      <div style="margin-top:10px;"><span class="tag tag-purple">Per-Client</span><span class="tag tag-green">Real-Time</span></div>
     </div>
-    <div class="card" style="border-left:3px solid #f59e0b;">
-      <h3>⚡ Chain Reactor Agent</h3>
-      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
-        Takes ONE event and propagates impact across all 6 domains simultaneously. Uses Policy Engine + GraphRAG for causal reasoning.
+    <div class="card" style="border-left:3px solid #f59e0b;padding:16px;">
+      <h3 style="font-size:14px;">⚡ Chain Reactor Agent</h3>
+      <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
+        <strong style="color:#e2e8f0;">What:</strong> Takes one event and traces impact across all 6 domains simultaneously — SOX, Security, TILA, ECOA, PCI, Contractual.<br>
+        <strong style="color:#e2e8f0;">How:</strong> Evaluates 26+ policies, traverses Knowledge Graph for causal paths, uses LLM for reasoning.<br>
+        <strong style="color:#e2e8f0;">Why:</strong> No other tool connects a code bug to a contract penalty to a SOX control — all at once.
       </p>
-      <div style="margin-top:10px;"><span class="tag tag-amber">Cross-Domain</span><span class="tag tag-red">Blocking</span></div>
     </div>
-    <div class="card" style="border-left:3px solid #10b981;">
-      <h3>📝 Audit Narrator Agent</h3>
-      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
-        Autonomously generates audit-ready evidence narratives from system activity. Uses LLM to write like a senior auditor — ready for external audit review.
+    <div class="card" style="border-left:3px solid #10b981;padding:16px;">
+      <h3 style="font-size:14px;">📝 Audit Narrator Agent</h3>
+      <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
+        <strong style="color:#e2e8f0;">What:</strong> Writes formal audit evidence automatically — documents who changed what, why, approvals, controls satisfied.<br>
+        <strong style="color:#e2e8f0;">How:</strong> LLM generates professional narratives from Git, Jira, SAST reports.<br>
+        <strong style="color:#e2e8f0;">Why:</strong> Audit prep that takes 3-4 weeks is reduced to zero — evidence generated as work happens.
       </p>
-      <div style="margin-top:10px;"><span class="tag tag-green">LLM-Powered</span><span class="tag tag-purple">Auto-Evidence</span></div>
     </div>
-    <div class="card" style="border-left:3px solid #ef4444;">
-      <h3>🔍 Drift Sentinel Agent</h3>
-      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
-        Detects silent compliance degradation before auditors do. Catches access creep, config drift, expired certifications, orphaned permissions.
+    <div class="card" style="border-left:3px solid #ef4444;padding:16px;">
+      <h3 style="font-size:14px;">🔍 Drift Sentinel Agent</h3>
+      <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
+        <strong style="color:#e2e8f0;">What:</strong> Detects silent compliance degradation — things that slowly go wrong without anyone noticing.<br>
+        <strong style="color:#e2e8f0;">How:</strong> Monitors access creep, config drift, expired certs, orphaned accounts.<br>
+        <strong style="color:#e2e8f0;">Why:</strong> Most audit findings are drift — not active violations. Catches them before auditors do.
       </p>
-      <div style="margin-top:10px;"><span class="tag tag-red">Proactive</span><span class="tag tag-amber">Auto-Remediate</span></div>
     </div>
-    <div class="card" style="border-left:3px solid #a78bfa;">
-      <h3>📜 Obligation Parser Agent</h3>
-      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
-        Reads MSA/contract text and extracts machine-readable obligations. Maps clauses to controls automatically using LLM.
+    <div class="card" style="border-left:3px solid #a78bfa;padding:16px;">
+      <h3 style="font-size:14px;">📜 Obligation Parser Agent</h3>
+      <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
+        <strong style="color:#e2e8f0;">What:</strong> Reads contract text (MSA, SOW) and extracts machine-readable obligations — SLA deadlines, penalties, notifications.<br>
+        <strong style="color:#e2e8f0;">How:</strong> LLM reads legal language, maps clauses to enforceable rules.<br>
+        <strong style="color:#e2e8f0;">Why:</strong> Contracts are read once and forgotten. This makes every clause actively enforced.
       </p>
-      <div style="margin-top:10px;"><span class="tag tag-purple">NLP</span><span class="tag tag-green">Contract→Rules</span></div>
     </div>
-    <div class="card" style="border-left:3px solid #fbbf24;">
-      <h3>🧠 Control Ingestion Agent</h3>
-      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
-        Feed raw regulation text → AI parses into live policies. Add entire frameworks (DORA, HITRUST) with ZERO code changes.
+    <div class="card" style="border-left:3px solid #fbbf24;padding:16px;">
+      <h3 style="font-size:14px;">🧠 Control Ingestion Agent</h3>
+      <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
+        <strong style="color:#e2e8f0;">What:</strong> Accepts raw regulation text and creates live policies the system enforces immediately.<br>
+        <strong style="color:#e2e8f0;">How:</strong> LLM parses legal text, extracts triggers, severity, SLA, creates policy in engine.<br>
+        <strong style="color:#e2e8f0;">Why:</strong> New regulation drops (DORA, HITRUST) → compliance team enforces same day, no developer needed.
       </p>
-      <div style="margin-top:10px;"><span class="tag tag-amber">Dynamic</span><span class="tag tag-red">Zero Code</span></div>
     </div>
   </div>
-  <div class="slide-num"><span>06</span> / 10</div>
+  <div class="slide-num"><span>06</span> / 11</div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
