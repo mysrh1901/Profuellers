@@ -435,23 +435,47 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
   <div class="label">Key Differentiator</div>
   <h2>⚡ One Commit → Six Compliance Domains</h2>
   <div class="grid-2" style="margin-top:24px;">
-    <div class="card">
-      <h3>Scenario: What Happens When a Developer Pushes Code</h3>
-      <div style="font-size:13px;color:#cbd5e1;line-height:1.9;margin-bottom:14px;">
-        A Hexaware developer working on a mortgage client's system pushes a code change that modifies how adjustable-rate mortgage (ARM) interest rates are calculated. This is a routine commit — but it touches financially-significant logic.
+    <div class="card" style="padding:20px;">
+      <h3 style="margin-bottom:8px;">Scenario: Developer Pushes Code to Rate Calculation</h3>
+      <div style="font-size:12px;color:#94a3b8;margin-bottom:12px;">
+        A routine commit modifies ARM interest rate logic — but it touches financially-significant code and borrower PII.
       </div>
-      <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:16px;font-size:13px;color:#e2e8f0;">
-        <div style="color:#fbbf24;font-weight:700;margin-bottom:8px;">Event Details</div>
-        <div style="color:#94a3b8;line-height:1.9;">
-          • <strong style="color:#e2e8f0;">What changed:</strong> ARM rate cap calculation logic + borrower eligibility checks<br>
-          • <strong style="color:#e2e8f0;">Why it matters:</strong> This code directly determines what interest rate a borrower pays<br>
-          • <strong style="color:#e2e8f0;">Risk detected:</strong> Automated SAST scan found a race condition (HIGH severity)<br>
-          • <strong style="color:#e2e8f0;">Data involved:</strong> Borrower income, credit score (PII)
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;color:#e2e8f0;">
+        <div><strong style="color:#fbbf24;">Changed:</strong> Rate cap + eligibility logic</div>
+        <div><strong style="color:#fbbf24;">Impact:</strong> Determines borrower's rate</div>
+        <div><strong style="color:#f87171;">SAST:</strong> Race condition (HIGH)</div>
+        <div><strong style="color:#a5b4fc;">Data:</strong> Income, credit score (PII)</div>
+      </div>
+      <div style="margin-top:12px;font-size:11px;color:#6ee7b7;font-weight:600;">
+        ⚡ Chain Reactor fires — 6 domains analyzed in &lt;2 seconds:
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;">
+        <div style="display:flex;align-items:center;gap:8px;font-size:11px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#ef4444;flex-shrink:0;"></div>
+          <span><strong>SOX</strong> — Dual approval required</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:11px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#f59e0b;flex-shrink:0;"></div>
+          <span><strong>Security</strong> — Deployment blocked</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:11px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#eab308;flex-shrink:0;"></div>
+          <span><strong>TILA/Reg Z</strong> — APR validation needed</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:11px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#a78bfa;flex-shrink:0;"></div>
+          <span><strong>Fair Lending</strong> — Impact analysis required</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:11px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#818cf8;flex-shrink:0;"></div>
+          <span><strong>Contractual</strong> — Client notification</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:11px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;"></div>
+          <span><strong>PCI-DSS</strong> — Code review required</span>
         </div>
       </div>
-      <div style="margin-top:14px;font-size:12px;color:#94a3b8;border-left:3px solid #818cf8;padding-left:12px;">
-        <strong style="color:#e2e8f0;">KAVACH immediately fires the Chain Reactor</strong> — analyzing this single commit across all 6 compliance domains simultaneously, in under 2 seconds.
-      </div>
+    </div>
       <div style="margin-top:20px;">
         <h3>Chain Reaction Fires:</h3>
         <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">
