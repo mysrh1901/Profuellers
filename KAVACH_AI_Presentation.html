@@ -144,72 +144,49 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <!-- SLIDE 3: Platform Architecture -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
-<div class="slide" id="slide3">
+<div class="slide" id="slide3" style="padding:40px 80px;">
   <div class="label">Platform Architecture</div>
-  <h2>End-to-End Agentic AI Pipeline</h2>
-  <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px;">
-    <!-- Row 1: Event Sources -->
-    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;">
-      <div class="arch-box"><div class="box-title">Git Hooks</div><div class="box-sub">Post-commit events</div></div>
-      <div class="arch-box"><div class="box-title">Jenkins CI</div><div class="box-sub">Pipeline webhooks</div></div>
-      <div class="arch-box"><div class="box-title">Jira</div><div class="box-sub">Ticket changes</div></div>
-      <div class="arch-box"><div class="box-title">AWS Config</div><div class="box-sub">Infra drift</div></div>
-      <div class="arch-box"><div class="box-title">File Watcher</div><div class="box-sub">Real-time scan</div></div>
-      <div class="arch-box"><div class="box-title">SAST Tools</div><div class="box-sub">Snyk, Checkmarx</div></div>
+  <h2 style="margin-bottom:20px;">End-to-End Agentic AI Pipeline</h2>
+  <div style="max-width:900px;margin:0 auto;font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.6;">
+    <div style="background:rgba(22,27,48,0.9);border:2px solid #334155;border-radius:12px;padding:16px 24px;text-align:center;">
+      <div style="font-size:11px;color:#818cf8;font-weight:700;letter-spacing:1px;margin-bottom:6px;">PERCEIVE</div>
+      <div style="font-size:15px;color:#e2e8f0;font-weight:600;">Event Sources</div>
+      <div style="font-size:13px;color:#94a3b8;margin-top:4px;">Git · Jenkins · Jira · AWS Config · File Watcher · SAST</div>
     </div>
-    <div class="arrow">▼ All events flow into unified message queue</div>
-    <!-- Row 2: Queue -->
-    <div class="arch-box" style="border-color:#818cf8;text-align:center;padding:10px;">
-      <div class="box-title" style="font-size:14px;">ActiveMQ Message Queue — "compliance-events"</div>
+    <div style="text-align:center;color:#818cf8;font-size:22px;line-height:2;">▼</div>
+    <div style="background:rgba(22,27,48,0.9);border:2px solid #818cf8;border-radius:12px;padding:14px 24px;text-align:center;">
+      <div style="font-size:15px;color:#a5b4fc;font-weight:600;">ActiveMQ Message Queue — "compliance-events"</div>
+      <div style="font-size:11px;color:#64748b;margin-top:2px;">Unified event bus — all sources into one queue</div>
     </div>
-    <div class="arrow">▼ Agents consume events asynchronously</div>
-    <!-- Row 3: Agent Layer -->
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;">
-      <div class="arch-box highlight"><div class="box-title">🏗️ Digital Twin</div><div class="box-sub">Per-client state</div></div>
-      <div class="arch-box highlight"><div class="box-title">⚡ Chain Reactor</div><div class="box-sub">Cross-domain impact</div></div>
-      <div class="arch-box highlight"><div class="box-title">📝 Audit Narrator</div><div class="box-sub">Evidence generation</div></div>
-      <div class="arch-box highlight"><div class="box-title">🔍 Drift Sentinel</div><div class="box-sub">Silent degradation</div></div>
-      <div class="arch-box highlight"><div class="box-title">📜 Obligation Parser</div><div class="box-sub">Contract → rules</div></div>
+    <div style="text-align:center;color:#818cf8;font-size:22px;line-height:2;">▼</div>
+    <div style="background:rgba(22,27,48,0.9);border:2px solid #34d399;border-radius:12px;padding:16px 24px;text-align:center;">
+      <div style="font-size:11px;color:#34d399;font-weight:700;letter-spacing:1px;margin-bottom:6px;">REASON</div>
+      <div style="font-size:15px;color:#e2e8f0;font-weight:600;">Agent Layer</div>
+      <div style="font-size:13px;color:#94a3b8;margin-top:6px;">Digital Twin ← ⚡ <span style="color:#fbbf24;font-weight:700;">Chain Reactor</span> (central) → Drift Sentinel</div>
+      <div style="font-size:13px;color:#94a3b8;">Audit Narrator ←─────────────────────→ Obligation Parser</div>
     </div>
-    <div class="arrow">▼ Agents reason using custom LLM + Knowledge Graph</div>
-    <!-- Row 4: Intelligence Layer -->
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
-      <div class="arch-box" style="border-color:#a78bfa;">
-        <div class="box-title">🧠 KAVACH LLM</div>
-        <div class="box-sub">Fine-tuned Llama 3.2 (our model)</div>
-      </div>
-      <div class="arch-box" style="border-color:#fbbf24;">
-        <div class="box-title">🕸️ Knowledge Graph + RAG</div>
-        <div class="box-sub">JGraphT causal path traversal</div>
-      </div>
-      <div class="arch-box" style="border-color:#10b981;">
-        <div class="box-title">⚙️ Policy Engine (26+ rules)</div>
-        <div class="box-sub">SOX, PCI, TILA, ECOA, MSA...</div>
-      </div>
+    <div style="text-align:center;color:#818cf8;font-size:22px;line-height:2;">▼</div>
+    <div style="background:rgba(22,27,48,0.9);border:2px solid #a78bfa;border-radius:12px;padding:16px 24px;text-align:center;">
+      <div style="font-size:11px;color:#a78bfa;font-weight:700;letter-spacing:1px;margin-bottom:6px;">DECIDE</div>
+      <div style="font-size:15px;color:#e2e8f0;font-weight:600;">Intelligence Layer</div>
+      <div style="font-size:14px;color:#94a3b8;margin-top:6px;">🧠 KAVACH LLM &nbsp;│&nbsp; 🕸️ Knowledge Graph + RAG &nbsp;│&nbsp; ⚙️ Policy Engine (26+)</div>
     </div>
-    <div class="arrow">▼ Results persisted + Actions triggered</div>
-    <!-- Row 5: Output -->
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;">
-      <div class="arch-box"><div class="box-title">🚫 Deploy Gate</div><div class="box-sub">Block / Allow</div></div>
-      <div class="arch-box"><div class="box-title">📄 Audit Evidence</div><div class="box-sub">Auto-generated</div></div>
-      <div class="arch-box"><div class="box-title">📊 Dashboard</div><div class="box-sub">Real-time UI</div></div>
-      <div class="arch-box"><div class="box-title">🔔 Alerts</div><div class="box-sub">Slack/Email</div></div>
-      <div class="arch-box"><div class="box-title">💾 Database</div><div class="box-sub">Event store</div></div>
+    <div style="text-align:center;color:#818cf8;font-size:22px;line-height:2;">▼</div>
+    <div style="background:rgba(22,27,48,0.9);border:2px solid #f87171;border-radius:12px;padding:16px 24px;text-align:center;">
+      <div style="font-size:11px;color:#f87171;font-weight:700;letter-spacing:1px;margin-bottom:6px;">ACT</div>
+      <div style="font-size:15px;color:#e2e8f0;font-weight:600;">Actions & Outputs</div>
+      <div style="font-size:14px;color:#94a3b8;margin-top:6px;">🚫 Deploy Gate &nbsp;│&nbsp; 📄 Audit Evidence &nbsp;│&nbsp; 📊 Dashboard &nbsp;│&nbsp; 🔔 Alerts</div>
     </div>
   </div>
-  <div style="margin-top:12px;text-align:center;">
+  <div style="margin-top:16px;text-align:center;">
     <span class="tag tag-purple">Spring Boot 3.4</span>
     <span class="tag tag-purple">ActiveMQ</span>
-    <span class="tag tag-purple">JGraphT</span>
     <span class="tag tag-green">Llama 3.2 + QLoRA</span>
-    <span class="tag tag-green">Ollama</span>
-    <span class="tag tag-green">AWS Bedrock</span>
+    <span class="tag tag-green">JGraphT</span>
     <span class="tag tag-amber">H2 / PostgreSQL</span>
     <span class="tag tag-amber">Python + Java</span>
-    <span class="tag tag-amber">Gradle</span>
-    <span class="tag tag-red">Jenkins CI/CD</span>
-    <span class="tag tag-red">Docker / K8s</span>
-    <span class="tag tag-red">JPA / Hibernate</span>
+    <span class="tag tag-red">Jenkins</span>
+    <span class="tag tag-red">Docker</span>
   </div>
   <div class="slide-num"><span>03</span> / 10</div>
 </div>
