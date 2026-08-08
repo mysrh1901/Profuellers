@@ -269,21 +269,24 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
   <h2>🕸️ Compliance Knowledge Graph with Graph RAG</h2>
   <div class="grid-2" style="margin-top:24px;">
     <div class="card">
-      <h3>How GraphRAG Works — Plain English</h3>
-      <div style="font-size:14px;color:#cbd5e1;line-height:2.2;">
-        <strong style="color:#a5b4fc;">Think of it like a map of all compliance rules and how they connect.</strong>
+      <h3>How GraphRAG Works in KAVACH</h3>
+      <div style="font-size:14px;color:#cbd5e1;line-height:2.1;">
+        <strong style="color:#a5b4fc;">1. Compliance Knowledge Graph</strong><br>
+        <span style="color:#94a3b8;">We model all regulations, controls, systems, and clients as a connected graph. Each entity is a node, and relationships (violates, requires, triggers, penalizes) are edges. This captures how compliance domains depend on each other.</span>
         <br><br>
-        <strong style="color:#e2e8f0;">1. We build a map (graph)</strong><br>
-        <span style="color:#94a3b8;">Every regulation, control, system, and client is a "dot" on the map. Lines between dots show relationships — like "SQL injection <em>violates</em> PCI-DSS" or "PCI-DSS <em>requires</em> code review".</span>
+        <strong style="color:#a5b4fc;">2. Causal Path Traversal</strong><br>
+        <span style="color:#94a3b8;">When an event occurs (e.g., SQL injection detected), the engine traverses the graph to discover all impacted regulations and downstream consequences — for example: SQL injection → violates PCI-DSS 6.5 → triggers MSA §7.2 SLA (48h) → exposes $50K penalty → requires SOX disclosure.</span>
         <br><br>
-        <strong style="color:#e2e8f0;">2. When something happens (code commit, config change)</strong><br>
-        <span style="color:#94a3b8;">We find the starting dot and follow all connected lines — like tracing a spider web. If SQL injection is found, we instantly see: it violates PCI-DSS → which triggers the MSA SLA → which has a $50K penalty → which affects SOX reporting.</span>
+        <strong style="color:#a5b4fc;">3. Retrieval-Augmented Generation (RAG)</strong><br>
+        <span style="color:#94a3b8;">The retrieved causal paths are passed as context to our LLM. Instead of the model reasoning from general knowledge alone, it receives the specific compliance relationships relevant to this event — enabling precise, regulation-aware analysis.</span>
         <br><br>
-        <strong style="color:#e2e8f0;">3. We give these paths to the AI (RAG = Retrieval Augmented Generation)</strong><br>
-        <span style="color:#94a3b8;">Instead of asking the AI "what's wrong?" with no context, we give it the relevant connections from our map. The AI then reasons with full compliance context — not guessing from general knowledge.</span>
-        <br><br>
-        <strong style="color:#e2e8f0;">4. Result: complete cross-domain impact in &lt;2 seconds</strong><br>
-        <span style="color:#94a3b8;">One finding → all affected regulations, penalties, SLAs, and required actions — traced through the graph, explained by the AI.</span>
+        <strong style="color:#a5b4fc;">4. Multi-Domain Impact Output</strong><br>
+        <span style="color:#94a3b8;">Result: a structured response showing every affected domain, specific regulation references, severity levels, and required actions — all within 2 seconds of the triggering event.</span>
+      </div>
+      <div style="margin-top:16px;">
+        <span class="tag tag-purple">JGraphT Engine</span>
+        <span class="tag tag-green">Causal Path Analysis</span>
+        <span class="tag tag-amber">LLM Context Enrichment</span>
       </div>
     </div>
     <div class="card">
