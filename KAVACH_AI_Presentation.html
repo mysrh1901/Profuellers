@@ -340,66 +340,83 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div class="slide" id="slide7">
   <div class="label">Technology Stack</div>
-  <h2>Enterprise-Grade Tech Stack</h2>
-  <div class="grid-4" style="margin-top:24px;">
-    <div class="card" style="text-align:center;">
-      <div style="font-size:28px;margin-bottom:8px;">🧠</div>
-      <h3 style="font-size:14px;">AI / LLM</h3>
-      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
-        Llama 3.2 (fine-tuned)<br>QLoRA Training<br>Ollama Runtime<br>AWS Bedrock (Claude)
+  <h2 style="margin-bottom:6px;">Enterprise-Grade Tech Stack</h2>
+  <div style="font-size:12px;color:#94a3b8;margin-bottom:14px;">Built on production-ready, enterprise-proven technologies. Zero proprietary lock-in — every component is open-source or industry-standard.</div>
+  <div class="grid-4" style="margin-top:12px;gap:14px;">
+    <div class="card" style="padding:14px;">
+      <h3 style="font-size:13px;">🧠 AI / LLM Layer</h3>
+      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
+        <strong style="color:#e2e8f0;">Llama 3.2</strong> — open-source base model (MIT license)<br>
+        <strong style="color:#e2e8f0;">QLoRA</strong> — efficient fine-tuning (4-bit, single GPU)<br>
+        <strong style="color:#e2e8f0;">Ollama</strong> — local model runtime (no cloud needed)<br>
+        <strong style="color:#e2e8f0;">AWS Bedrock</strong> — Claude for production scale
       </p>
     </div>
-    <div class="card" style="text-align:center;">
-      <div style="font-size:28px;margin-bottom:8px;">⚙️</div>
-      <h3 style="font-size:14px;">Backend</h3>
-      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
-        Spring Boot 3.4<br>ActiveMQ (JMS)<br>H2 Database<br>JPA/Hibernate
+    <div class="card" style="padding:14px;">
+      <h3 style="font-size:13px;">⚙️ Backend Services</h3>
+      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
+        <strong style="color:#e2e8f0;">Spring Boot 3.4</strong> — REST APIs, WebSocket, scheduling<br>
+        <strong style="color:#e2e8f0;">ActiveMQ</strong> — embedded message queue (JMS)<br>
+        <strong style="color:#e2e8f0;">H2 Database</strong> — embedded SQL (zero install)<br>
+        <strong style="color:#e2e8f0;">JPA/Hibernate</strong> — ORM with auto-schema
       </p>
     </div>
-    <div class="card" style="text-align:center;">
-      <div style="font-size:28px;margin-bottom:8px;">🕸️</div>
-      <h3 style="font-size:14px;">Graph / RAG</h3>
-      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
-        JGraphT<br>Causal Path Analysis<br>GraphRAG Retrieval<br>Knowledge Graph
+    <div class="card" style="padding:14px;">
+      <h3 style="font-size:13px;">🕸️ Graph & RAG</h3>
+      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
+        <strong style="color:#e2e8f0;">JGraphT</strong> — compliance knowledge graph engine<br>
+        <strong style="color:#e2e8f0;">Causal Paths</strong> — multi-hop traversal (finding→regulation→penalty)<br>
+        <strong style="color:#e2e8f0;">GraphRAG</strong> — graph-retrieved context enriches LLM<br>
+        <strong style="color:#e2e8f0;">26+ Nodes</strong> — regulations, controls, systems mapped
       </p>
     </div>
-    <div class="card" style="text-align:center;">
-      <div style="font-size:28px;margin-bottom:8px;">🖥️</div>
-      <h3 style="font-size:14px;">Frontend</h3>
-      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
-        Real-time Dashboard<br>Auto-refresh (no reload)<br>5 Interactive Views<br>Click-to-expand Panels
+    <div class="card" style="padding:14px;">
+      <h3 style="font-size:13px;">🖥️ Dashboard / UI</h3>
+      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
+        <strong style="color:#e2e8f0;">Real-time</strong> — auto-refresh without page reload<br>
+        <strong style="color:#e2e8f0;">5 Views</strong> — Dashboard, Audit, Controls, Drift, Live Scan<br>
+        <strong style="color:#e2e8f0;">Click-to-expand</strong> — panels open as modal for detail<br>
+        <strong style="color:#e2e8f0;">Responsive</strong> — works on any screen size
       </p>
     </div>
-    <div class="card" style="text-align:center;">
-      <div style="font-size:28px;margin-bottom:8px;">🔍</div>
-      <h3 style="font-size:14px;">Code Analysis</h3>
-      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
-        AI Scanner (Ollama)<br>Entropy-based secrets<br>SAST integration<br>File System Watcher
+    <div class="card" style="padding:14px;">
+      <h3 style="font-size:13px;">🔍 Code Analysis</h3>
+      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
+        <strong style="color:#e2e8f0;">AI Scanner</strong> — LLM reads code and reasons about compliance<br>
+        <strong style="color:#e2e8f0;">Entropy Detection</strong> — finds secrets without keyword matching<br>
+        <strong style="color:#e2e8f0;">File Watcher</strong> — 3-second polling for live changes<br>
+        <strong style="color:#e2e8f0;">Heuristic Fallback</strong> — works even without LLM running
       </p>
     </div>
-    <div class="card" style="text-align:center;">
-      <div style="font-size:28px;margin-bottom:8px;">📡</div>
-      <h3 style="font-size:14px;">Event Pipeline</h3>
-      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
-        Webhook ingestion<br>JMS message queue<br>Event-driven agents<br>Async processing
+    <div class="card" style="padding:14px;">
+      <h3 style="font-size:13px;">📡 Event Pipeline</h3>
+      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
+        <strong style="color:#e2e8f0;">Webhooks</strong> — accepts events from any source (Git, CI/CD, ITSM)<br>
+        <strong style="color:#e2e8f0;">JMS Queue</strong> — decouples ingestion from processing<br>
+        <strong style="color:#e2e8f0;">Async Agents</strong> — process events without blocking<br>
+        <strong style="color:#e2e8f0;">Event Store</strong> — full history for audit trail
       </p>
     </div>
-    <div class="card" style="text-align:center;">
-      <div style="font-size:28px;margin-bottom:8px;">🏗️</div>
-      <h3 style="font-size:14px;">Microservices</h3>
-      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
-        Gradle Multi-project<br>Alpha/Beta/Gamma<br>Selective Deploy<br>Jenkins Pipeline
+    <div class="card" style="padding:14px;">
+      <h3 style="font-size:13px;">🏗️ Microservices</h3>
+      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
+        <strong style="color:#e2e8f0;">Gradle Multi-project</strong> — 3 services in one repo<br>
+        <strong style="color:#e2e8f0;">Selective Deploy</strong> — deploy Alpha, Beta, or Gamma independently<br>
+        <strong style="color:#e2e8f0;">Jenkins Pipeline</strong> — parameterized CI/CD<br>
+        <strong style="color:#e2e8f0;">Compliance Gate</strong> — KAVACH checks before deploy
       </p>
     </div>
-    <div class="card" style="text-align:center;">
-      <div style="font-size:28px;margin-bottom:8px;">☁️</div>
-      <h3 style="font-size:14px;">Cloud / Infra</h3>
-      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
-        AWS (Bedrock, S3)<br>Docker / K8s ready<br>Zero external deps<br>Self-contained demo
+    <div class="card" style="padding:14px;">
+      <h3 style="font-size:13px;">☁️ Cloud & Infrastructure</h3>
+      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
+        <strong style="color:#e2e8f0;">AWS Ready</strong> — Bedrock, S3, EC2 for production<br>
+        <strong style="color:#e2e8f0;">Docker / K8s</strong> — containerized, orchestration-ready<br>
+        <strong style="color:#e2e8f0;">Zero External Deps</strong> — runs fully self-contained<br>
+        <strong style="color:#e2e8f0;">Demo Mode</strong> — everything embedded, no install needed
       </p>
     </div>
   </div>
-  <div class="slide-num"><span>07</span> / 10</div>
+  <div class="slide-num"><span>07</span> / 11</div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
