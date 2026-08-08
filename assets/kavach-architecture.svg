@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+  <defs>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#fbbf24"/>
+    </linearGradient>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/><stop offset="100%" stop-color="#f87171"/>
+    </linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.3"/></filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="700" fill="#0f1419"/>
+
+  <!-- Title -->
+  <text x="600" y="40" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="22" font-weight="800" fill="#f8fafc">KAVACH AI — End-to-End Agentic Pipeline</text>
+  <text x="600" y="62" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" fill="#64748b">Event Sources → Message Queue → Agent Layer → Intelligence Layer → Actions</text>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LAYER 1: EVENT SOURCES (Top) -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <text x="60" y="105" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#64748b" letter-spacing="1.5">EVENT SOURCES</text>
+
+  <!-- Source boxes -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="115" width="150" height="50" rx="8" fill="#161b24" stroke="#334155" stroke-width="1"/>
+    <text x="135" y="137" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#e2e8f0">Git Post-Commit</text>
+    <text x="135" y="153" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#64748b">Code changes, PRs</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="230" y="115" width="150" height="50" rx="8" fill="#161b24" stroke="#334155" stroke-width="1"/>
+    <text x="305" y="137" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#e2e8f0">Jenkins CI/CD</text>
+    <text x="305" y="153" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#64748b">Build, deploy events</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="400" y="115" width="150" height="50" rx="8" fill="#161b24" stroke="#334155" stroke-width="1"/>
+    <text x="475" y="137" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#e2e8f0">Jira / ServiceNow</text>
+    <text x="475" y="153" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#64748b">Ticket state changes</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="570" y="115" width="150" height="50" rx="8" fill="#161b24" stroke="#334155" stroke-width="1"/>
+    <text x="645" y="137" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#e2e8f0">AWS Config</text>
+    <text x="645" y="153" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#64748b">Infra drift, IAM changes</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="740" y="115" width="150" height="50" rx="8" fill="#161b24" stroke="#334155" stroke-width="1"/>
+    <text x="815" y="137" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#e2e8f0">File Watcher</text>
+    <text x="815" y="153" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#64748b">Real-time code scanning</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="910" y="115" width="150" height="50" rx="8" fill="#161b24" stroke="#334155" stroke-width="1"/>
+    <text x="985" y="137" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#e2e8f0">SAST Tools</text>
+    <text x="985" y="153" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#64748b">Checkmarx, Snyk, Wiz</text>
+  </g>
+
+  <!-- Arrows down to queue -->
+  <path d="M135 165 L135 185 L560 185 L560 200" stroke="#475569" stroke-width="1.5" fill="none" marker-end="url(#arrowGray)"/>
+  <path d="M305 165 L305 185 L560 185" stroke="#475569" stroke-width="1.5" fill="none"/>
+  <path d="M475 165 L475 185 L560 185" stroke="#475569" stroke-width="1.5" fill="none"/>
+  <path d="M645 165 L645 185 L560 185" stroke="#475569" stroke-width="1.5" fill="none"/>
+  <path d="M815 165 L815 185 L560 185" stroke="#475569" stroke-width="1.5" fill="none"/>
+  <path d="M985 165 L985 185 L560 185" stroke="#475569" stroke-width="1.5" fill="none"/>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LAYER 2: MESSAGE QUEUE -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <rect x="350" y="200" width="420" height="40" rx="8" fill="url(#purpleGrad)" opacity="0.15" stroke="url(#purpleGrad)" stroke-width="1.5"/>
+  <text x="560" y="225" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#a5b4fc">ActiveMQ Message Queue — "compliance-events"</text>
+
+  <!-- Arrow down -->
+  <line x1="560" y1="240" x2="560" y2="270" stroke="#818cf8" stroke-width="2" stroke-dasharray="4 3"/>
+  <polygon points="555,268 565,268 560,276" fill="#818cf8"/>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LAYER 3: AGENT LAYER (Main processing) -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <text x="60" y="295" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#64748b" letter-spacing="1.5">AGENT LAYER (Autonomous)</text>
+
+  <!-- Chain Reactor (Central agent) -->
+  <rect x="420" y="305" width="280" height="70" rx="12" fill="#161b24" stroke="url(#amberGrad)" stroke-width="2" filter="url(#shadow)"/>
+  <text x="560" y="333" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="800" fill="#fbbf24">⚡ Chain Reactor Agent</text>
+  <text x="560" y="352" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#94a3b8">Receives event → Evaluates ALL policies → Propagates impact</text>
+  <text x="560" y="367" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#64748b">Perceive → Reason → Decide → Act (autonomously)</text>
+
+  <!-- Surrounding agents -->
+  <rect x="60" y="310" width="200" height="60" rx="10" fill="#161b24" stroke="url(#greenGrad)" stroke-width="1.5"/>
+  <text x="160" y="335" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#34d399">🏗️ Digital Twin Agent</text>
+  <text x="160" y="352" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#94a3b8">Per-client compliance state</text>
+  <text x="160" y="364" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#64748b">Scores, risks, frameworks, SLAs</text>
+
+  <rect x="60" y="385" width="200" height="60" rx="10" fill="#161b24" stroke="url(#greenGrad)" stroke-width="1.5"/>
+  <text x="160" y="410" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#34d399">📝 Audit Narrator Agent</text>
+  <text x="160" y="427" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#94a3b8">Auto-generates evidence</text>
+  <text x="160" y="439" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#64748b">LLM writes audit narratives</text>
+
+  <rect x="860" y="310" width="200" height="60" rx="10" fill="#161b24" stroke="url(#redGrad)" stroke-width="1.5"/>
+  <text x="960" y="335" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#f87171">🔍 Drift Sentinel Agent</text>
+  <text x="960" y="352" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#94a3b8">Silent degradation detection</text>
+  <text x="960" y="364" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#64748b">Access creep, config drift</text>
+
+  <rect x="860" y="385" width="200" height="60" rx="10" fill="#161b24" stroke="url(#redGrad)" stroke-width="1.5"/>
+  <text x="960" y="410" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#f87171">📜 Obligation Parser Agent</text>
+  <text x="960" y="427" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#94a3b8">Contract → machine rules</text>
+  <text x="960" y="439" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#64748b">MSA clauses → enforceable policies</text>
+
+  <!-- Connection lines from Chain Reactor to other agents -->
+  <line x1="420" y1="340" x2="260" y2="340" stroke="#475569" stroke-width="1" stroke-dasharray="3 2"/>
+  <line x1="420" y1="365" x2="260" y2="415" stroke="#475569" stroke-width="1" stroke-dasharray="3 2"/>
+  <line x1="700" y1="340" x2="860" y2="340" stroke="#475569" stroke-width="1" stroke-dasharray="3 2"/>
+  <line x1="700" y1="365" x2="860" y2="415" stroke="#475569" stroke-width="1" stroke-dasharray="3 2"/>
+
+  <!-- Arrow down from Chain Reactor to Intelligence Layer -->
+  <line x1="560" y1="375" x2="560" y2="465" stroke="#818cf8" stroke-width="2" stroke-dasharray="4 3"/>
+  <polygon points="555,463 565,463 560,471" fill="#818cf8"/>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LAYER 4: INTELLIGENCE LAYER -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <text x="60" y="490" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#64748b" letter-spacing="1.5">INTELLIGENCE LAYER</text>
+
+  <!-- Three intelligence boxes -->
+  <rect x="120" y="500" width="260" height="75" rx="12" fill="#161b24" stroke="#a78bfa" stroke-width="2" filter="url(#shadow)"/>
+  <text x="250" y="525" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="800" fill="#a78bfa">🧠 KAVACH LLM</text>
+  <text x="250" y="543" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#e2e8f0">Fine-tuned Llama 3.2 (our model)</text>
+  <text x="250" y="558" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#94a3b8">Reads code → reasons about compliance</text>
+  <text x="250" y="571" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#64748b">Runs on our GPU — client code stays internal</text>
+
+  <rect x="420" y="500" width="260" height="75" rx="12" fill="#161b24" stroke="#fbbf24" stroke-width="2" filter="url(#shadow)"/>
+  <text x="550" y="525" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="800" fill="#fbbf24">🕸️ Knowledge Graph + RAG</text>
+  <text x="550" y="543" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#e2e8f0">JGraphT — Causal path traversal</text>
+  <text x="550" y="558" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#94a3b8">Traces impact across regulations</text>
+  <text x="550" y="571" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#64748b">Feeds context paths to LLM for reasoning</text>
+
+  <rect x="720" y="500" width="260" height="75" rx="12" fill="#161b24" stroke="#10b981" stroke-width="2" filter="url(#shadow)"/>
+  <text x="850" y="525" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="800" fill="#10b981">⚙️ Policy Engine (26+ rules)</text>
+  <text x="850" y="543" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#e2e8f0">SOX, PCI-DSS, TILA, ECOA, MSA...</text>
+  <text x="850" y="558" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#94a3b8">Evaluates event against all controls</text>
+  <text x="850" y="571" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#64748b">New policies added via AI — zero code changes</text>
+
+  <!-- Arrow down -->
+  <line x1="560" y1="575" x2="560" y2="605" stroke="#818cf8" stroke-width="2" stroke-dasharray="4 3"/>
+  <polygon points="555,603 565,603 560,611" fill="#818cf8"/>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LAYER 5: OUTPUTS / ACTIONS -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <text x="60" y="628" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#64748b" letter-spacing="1.5">ACTIONS &amp; OUTPUTS</text>
+
+  <rect x="60" y="638" width="200" height="50" rx="8" fill="#161b24" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="160" y="659" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#f87171">🚫 Deployment Gate</text>
+  <text x="160" y="676" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#94a3b8">Block / Allow (based on findings)</text>
+
+  <rect x="290" y="638" width="200" height="50" rx="8" fill="#161b24" stroke="#10b981" stroke-width="1.5"/>
+  <text x="390" y="659" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#34d399">📄 Audit Evidence</text>
+  <text x="390" y="676" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#94a3b8">Auto-generated narratives (EY-ready)</text>
+
+  <rect x="520" y="638" width="200" height="50" rx="8" fill="#161b24" stroke="#818cf8" stroke-width="1.5"/>
+  <text x="620" y="659" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#a5b4fc">📊 Dashboard</text>
+  <text x="620" y="676" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#94a3b8">Real-time compliance scores</text>
+
+  <rect x="750" y="638" width="200" height="50" rx="8" fill="#161b24" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="850" y="659" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#fbbf24">🔔 Alerts</text>
+  <text x="850" y="676" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#94a3b8">Slack, Email, PagerDuty</text>
+
+  <rect x="980" y="638" width="170" height="50" rx="8" fill="#161b24" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="1065" y="659" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#a78bfa">💾 H2 Database</text>
+  <text x="1065" y="676" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#94a3b8">Persistent event store</text>
+
+  <!-- Flow label on right side -->
+  <text x="1140" y="140" font-family="Inter,sans-serif" font-size="9" fill="#475569" transform="rotate(90 1140 140)">PERCEIVE</text>
+  <text x="1140" y="340" font-family="Inter,sans-serif" font-size="9" fill="#475569" transform="rotate(90 1140 340)">REASON</text>
+  <text x="1140" y="530" font-family="Inter,sans-serif" font-size="9" fill="#475569" transform="rotate(90 1140 530)">DECIDE</text>
+  <text x="1140" y="660" font-family="Inter,sans-serif" font-size="9" fill="#475569" transform="rotate(90 1140 660)">ACT</text>
+
+</svg>
