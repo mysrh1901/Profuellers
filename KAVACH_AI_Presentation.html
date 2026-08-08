@@ -77,7 +77,7 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
   <a href="#slide1"></a><a href="#slide2"></a><a href="#slide3"></a>
   <a href="#slide4"></a><a href="#slide5"></a><a href="#slide6"></a>
   <a href="#slide7"></a><a href="#slide8"></a><a href="#slide9"></a>
-  <a href="#slide10"></a>
+  <a href="#slide10"></a><a href="#slide11"></a>
 </div>
 
 <div class="slides">
@@ -617,7 +617,66 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
       </div>
     </div>
   </div>
-  <div class="slide-num"><span>10</span> / 10</div>
+  <div class="slide-num"><span>10</span> / 11</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SLIDE 11: What's Unique vs SAST/SonarQube -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="slide" id="slide11" style="padding:40px 80px;">
+  <div class="label">What Makes KAVACH Different</div>
+  <h2 style="margin-bottom:6px;">"SonarQube Already Does This" — No, It Doesn't.</h2>
+  <div style="font-size:13px;color:#94a3b8;margin-bottom:18px;">SAST tools find the bug. KAVACH tells you what it means for the business, the contract, the audit, and the regulator.</div>
+
+  <div class="grid-2" style="gap:20px;">
+    <div class="card" style="padding:20px;">
+      <h3 style="margin-bottom:12px;font-size:16px;">SonarQube / Checkmarx Says:</h3>
+      <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:14px;font-size:14px;color:#f87171;font-weight:600;text-align:center;">
+        "SQL injection found on line 142"
+      </div>
+      <div style="margin-top:16px;font-size:12px;color:#64748b;text-align:center;">That's it. Fix the bug. No business context.</div>
+
+      <h3 style="margin-top:24px;margin-bottom:12px;font-size:16px;">KAVACH AI Says:</h3>
+      <div style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:10px;padding:14px;font-size:12px;color:#cbd5e1;line-height:2.0;">
+        "This SQL injection simultaneously:<br>
+        <span style="color:#f87171;">1.</span> Violates <strong style="color:#a5b4fc;">PCI-DSS 6.5.1</strong> → blocks deployment<br>
+        <span style="color:#f87171;">2.</span> Triggers <strong style="color:#fbbf24;">MSA §7.2</strong> → 48h SLA starts, $50K penalty<br>
+        <span style="color:#f87171;">3.</span> Requires <strong style="color:#a5b4fc;">SOX ITGC-CM-06</strong> → code review before fix ships<br>
+        <span style="color:#f87171;">4.</span> Needs <strong style="color:#a5b4fc;">client notification</strong> per MSA §14.1<br>
+        <span style="color:#f87171;">5.</span> Auto-generates <strong style="color:#34d399;">audit evidence</strong> for EY<br>
+        <span style="color:#f87171;">6.</span> Updates client score: <strong style="color:#f87171;">87% → 72%</strong>"
+      </div>
+    </div>
+
+    <div class="card" style="padding:20px;">
+      <h3 style="margin-bottom:12px;font-size:16px;">Capability Comparison</h3>
+      <table style="width:100%;font-size:12px;color:#94a3b8;border-collapse:collapse;">
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.25);">
+          <th style="text-align:left;padding:7px;color:#64748b;">Capability</th>
+          <th style="text-align:center;padding:7px;color:#f87171;font-size:10px;">SonarQube<br>Checkmarx</th>
+          <th style="text-align:center;padding:7px;color:#f87171;font-size:10px;">Vanta<br>Drata</th>
+          <th style="text-align:center;padding:7px;color:#f87171;font-size:10px;">ServiceNow<br>GRC</th>
+          <th style="text-align:center;padding:7px;color:#34d399;font-size:10px;">KAVACH<br>AI</th>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Find code vulnerabilities</td><td style="text-align:center;color:#34d399;">Yes</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Map finding to specific regulation section</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#fbbf24;">Partial</td><td style="text-align:center;color:#fbbf24;">Partial</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Cross-domain causal reasoning (1 event → 6 domains)</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Per-client/engagement context (different SLAs)</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#fbbf24;">Manual</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Trigger contractual SLA & calculate penalty</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Generate audit evidence automatically (LLM)</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#fbbf24;">Templates</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes (AI)</td></tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Block deployment based on compliance policy</td><td style="text-align:center;color:#fbbf24;">Quality only</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Add new framework without code change</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#fbbf24;">Config</td><td style="text-align:center;color:#34d399;">Yes (AI)</td></tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Own LLM (data stays on-premise)</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Knowledge Graph with causal path traversal</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Fair Lending / ECOA / TILA compliance checks</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
+        <tr><td style="padding:6px;">Multi-agent autonomous operation (24/7)</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
+      </table>
+      <div style="margin-top:14px;padding:10px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:8px;font-size:11px;color:#a5b4fc;text-align:center;">
+        SAST tools are <strong>inputs</strong> to KAVACH — they feed findings into our agent pipeline. They're not competitors, they're our data providers.
+      </div>
+    </div>
+  </div>
+  <div class="slide-num"><span>11</span> / 11</div>
 </div>
 
 </div><!-- end slides -->
