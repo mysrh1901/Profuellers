@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KAVACH AI — Technical Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; overflow:hidden; }
+body { font-family:'Inter',sans-serif; background:#0a0e1a; color:#e2e8f0; }
+
+/* Slide system */
+.slides { height:100vh; scroll-snap-type:y mandatory; overflow-y:scroll; scroll-behavior:smooth; }
+.slide { height:100vh; scroll-snap-align:start; display:flex; flex-direction:column;
+  justify-content:center; padding:60px 100px; position:relative; overflow:hidden; }
+.slide::before { content:''; position:absolute; top:0; left:0; right:0; height:4px;
+  background:linear-gradient(90deg, #6366f1, #a78bfa, #10b981); }
+
+/* Navigation */
+.nav-dots { position:fixed; right:30px; top:50%; transform:translateY(-50%); z-index:100;
+  display:flex; flex-direction:column; gap:12px; }
+.nav-dots a { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,0.2);
+  border:1px solid rgba(255,255,255,0.3); transition:all 0.3s; }
+.nav-dots a:hover, .nav-dots a.active { background:#818cf8; transform:scale(1.4); }
+
+/* Typography */
+h1 { font-size:56px; font-weight:900; letter-spacing:-2px; line-height:1.1; }
+h2 { font-size:38px; font-weight:800; letter-spacing:-1px; margin-bottom:30px; }
+h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
+.subtitle { font-size:22px; color:#94a3b8; margin-top:12px; font-weight:400; }
+.tagline { font-size:16px; color:#64748b; margin-top:20px; font-style:italic; }
+.label { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  color:#818cf8; margin-bottom:12px; }
+
+/* Cards and boxes */
+.card { background:rgba(22,27,48,0.8); border:1px solid rgba(100,116,139,0.25);
+  border-radius:16px; padding:28px; backdrop-filter:blur(10px); }
+.card:hover { border-color:rgba(99,102,241,0.5); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+.grid-4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:16px; }
+
+/* Architecture diagram */
+.arch-box { background:rgba(22,27,48,0.9); border:1px solid rgba(99,102,241,0.3);
+  border-radius:12px; padding:16px 20px; text-align:center; position:relative; }
+.arch-box.highlight { border-color:#10b981; box-shadow:0 0 20px rgba(16,185,129,0.15); }
+.arch-box .box-title { font-size:13px; font-weight:700; color:#e2e8f0; }
+.arch-box .box-sub { font-size:11px; color:#94a3b8; margin-top:4px; }
+.arrow { color:#818cf8; font-size:20px; text-align:center; line-height:30px; }
+
+/* Tags */
+.tag { display:inline-block; padding:4px 12px; border-radius:20px; font-size:11px;
+  font-weight:600; margin:3px; }
+.tag-purple { background:rgba(99,102,241,0.15); color:#a5b4fc; border:1px solid rgba(99,102,241,0.3); }
+.tag-green { background:rgba(16,185,129,0.15); color:#6ee7b7; border:1px solid rgba(16,185,129,0.3); }
+.tag-amber { background:rgba(245,158,11,0.15); color:#fcd34d; border:1px solid rgba(245,158,11,0.3); }
+.tag-red { background:rgba(239,68,68,0.15); color:#fca5a5; border:1px solid rgba(239,68,68,0.3); }
+
+/* Code block */
+.code { font-family:'JetBrains Mono',monospace; font-size:13px; background:rgba(15,23,42,0.8);
+  border:1px solid rgba(100,116,139,0.2); border-radius:10px; padding:20px; line-height:1.7;
+  color:#94a3b8; overflow-x:auto; }
+.code .keyword { color:#c084fc; }
+.code .string { color:#6ee7b7; }
+.code .comment { color:#64748b; }
+
+/* Slide counter */
+.slide-num { position:absolute; bottom:30px; right:40px; font-size:12px; color:#475569; }
+.slide-num span { color:#818cf8; font-weight:700; }
+</style>
+</head>
+<body>
+
+<!-- Navigation Dots -->
+<div class="nav-dots">
+  <a href="#slide1"></a><a href="#slide2"></a><a href="#slide3"></a>
+  <a href="#slide4"></a><a href="#slide5"></a><a href="#slide6"></a>
+  <a href="#slide7"></a><a href="#slide8"></a><a href="#slide9"></a>
+  <a href="#slide10"></a>
+</div>
+
+<div class="slides">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SLIDE 1: Title -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="slide" id="slide1">
+  <div class="label">Hexaware Profuellers · Agentic Arena 2026</div>
+  <h1 style="background:linear-gradient(135deg,#f8fafc,#a5b4fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+    🛡️ KAVACH AI</h1>
+  <div class="subtitle">Knowledge-driven Audit, Vulnerability Analysis & Compliance Health</div>
+  <div class="tagline">"One commit. Six domains. Zero breaches."</div>
+  <div style="margin-top:40px;">
+    <span class="tag tag-purple">Multi-Agent AI</span>
+    <span class="tag tag-green">Custom Fine-Tuned LLM</span>
+    <span class="tag tag-amber">Graph RAG</span>
+    <span class="tag tag-red">Real-Time Compliance</span>
+  </div>
+  <div class="slide-num"><span>01</span> / 10</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SLIDE 2: Problem Statement -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="slide" id="slide2">
+  <div class="label">The Problem</div>
+  <h2>One Code Commit Can Simultaneously Violate 6 Compliance Domains</h2>
+  <div class="grid-3" style="margin-top:30px;">
+    <div class="card">
+      <h3 style="color:#f87171;">Today's Reality</h3>
+      <p style="color:#94a3b8;font-size:14px;line-height:1.8;">
+        • SOX team finds issues in annual audit<br>
+        • Security team scans weekly<br>
+        • Legal reviews contracts quarterly<br>
+        • Fair lending tested semi-annually<br>
+        • <strong style="color:#f87171;">Violations found MONTHS later</strong>
+      </p>
+    </div>
+    <div class="card">
+      <h3 style="color:#fbbf24;">The Gap</h3>
+      <p style="color:#94a3b8;font-size:14px;line-height:1.8;">
+        • Different teams, different tools<br>
+        • No cross-domain reasoning<br>
+        • No per-client context<br>
+        • Reactive, not predictive<br>
+        • <strong style="color:#fbbf24;">$50K+ per missed violation</strong>
+      </p>
+    </div>
+    <div class="card">
+      <h3 style="color:#34d399;">KAVACH AI Solution</h3>
+      <p style="color:#94a3b8;font-size:14px;line-height:1.8;">
+        • AI reasons across ALL domains simultaneously<br>
+        • Per-engagement compliance twin<br>
+        • Predicts impact BEFORE deploy<br>
+        • Generates audit evidence in real-time<br>
+        • <strong style="color:#34d399;">Zero compliance surprises</strong>
+      </p>
+    </div>
+  </div>
+  <div class="slide-num"><span>02</span> / 10</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SLIDE 3: Platform Architecture -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="slide" id="slide3">
+  <div class="label">Platform Architecture</div>
+  <h2>End-to-End Agentic AI Pipeline</h2>
+  <div style="display:grid;grid-template-columns:1fr;gap:14px;margin-top:20px;">
+    <!-- Row 1: Event Sources -->
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;">
+      <div class="arch-box"><div class="box-title">Git Hooks</div><div class="box-sub">Post-commit events</div></div>
+      <div class="arch-box"><div class="box-title">Jenkins CI</div><div class="box-sub">Pipeline webhooks</div></div>
+      <div class="arch-box"><div class="box-title">Jira</div><div class="box-sub">Ticket state changes</div></div>
+      <div class="arch-box"><div class="box-title">AWS Config</div><div class="box-sub">Infra drift events</div></div>
+      <div class="arch-box"><div class="box-title">File Watcher</div><div class="box-sub">Real-time scanning</div></div>
+    </div>
+    <div class="arrow">▼ Events flow into unified queue (ActiveMQ)</div>
+    <!-- Row 2: Agent Layer -->
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;">
+      <div class="arch-box highlight"><div class="box-title">🏗️ Digital Twin</div><div class="box-sub">Per-client state</div></div>
+      <div class="arch-box highlight"><div class="box-title">⚡ Chain Reactor</div><div class="box-sub">Cross-domain impact</div></div>
+      <div class="arch-box highlight"><div class="box-title">📝 Audit Narrator</div><div class="box-sub">Evidence generation</div></div>
+      <div class="arch-box highlight"><div class="box-title">🔍 Drift Sentinel</div><div class="box-sub">Silent degradation</div></div>
+      <div class="arch-box highlight"><div class="box-title">📜 Obligation Parser</div><div class="box-sub">Contract → rules</div></div>
+    </div>
+    <div class="arrow">▼ Agents reason using custom LLM + Knowledge Graph</div>
+    <!-- Row 3: Intelligence Layer -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div class="arch-box" style="border-color:#a78bfa;">
+        <div class="box-title">🧠 KAVACH LLM</div>
+        <div class="box-sub">Fine-tuned Llama 3.2 (QLoRA)</div>
+      </div>
+      <div class="arch-box" style="border-color:#fbbf24;">
+        <div class="box-title">🕸️ Knowledge Graph</div>
+        <div class="box-sub">JGraphT + GraphRAG</div>
+      </div>
+      <div class="arch-box" style="border-color:#f87171;">
+        <div class="box-title">⚙️ Policy Engine</div>
+        <div class="box-sub">26+ live policies</div>
+      </div>
+    </div>
+    <div class="arrow">▼ Results persisted + Dashboard updated</div>
+    <!-- Row 4: Output -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;">
+      <div class="arch-box"><div class="box-title">Dashboard</div><div class="box-sub">Real-time UI</div></div>
+      <div class="arch-box"><div class="box-title">Deployment Gate</div><div class="box-sub">Block/Allow</div></div>
+      <div class="arch-box"><div class="box-title">Audit Evidence</div><div class="box-sub">Auto-generated</div></div>
+      <div class="arch-box"><div class="box-title">Alerts</div><div class="box-sub">Slack/Email/PagerDuty</div></div>
+    </div>
+  </div>
+  <div class="slide-num"><span>03</span> / 10</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SLIDE 4: Our Own LLM -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="slide" id="slide4">
+  <div class="label">Custom LLM</div>
+  <h2>🧠 KAVACH Compliance LLM — Our Own Model</h2>
+  <div class="grid-2" style="margin-top:24px;">
+    <div class="card">
+      <h3>Fine-Tuning Pipeline</h3>
+      <div class="code">
+<span class="comment"># Base Model</span>
+Meta Llama 3.2 (1B params, open-source MIT)
+
+<span class="comment"># Fine-Tuning Method</span>
+QLoRA (4-bit quantized LoRA)
+Trainable params: ~4M / 1.2B = <span class="string">0.3%</span>
+
+<span class="comment"># Training Data (OURS)</span>
+├── 500+ SOX ITGC control mappings
+├── 200+ TILA/RESPA scenarios
+├── 150+ Fair Lending case studies
+├── 300+ PCI-DSS violation patterns
+├── 100+ MSA clause → policy mappings
+└── 1000+ code → compliance finding pairs
+
+<span class="comment"># Output</span>
+<span class="keyword">kavach-compliance-v1</span> (our weights, our IP)
+      </div>
+    </div>
+    <div class="card">
+      <h3>Why Our Own LLM?</h3>
+      <table style="width:100%;font-size:13px;color:#94a3b8;border-collapse:collapse;">
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.2);">
+          <th style="text-align:left;padding:8px;color:#64748b;">Concern</th>
+          <th style="text-align:left;padding:8px;color:#f87171;">GPT/Claude API</th>
+          <th style="text-align:left;padding:8px;color:#34d399;">KAVACH LLM</th>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);">
+          <td style="padding:8px;">Data Privacy</td>
+          <td style="padding:8px;color:#f87171;">Code sent to OpenAI</td>
+          <td style="padding:8px;color:#34d399;">Runs locally</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);">
+          <td style="padding:8px;">Cost</td>
+          <td style="padding:8px;color:#f87171;">$0.03-0.06/call × 1000s</td>
+          <td style="padding:8px;color:#34d399;">Free after training</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);">
+          <td style="padding:8px;">Latency</td>
+          <td style="padding:8px;color:#f87171;">2-5 seconds</td>
+          <td style="padding:8px;color:#34d399;">&lt;500ms local</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);">
+          <td style="padding:8px;">Specialization</td>
+          <td style="padding:8px;color:#f87171;">Generic knowledge</td>
+          <td style="padding:8px;color:#34d399;">Compliance expert</td>
+        </tr>
+        <tr>
+          <td style="padding:8px;">IP Ownership</td>
+          <td style="padding:8px;color:#f87171;">OpenAI owns model</td>
+          <td style="padding:8px;color:#34d399;">WE own weights</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="slide-num"><span>04</span> / 10</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SLIDE 5: Graph RAG -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="slide" id="slide5">
+  <div class="label">Knowledge Graph + GraphRAG</div>
+  <h2>🕸️ Compliance Knowledge Graph with Graph RAG</h2>
+  <div class="grid-2" style="margin-top:24px;">
+    <div class="card">
+      <h3>How GraphRAG Works in KAVACH</h3>
+      <p style="color:#94a3b8;font-size:14px;line-height:2;">
+        <strong style="color:#e2e8f0;">1. Build Graph:</strong> Nodes = regulations, controls, systems, clients<br>
+        <strong style="color:#e2e8f0;">2. Edges:</strong> "violates", "requires", "affects", "mitigates"<br>
+        <strong style="color:#e2e8f0;">3. On Event:</strong> Traverse graph for causal paths<br>
+        <strong style="color:#e2e8f0;">4. RAG:</strong> Retrieved paths sent to LLM for reasoning<br>
+        <strong style="color:#e2e8f0;">5. Output:</strong> Multi-domain impact with regulation refs
+      </p>
+      <div style="margin-top:16px;">
+        <span class="tag tag-purple">JGraphT (Java)</span>
+        <span class="tag tag-green">Causal Path Traversal</span>
+        <span class="tag tag-amber">Context Enrichment</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Graph Structure</h3>
+      <div class="code" style="font-size:12px;">
+<span class="comment">// Knowledge Graph Nodes</span>
+[SQL_INJECTION] ──violates──► [PCI-DSS-6.5]
+[SQL_INJECTION] ──violates──► [OWASP-A03]
+[SQL_INJECTION] ──triggers──► [MSA-§7.2-SLA]
+[MSA-§7.2-SLA] ──penalizes──► [$50K/incident]
+[PCI-DSS-6.5]  ──requires──► [CODE_REVIEW]
+[CODE_REVIEW]  ──satisfies──► [ITGC-CM-06]
+
+<span class="comment">// GraphRAG Query</span>
+Input: "SQL injection found in loan module"
+Traversal: 3-hop causal paths
+Retrieved: 6 connected compliance domains
+LLM Prompt: paths + code + client context
+Output: Structured multi-domain findings
+      </div>
+    </div>
+  </div>
+  <div class="slide-num"><span>05</span> / 10</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SLIDE 6: Multi-Agent System -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="slide" id="slide6">
+  <div class="label">Agentic Architecture</div>
+  <h2>5 Autonomous Agents — Perceive, Reason, Act</h2>
+  <div class="grid-3" style="margin-top:24px;">
+    <div class="card" style="border-left:3px solid #818cf8;">
+      <h3>🏗️ Digital Twin Agent</h3>
+      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
+        Maintains live compliance state for each client engagement. Aggregates findings from Snyk, Checkmarx, Wiz, ServiceNow into a unified compliance score.
+      </p>
+      <div style="margin-top:10px;"><span class="tag tag-purple">Per-Client</span><span class="tag tag-green">Real-Time</span></div>
+    </div>
+    <div class="card" style="border-left:3px solid #f59e0b;">
+      <h3>⚡ Chain Reactor Agent</h3>
+      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
+        Takes ONE event and propagates impact across all 6 domains simultaneously. Uses Policy Engine + GraphRAG for causal reasoning.
+      </p>
+      <div style="margin-top:10px;"><span class="tag tag-amber">Cross-Domain</span><span class="tag tag-red">Blocking</span></div>
+    </div>
+    <div class="card" style="border-left:3px solid #10b981;">
+      <h3>📝 Audit Narrator Agent</h3>
+      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
+        Autonomously generates audit-ready evidence narratives from system activity. Uses LLM to write like a senior auditor (EY/Deloitte ready).
+      </p>
+      <div style="margin-top:10px;"><span class="tag tag-green">LLM-Powered</span><span class="tag tag-purple">Auto-Evidence</span></div>
+    </div>
+    <div class="card" style="border-left:3px solid #ef4444;">
+      <h3>🔍 Drift Sentinel Agent</h3>
+      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
+        Detects silent compliance degradation before auditors do. Catches access creep, config drift, expired certifications, orphaned permissions.
+      </p>
+      <div style="margin-top:10px;"><span class="tag tag-red">Proactive</span><span class="tag tag-amber">Auto-Remediate</span></div>
+    </div>
+    <div class="card" style="border-left:3px solid #a78bfa;">
+      <h3>📜 Obligation Parser Agent</h3>
+      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
+        Reads MSA/contract text and extracts machine-readable obligations. Maps clauses to controls automatically using LLM.
+      </p>
+      <div style="margin-top:10px;"><span class="tag tag-purple">NLP</span><span class="tag tag-green">Contract→Rules</span></div>
+    </div>
+    <div class="card" style="border-left:3px solid #fbbf24;">
+      <h3>🧠 Control Ingestion Agent</h3>
+      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
+        Feed raw regulation text → AI parses into live policies. Add entire frameworks (DORA, HITRUST) with ZERO code changes.
+      </p>
+      <div style="margin-top:10px;"><span class="tag tag-amber">Dynamic</span><span class="tag tag-red">Zero Code</span></div>
+    </div>
+  </div>
+  <div class="slide-num"><span>06</span> / 10</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SLIDE 7: Tech Stack -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="slide" id="slide7">
+  <div class="label">Technology Stack</div>
+  <h2>Enterprise-Grade Tech Stack</h2>
+  <div class="grid-4" style="margin-top:24px;">
+    <div class="card" style="text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">🧠</div>
+      <h3 style="font-size:14px;">AI / LLM</h3>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
+        Llama 3.2 (fine-tuned)<br>QLoRA Training<br>Ollama Runtime<br>AWS Bedrock (Claude)
+      </p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">⚙️</div>
+      <h3 style="font-size:14px;">Backend</h3>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
+        Spring Boot 3.4<br>ActiveMQ (JMS)<br>H2 Database<br>JPA/Hibernate
+      </p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">🕸️</div>
+      <h3 style="font-size:14px;">Graph / RAG</h3>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
+        JGraphT<br>Causal Path Analysis<br>GraphRAG Retrieval<br>Knowledge Graph
+      </p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">🖥️</div>
+      <h3 style="font-size:14px;">Frontend</h3>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
+        Real-time Dashboard<br>Auto-refresh (no reload)<br>5 Interactive Views<br>Click-to-expand Panels
+      </p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">🔍</div>
+      <h3 style="font-size:14px;">Code Analysis</h3>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
+        AI Scanner (Ollama)<br>Entropy-based secrets<br>SAST integration<br>File System Watcher
+      </p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">📡</div>
+      <h3 style="font-size:14px;">Event Pipeline</h3>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
+        Webhook ingestion<br>JMS message queue<br>Event-driven agents<br>Async processing
+      </p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">🏗️</div>
+      <h3 style="font-size:14px;">Microservices</h3>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
+        Gradle Multi-project<br>Alpha/Beta/Gamma<br>Selective Deploy<br>Jenkins Pipeline
+      </p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">☁️</div>
+      <h3 style="font-size:14px;">Cloud / Infra</h3>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
+        AWS (Bedrock, S3)<br>Docker / K8s ready<br>Zero external deps<br>Self-contained demo
+      </p>
+    </div>
+  </div>
+  <div class="slide-num"><span>07</span> / 10</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SLIDE 8: Chain Reaction Demo -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="slide" id="slide8">
+  <div class="label">Key Differentiator</div>
+  <h2>⚡ One Commit → Six Compliance Domains</h2>
+  <div class="grid-2" style="margin-top:24px;">
+    <div class="card">
+      <h3>Trigger: Developer commits ARM rate change</h3>
+      <div class="code" style="font-size:12px;">
+<span class="keyword">commit</span> a3f7b2c — "Update ARM rate cap logic"
+<span class="comment">// Files: rate_calculator.py, borrower_eligibility.py</span>
+<span class="comment">// Touches: financial logic + borrower PII</span>
+<span class="comment">// SAST: 1 HIGH finding (race condition)</span>
+      </div>
+      <div style="margin-top:20px;">
+        <h3>Chain Reaction Fires:</h3>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:12px;height:12px;border-radius:50%;background:#ef4444;"></div>
+            <span style="font-size:13px;"><strong>SOX</strong> — Dual approval required for financial system</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:12px;height:12px;border-radius:50%;background:#f59e0b;"></div>
+            <span style="font-size:13px;"><strong>Security</strong> — SAST finding blocks deployment</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:12px;height:12px;border-radius:50%;background:#eab308;"></div>
+            <span style="font-size:13px;"><strong>TILA/Reg Z</strong> — APR accuracy validation needed</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:12px;height:12px;border-radius:50%;background:#a78bfa;"></div>
+            <span style="font-size:13px;"><strong>Fair Lending</strong> — Disparate impact analysis required</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:12px;height:12px;border-radius:50%;background:#818cf8;"></div>
+            <span style="font-size:13px;"><strong>Contractual</strong> — Client notification per MSA §7.4</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:12px;height:12px;border-radius:50%;background:#10b981;"></div>
+            <span style="font-size:13px;"><strong>PCI-DSS</strong> — Code review required before release</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>What No Other Tool Does</h3>
+      <table style="width:100%;font-size:13px;color:#94a3b8;border-collapse:collapse;margin-top:10px;">
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.2);">
+          <th style="text-align:left;padding:10px;color:#64748b;">Tool</th>
+          <th style="text-align:left;padding:10px;color:#64748b;">Limitation</th>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);">
+          <td style="padding:10px;">Vanta / Drata</td>
+          <td style="padding:10px;">Single-company, no multi-client</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);">
+          <td style="padding:10px;">ServiceNow</td>
+          <td style="padding:10px;">Aggregation, no causal reasoning</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);">
+          <td style="padding:10px;">Checkmarx / Snyk</td>
+          <td style="padding:10px;">Find vulns, no business impact</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);">
+          <td style="padding:10px;">Fieldguide</td>
+          <td style="padding:10px;">Helps auditors, doesn't generate</td>
+        </tr>
+        <tr>
+          <td style="padding:10px;color:#34d399;font-weight:700;">KAVACH AI</td>
+          <td style="padding:10px;color:#34d399;">Cross-domain causal reasoning + auto evidence</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="slide-num"><span>08</span> / 10</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SLIDE 9: Dynamic Control Ingestion -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="slide" id="slide9">
+  <div class="label">Adaptability — Zero Code Changes</div>
+  <h2>New Regulation Drops? KAVACH Adapts Instantly.</h2>
+  <div class="grid-2" style="margin-top:24px;">
+    <div class="card">
+      <h3>How It Works</h3>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:12px;">
+        <div style="display:flex;gap:12px;align-items:start;">
+          <div style="min-width:32px;height:32px;border-radius:50%;background:rgba(99,102,241,0.2);display:flex;align-items:center;justify-content:center;color:#a5b4fc;font-weight:800;">1</div>
+          <div><strong style="color:#e2e8f0;">Feed regulation text</strong><br><span style="color:#94a3b8;font-size:13px;">Paste DORA Article 19 text into API</span></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:start;">
+          <div style="min-width:32px;height:32px;border-radius:50%;background:rgba(99,102,241,0.2);display:flex;align-items:center;justify-content:center;color:#a5b4fc;font-weight:800;">2</div>
+          <div><strong style="color:#e2e8f0;">AI agent parses</strong><br><span style="color:#94a3b8;font-size:13px;">LLM extracts domain, severity, triggers, actions</span></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:start;">
+          <div style="min-width:32px;height:32px;border-radius:50%;background:rgba(99,102,241,0.2);display:flex;align-items:center;justify-content:center;color:#a5b4fc;font-weight:800;">3</div>
+          <div><strong style="color:#e2e8f0;">Policy created automatically</strong><br><span style="color:#94a3b8;font-size:13px;">Added to live engine — no restart needed</span></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:start;">
+          <div style="min-width:32px;height:32px;border-radius:50%;background:rgba(16,185,129,0.2);display:flex;align-items:center;justify-content:center;color:#6ee7b7;font-weight:800;">✓</div>
+          <div><strong style="color:#34d399;">Enforced immediately</strong><br><span style="color:#94a3b8;font-size:13px;">Next event triggers the new policy. Zero code changes.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Demo: Adding DORA Framework</h3>
+      <div class="code" style="font-size:11px;">
+<span class="comment">// POST /api/controls/ingest</span>
+{
+  <span class="string">"framework"</span>: <span class="string">"DORA"</span>,
+  <span class="string">"controlText"</span>: <span class="string">"Article 19: Financial
+    entities shall report major ICT incidents
+    to competent authority within 4 hours..."</span>
+}
+
+<span class="comment">// Response (AI-generated policy):</span>
+{
+  <span class="string">"id"</span>: <span class="string">"DORA-ICT-019"</span>,
+  <span class="string">"domain"</span>: <span class="string">"REGULATORY"</span>,
+  <span class="string">"severity"</span>: <span class="string">"CRITICAL"</span>,
+  <span class="string">"blocking"</span>: <span class="keyword">true</span>,
+  <span class="string">"sla"</span>: <span class="string">"4 hours"</span>
+}
+
+<span class="comment">// Result: DORA now enforced. No restart.</span>
+<span class="comment">// Works for: HITRUST, NIST, ISO, FedRAMP...</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num"><span>09</span> / 10</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SLIDE 10: Business Value & Summary -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="slide" id="slide10">
+  <div class="label">Business Impact</div>
+  <h2>Value for Hexaware & Clients</h2>
+  <div class="grid-2" style="margin-top:24px;">
+    <div class="card">
+      <h3>Quantified Value</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:16px;">
+        <div style="text-align:center;">
+          <div style="font-size:36px;font-weight:900;color:#818cf8;">70%</div>
+          <div style="font-size:12px;color:#94a3b8;">Audit prep time saved</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:36px;font-weight:900;color:#34d399;">$2-4M</div>
+          <div style="font-size:12px;color:#94a3b8;">Annual cost savings</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:36px;font-weight:900;color:#fbbf24;">6</div>
+          <div style="font-size:12px;color:#94a3b8;">Domains per commit</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:36px;font-weight:900;color:#f87171;">&lt;2s</div>
+          <div style="font-size:12px;color:#94a3b8;">Analysis time</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:36px;font-weight:900;color:#a78bfa;">$50K+</div>
+          <div style="font-size:12px;color:#94a3b8;">Penalty avoided/incident</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:36px;font-weight:900;color:#10b981;">24/7</div>
+          <div style="font-size:12px;color:#94a3b8;">Autonomous agents</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Why This Wins</h3>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:12px;font-size:14px;color:#cbd5e1;line-height:1.7;">
+        <div>✅ <strong>Own LLM</strong> — Fine-tuned, runs locally, no external API dependency</div>
+        <div>✅ <strong>Graph RAG</strong> — Causal reasoning across compliance domains</div>
+        <div>✅ <strong>Multi-Agent</strong> — 5 autonomous agents (perceive → reason → act)</div>
+        <div>✅ <strong>Domain-Agnostic</strong> — Add new framework with zero code changes</div>
+        <div>✅ <strong>Per-Engagement</strong> — Different rules per client (not per company)</div>
+        <div>✅ <strong>Predictive</strong> — Blocks violations BEFORE deployment</div>
+        <div>✅ <strong>Auto-Evidence</strong> — Audit narratives generated autonomously</div>
+        <div>✅ <strong>No Market Equivalent</strong> — Nobody else does cross-domain reasoning</div>
+      </div>
+      <div style="margin-top:20px;padding:14px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);border-radius:10px;text-align:center;">
+        <div style="font-size:18px;font-weight:800;color:#a5b4fc;">🛡️ KAVACH AI</div>
+        <div style="font-size:13px;color:#94a3b8;margin-top:4px;">"One commit. Six domains. Zero breaches."</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num"><span>10</span> / 10</div>
+</div>
+
+</div><!-- end slides -->
+
+<script>
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+  const slides = document.querySelectorAll('.slide');
+  const container = document.querySelector('.slides');
+  const slideHeight = window.innerHeight;
+  const currentSlide = Math.round(container.scrollTop / slideHeight);
+  
+  if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
+    e.preventDefault();
+    if (currentSlide < slides.length - 1) {
+      container.scrollTo({ top: (currentSlide + 1) * slideHeight, behavior: 'smooth' });
+    }
+  } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+    e.preventDefault();
+    if (currentSlide > 0) {
+      container.scrollTo({ top: (currentSlide - 1) * slideHeight, behavior: 'smooth' });
+    }
+  }
+});
+
+// Update nav dots
+const container = document.querySelector('.slides');
+const dots = document.querySelectorAll('.nav-dots a');
+container.addEventListener('scroll', function() {
+  const current = Math.round(container.scrollTop / window.innerHeight);
+  dots.forEach((d, i) => d.classList.toggle('active', i === current));
+});
+dots[0].classList.add('active');
+</script>
+</body>
+</html>
