@@ -270,20 +270,16 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
   <div class="grid-2" style="margin-top:24px;">
     <div class="card">
       <h3>How GraphRAG Works in KAVACH</h3>
-      <div style="font-size:14px;color:#cbd5e1;line-height:2.1;">
-        <strong style="color:#a5b4fc;">1. Compliance Knowledge Graph</strong><br>
-        <span style="color:#94a3b8;">We model all regulations, controls, systems, and clients as a connected graph. Each entity is a node, and relationships (violates, requires, triggers, penalizes) are edges. This captures how compliance domains depend on each other.</span>
+      <div style="font-size:13px;color:#cbd5e1;line-height:1.9;">
+        <strong style="color:#a5b4fc;">1. Compliance Knowledge Graph</strong> — All regulations, controls, and systems modeled as connected nodes with relationship edges (violates, requires, triggers, penalizes).
         <br><br>
-        <strong style="color:#a5b4fc;">2. Causal Path Traversal</strong><br>
-        <span style="color:#94a3b8;">When an event occurs (e.g., SQL injection detected), the engine traverses the graph to discover all impacted regulations and downstream consequences — for example: SQL injection → violates PCI-DSS 6.5 → triggers MSA §7.2 SLA (48h) → exposes $50K penalty → requires SOX disclosure.</span>
+        <strong style="color:#a5b4fc;">2. Causal Path Traversal</strong> — On event, traverse the graph to find all downstream impacts. E.g.: SQL injection → PCI-DSS 6.5 → MSA §7.2 SLA → $50K penalty → SOX disclosure.
         <br><br>
-        <strong style="color:#a5b4fc;">3. Retrieval-Augmented Generation (RAG)</strong><br>
-        <span style="color:#94a3b8;">The retrieved causal paths are passed as context to our LLM. Instead of the model reasoning from general knowledge alone, it receives the specific compliance relationships relevant to this event — enabling precise, regulation-aware analysis.</span>
+        <strong style="color:#a5b4fc;">3. RAG (Retrieval-Augmented Generation)</strong> — Retrieved paths are passed as context to our LLM, enabling precise regulation-aware reasoning instead of generic responses.
         <br><br>
-        <strong style="color:#a5b4fc;">4. Multi-Domain Impact Output</strong><br>
-        <span style="color:#94a3b8;">Result: a structured response showing every affected domain, specific regulation references, severity levels, and required actions — all within 2 seconds of the triggering event.</span>
+        <strong style="color:#a5b4fc;">4. Output</strong> — Structured multi-domain impact with regulation references, severity, and actions — within 2 seconds.
       </div>
-      <div style="margin-top:16px;">
+      <div style="margin-top:12px;">
         <span class="tag tag-purple">JGraphT Engine</span>
         <span class="tag tag-green">Causal Path Analysis</span>
         <span class="tag tag-amber">LLM Context Enrichment</span>
