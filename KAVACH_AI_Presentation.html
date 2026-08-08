@@ -436,12 +436,21 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
   <h2>⚡ One Commit → Six Compliance Domains</h2>
   <div class="grid-2" style="margin-top:24px;">
     <div class="card">
-      <h3>Trigger: Developer commits ARM rate change</h3>
-      <div class="code" style="font-size:12px;">
-<span class="keyword">commit</span> a3f7b2c — "Update ARM rate cap logic"
-<span class="comment">// Files: rate_calculator.py, borrower_eligibility.py</span>
-<span class="comment">// Touches: financial logic + borrower PII</span>
-<span class="comment">// SAST: 1 HIGH finding (race condition)</span>
+      <h3>Scenario: What Happens When a Developer Pushes Code</h3>
+      <div style="font-size:13px;color:#cbd5e1;line-height:1.9;margin-bottom:14px;">
+        A Hexaware developer working on a mortgage client's system pushes a code change that modifies how adjustable-rate mortgage (ARM) interest rates are calculated. This is a routine commit — but it touches financially-significant logic.
+      </div>
+      <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:16px;font-size:13px;color:#e2e8f0;">
+        <div style="color:#fbbf24;font-weight:700;margin-bottom:8px;">Event Details</div>
+        <div style="color:#94a3b8;line-height:1.9;">
+          • <strong style="color:#e2e8f0;">What changed:</strong> ARM rate cap calculation logic + borrower eligibility checks<br>
+          • <strong style="color:#e2e8f0;">Why it matters:</strong> This code directly determines what interest rate a borrower pays<br>
+          • <strong style="color:#e2e8f0;">Risk detected:</strong> Automated SAST scan found a race condition (HIGH severity)<br>
+          • <strong style="color:#e2e8f0;">Data involved:</strong> Borrower income, credit score (PII)
+        </div>
+      </div>
+      <div style="margin-top:14px;font-size:12px;color:#94a3b8;border-left:3px solid #818cf8;padding-left:12px;">
+        <strong style="color:#e2e8f0;">KAVACH immediately fires the Chain Reactor</strong> — analyzing this single commit across all 6 compliance domains simultaneously, in under 2 seconds.
       </div>
       <div style="margin-top:20px;">
         <h3>Chain Reaction Fires:</h3>
