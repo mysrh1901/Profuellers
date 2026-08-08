@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Generate a high-resolution architecture diagram as PNG."""
+"""Generate a high-resolution architecture diagram as PNG — no emoji (avoids square boxes)."""
 
 from PIL import Image, ImageDraw, ImageFont
 import os
 
 # Image size (high-res for presentation)
-W, H = 2400, 1500
+W, H = 2400, 1400
 img = Image.new('RGB', (W, H), '#0f1419')
 draw = ImageDraw.Draw(img)
 
@@ -18,15 +18,15 @@ def font(size, bold=False):
     except:
         return ImageFont.load_default()
 
-f_title = font(48, bold=True)
-f_subtitle = font(22)
-f_label = font(18, bold=True)
+f_title = font(44, bold=True)
+f_subtitle = font(20)
+f_section = font(20, bold=True)
 f_box_title = font(22, bold=True)
 f_box_sub = font(16)
 f_box_detail = font(14)
-f_section = font(20, bold=True)
-f_tech = font(16, bold=True)
-f_tech_sub = font(13)
+f_label = font(16, bold=True)
+f_tech = font(15, bold=True)
+f_tech_sub = font(12)
 
 # Colors
 PURPLE = '#818cf8'
@@ -39,8 +39,8 @@ DIM = '#475569'
 DARK_CARD = '#161b24'
 BORDER = '#334155'
 
-def rounded_rect(x, y, w, h, fill=DARK_CARD, outline=BORDER, radius=12, width=2):
-    draw.rounded_rectangle([x, y, x+w, y+h], radius=radius, fill=fill, outline=outline, width=width)
+def box(x, y, w, h, outline=BORDER, width=2, radius=14):
+    draw.rounded_rectangle([x, y, x+w, y+h], radius=radius, fill=DARK_CARD, outline=outline, width=width)
 
 def center_text(text, x, y, w, fnt, fill=WHITE):
     bbox = draw.textbbox((0,0), text, font=fnt)
@@ -48,175 +48,160 @@ def center_text(text, x, y, w, fnt, fill=WHITE):
     draw.text((x + (w - tw)//2, y), text, font=fnt, fill=fill)
 
 def arrow_down(x, y1, y2, color=PURPLE):
-    draw.line([(x, y1), (x, y2-8)], fill=color, width=3)
-    draw.polygon([(x-6, y2-10), (x+6, y2-10), (x, y2)], fill=color)
+    draw.line([(x, y1), (x, y2-10)], fill=color, width=3)
+    draw.polygon([(x-7, y2-12), (x+7, y2-12), (x, y2)], fill=color)
 
 # ═══════════════════════════════════════════════════════════
 # TITLE
 # ═══════════════════════════════════════════════════════════
-draw.text((80, 40), "🛡️ KAVACH AI — Architecture Flow", font=f_title, fill=WHITE)
-draw.text((80, 100), "How the Agentic Pipeline works: Event → Queue → Agents → Intelligence → Action", font=f_subtitle, fill=GRAY)
+draw.text((80, 35), "KAVACH AI", font=f_title, fill=PURPLE)
+draw.text((380, 48), "- End-to-End Agentic Pipeline", font=font(32), fill=WHITE)
+draw.text((80, 90), "Event Sources  ->  Message Queue  ->  Agent Layer  ->  Intelligence Layer  ->  Actions & Outputs", font=f_subtitle, fill=GRAY)
 
 # ═══════════════════════════════════════════════════════════
 # LAYER 1: EVENT SOURCES
 # ═══════════════════════════════════════════════════════════
-draw.text((80, 160), "① EVENT SOURCES (Perceive)", font=f_section, fill=DIM)
+y0 = 140
+draw.text((80, y0), "1. EVENT SOURCES", font=f_section, fill=DIM)
 
 sources = [
-    ("Git Webhooks", "Code commits, PRs"),
-    ("Jenkins CI/CD", "Build & deploy events"),
+    ("Git Webhooks", "Code commits, PRs, merges"),
+    ("Jenkins CI/CD", "Build & deploy pipeline events"),
     ("Jira / ServiceNow", "Ticket state changes"),
-    ("AWS Config", "Infra & IAM changes"),
-    ("File Watcher", "Real-time code scan"),
+    ("AWS Config", "Infra drift, IAM changes"),
+    ("File Watcher", "Real-time code scanning"),
     ("SAST Tools", "Checkmarx, Snyk, Wiz"),
 ]
-sx = 80
 for i, (title, sub) in enumerate(sources):
-    bx = sx + i * 370
-    rounded_rect(bx, 195, 340, 80, outline=BORDER)
-    draw.text((bx+20, 210), title, font=f_box_title, fill=WHITE)
-    draw.text((bx+20, 240), sub, font=f_box_sub, fill=GRAY)
+    bx = 80 + i * 380
+    box(bx, y0+35, 355, 70)
+    draw.text((bx+18, y0+48), title, font=f_box_title, fill=WHITE)
+    draw.text((bx+18, y0+76), sub, font=f_box_sub, fill=GRAY)
 
-# Arrow down to queue
-arrow_down(W//2, 280, 320, PURPLE)
+# Arrow
+arrow_down(W//2, y0+110, y0+155, PURPLE)
 
 # ═══════════════════════════════════════════════════════════
 # LAYER 2: MESSAGE QUEUE
 # ═══════════════════════════════════════════════════════════
-rounded_rect(300, 325, W-600, 70, outline=PURPLE, width=3)
-center_text("ActiveMQ Message Queue — \"compliance-events\"", 300, 343, W-600, f_box_title, PURPLE)
-draw.text((320, 370), "All events from all sources flow into a single unified queue — agents consume asynchronously", font=f_box_detail, fill=DIM)
+y1 = y0 + 160
+box(250, y1, W-500, 60, outline=PURPLE, width=3)
+center_text("ActiveMQ Message Queue  -  \"compliance-events\"", 250, y1+12, W-500, f_box_title, PURPLE)
+draw.text((270, y1+40), "Unified event bus: all sources feed into one queue, agents consume asynchronously", font=f_box_detail, fill=DIM)
 
-arrow_down(W//2, 400, 445, PURPLE)
+arrow_down(W//2, y1+65, y1+105, PURPLE)
 
 # ═══════════════════════════════════════════════════════════
 # LAYER 3: AGENT LAYER
 # ═══════════════════════════════════════════════════════════
-draw.text((80, 450), "② AGENT LAYER (Reason & Decide)", font=f_section, fill=DIM)
+y2 = y1 + 110
+draw.text((80, y2), "2. AGENT LAYER  (Perceive -> Reason -> Decide -> Act)", font=f_section, fill=DIM)
 
-# Chain Reactor (center, larger)
-cx, cy = 700, 490
-rounded_rect(cx, cy, 900, 110, outline=AMBER, width=3)
-draw.text((cx+30, cy+15), "⚡ Chain Reactor Agent (Central Orchestrator)", font=f_box_title, fill=AMBER)
-draw.text((cx+30, cy+50), "Receives event → Evaluates 26+ policies → Traces causal graph → Triggers downstream agents", font=f_box_sub, fill=WHITE)
-draw.text((cx+30, cy+78), "PERCEIVE the event → REASON about impact → DECIDE severity → ACT (block/alert/narrate)", font=f_box_detail, fill=GRAY)
+# Chain Reactor (center, prominent)
+cx = 650
+box(cx, y2+35, 1000, 100, outline=AMBER, width=3)
+draw.text((cx+25, y2+50), "[CHAIN REACTOR AGENT]  -  Central Orchestrator", font=f_box_title, fill=AMBER)
+draw.text((cx+25, y2+82), "Receives event -> Evaluates 26+ policies -> Traces knowledge graph -> Triggers downstream agents", font=f_box_sub, fill=WHITE)
+draw.text((cx+25, y2+108), "Autonomous loop: perceive the event, reason about cross-domain impact, decide severity, act (block/alert/narrate)", font=f_box_detail, fill=GRAY)
 
 # Left agents
-agents_left = [
-    ("🏗️ Digital Twin Agent", "Maintains live compliance", "score per client engagement", GREEN),
-    ("📝 Audit Narrator Agent", "Auto-generates audit evidence", "using LLM (EY/Deloitte ready)", GREEN),
+left_agents = [
+    ("[DIGITAL TWIN AGENT]", "Live compliance score per client", "Aggregates Snyk + Checkmarx + Wiz + ServiceNow", GREEN),
+    ("[AUDIT NARRATOR AGENT]", "Auto-generates audit evidence", "LLM writes narratives (EY/Deloitte ready)", GREEN),
 ]
-for i, (title, line1, line2, color) in enumerate(agents_left):
-    ay = 490 + i * 120
-    rounded_rect(80, ay, 570, 100, outline=color, width=2)
-    draw.text((100, ay+15), title, font=f_box_title, fill=color)
-    draw.text((100, ay+48), line1, font=f_box_sub, fill=WHITE)
-    draw.text((100, ay+72), line2, font=f_box_detail, fill=GRAY)
-    # Connection line
-    draw.line([(650, ay+50), (700, cy+55)], fill=DIM, width=1)
+for i, (title, line1, line2, color) in enumerate(left_agents):
+    ay = y2 + 35 + i * 115
+    box(80, ay, 540, 95, outline=color, width=2)
+    draw.text((100, ay+12), title, font=f_box_title, fill=color)
+    draw.text((100, ay+42), line1, font=f_box_sub, fill=WHITE)
+    draw.text((100, ay+66), line2, font=f_box_detail, fill=GRAY)
+    # connector
+    draw.line([(620, ay+47), (cx, y2+85)], fill=DIM, width=1)
 
 # Right agents
-agents_right = [
-    ("🔍 Drift Sentinel Agent", "Detects silent compliance", "degradation before auditors do", RED),
-    ("📜 Obligation Parser Agent", "Converts MSA/contract text", "into machine-enforceable rules", RED),
+right_agents = [
+    ("[DRIFT SENTINEL AGENT]", "Detects silent compliance degradation", "Access creep, config drift, expired certs", RED),
+    ("[OBLIGATION PARSER AGENT]", "Converts MSA/contract into rules", "LLM parses legal text -> enforceable policies", RED),
 ]
-for i, (title, line1, line2, color) in enumerate(agents_right):
-    ay = 490 + i * 120
-    rounded_rect(1650, ay, 570, 100, outline=color, width=2)
-    draw.text((1670, ay+15), title, font=f_box_title, fill=color)
-    draw.text((1670, ay+48), line1, font=f_box_sub, fill=WHITE)
-    draw.text((1670, ay+72), line2, font=f_box_detail, fill=GRAY)
-    draw.line([(1650, ay+50), (1600, cy+55)], fill=DIM, width=1)
+for i, (title, line1, line2, color) in enumerate(right_agents):
+    ay = y2 + 35 + i * 115
+    box(1680, ay, 540, 95, outline=color, width=2)
+    draw.text((1700, ay+12), title, font=f_box_title, fill=color)
+    draw.text((1700, ay+42), line1, font=f_box_sub, fill=WHITE)
+    draw.text((1700, ay+66), line2, font=f_box_detail, fill=GRAY)
+    draw.line([(1680, ay+47), (cx+1000, y2+85)], fill=DIM, width=1)
 
 # Arrow down
-arrow_down(W//2, 610, 660, PURPLE)
+arrow_down(W//2, y2+245, y2+285, PURPLE)
 
 # ═══════════════════════════════════════════════════════════
 # LAYER 4: INTELLIGENCE LAYER
 # ═══════════════════════════════════════════════════════════
-draw.text((80, 670), "③ INTELLIGENCE LAYER (AI Reasoning)", font=f_section, fill=DIM)
+y3 = y2 + 290
+draw.text((80, y3), "3. INTELLIGENCE LAYER  (AI Reasoning)", font=f_section, fill=DIM)
 
 intel = [
-    ("🧠 KAVACH LLM (Our Model)", "Fine-tuned Llama 3.2 on compliance data", "Reads code → reasons about regulations", "Runs on our GPU — data never leaves", '#a78bfa'),
-    ("🕸️ Knowledge Graph + GraphRAG", "JGraphT — causal path traversal", "Maps: violation → regulation → penalty → action", "Retrieved paths enrich LLM context", AMBER),
-    ("⚙️ Compliance Policy Engine", "26+ live policies (SOX, PCI, TILA, ECOA...)", "Evaluates every event against all controls", "New policies added via AI — zero code changes", GREEN),
+    ("KAVACH LLM (Our Model)", "Fine-tuned Llama 3.2 on compliance data", "Reads code, reasons about violations", "Runs on our infra - data stays internal", '#a78bfa'),
+    ("KNOWLEDGE GRAPH + GraphRAG", "JGraphT causal path traversal", "Maps: finding -> regulation -> penalty", "Retrieved paths enrich LLM context", AMBER),
+    ("POLICY ENGINE (26+ Rules)", "SOX, PCI-DSS, TILA, ECOA, MSA...", "Evaluates event against all controls", "New policies via AI - zero code changes", GREEN),
 ]
 for i, (title, line1, line2, line3, color) in enumerate(intel):
     ix = 80 + i * 770
-    rounded_rect(ix, 705, 720, 130, outline=color, width=3)
-    draw.text((ix+25, 715), title, font=f_box_title, fill=color)
-    draw.text((ix+25, 750), line1, font=f_box_sub, fill=WHITE)
-    draw.text((ix+25, 778), line2, font=f_box_sub, fill=GRAY)
-    draw.text((ix+25, 806), line3, font=f_box_detail, fill=DIM)
+    box(ix, y3+35, 730, 120, outline=color, width=3)
+    draw.text((ix+22, y3+48), title, font=f_box_title, fill=color)
+    draw.text((ix+22, y3+78), line1, font=f_box_sub, fill=WHITE)
+    draw.text((ix+22, y3+102), line2, font=f_box_sub, fill=GRAY)
+    draw.text((ix+22, y3+126), line3, font=f_box_detail, fill=DIM)
 
 # Arrow down
-arrow_down(W//2, 840, 880, PURPLE)
+arrow_down(W//2, y3+160, y3+195, PURPLE)
 
 # ═══════════════════════════════════════════════════════════
-# LAYER 5: ACTIONS / OUTPUTS
+# LAYER 5: OUTPUTS
 # ═══════════════════════════════════════════════════════════
-draw.text((80, 890), "④ ACTIONS & OUTPUTS (Act)", font=f_section, fill=DIM)
+y4 = y3 + 200
+draw.text((80, y4), "4. ACTIONS & OUTPUTS", font=f_section, fill=DIM)
 
 outputs = [
-    ("🚫 Deployment Gate", "Block / Allow deployment", "Based on policy violations", RED),
-    ("📄 Audit Evidence", "Auto-generated narratives", "EY/Deloitte audit-ready", GREEN),
-    ("📊 Real-Time Dashboard", "Live compliance scores", "Per-client, per-domain", PURPLE),
-    ("🔔 Alerts & Notifications", "Slack, Email, PagerDuty", "SLA timers, escalations", AMBER),
-    ("💾 Persistent Store", "H2 / PostgreSQL", "Event history, audit trail", '#64748b'),
+    ("DEPLOYMENT GATE", "Block / Allow", RED),
+    ("AUDIT EVIDENCE", "Auto-generated narratives", GREEN),
+    ("LIVE DASHBOARD", "Real-time scores per client", PURPLE),
+    ("ALERTS", "Slack, Email, PagerDuty", AMBER),
+    ("DATABASE", "Persistent event store", '#64748b'),
 ]
-for i, (title, line1, line2, color) in enumerate(outputs):
-    ox = 80 + i * 460
-    rounded_rect(ox, 925, 420, 95, outline=color, width=2)
-    draw.text((ox+20, 938), title, font=f_box_title, fill=color)
-    draw.text((ox+20, 968), line1, font=f_box_sub, fill=WHITE)
-    draw.text((ox+20, 993), line2, font=f_box_detail, fill=GRAY)
+for i, (title, sub, color) in enumerate(outputs):
+    ox = 80 + i * 455
+    box(ox, y4+35, 420, 65, outline=color, width=2)
+    draw.text((ox+18, y4+48), title, font=f_box_title, fill=color)
+    draw.text((ox+18, y4+74), sub, font=f_box_sub, fill=GRAY)
 
 # ═══════════════════════════════════════════════════════════
-# TECH STACK BAR (Bottom)
+# TECH STACK BAR
 # ═══════════════════════════════════════════════════════════
-draw.line([(80, 1060), (W-80, 1060)], fill=BORDER, width=1)
-draw.text((80, 1075), "TECH STACK", font=f_section, fill=DIM)
+y5 = y4 + 120
+draw.line([(80, y5), (W-80, y5)], fill=BORDER, width=1)
+draw.text((80, y5+10), "TECH STACK:", font=f_label, fill=DIM)
 
 techs = [
-    ("Spring Boot 3.4", "Backend + REST API"),
-    ("ActiveMQ", "Message Queue"),
-    ("JGraphT", "Knowledge Graph"),
-    ("Llama 3.2 + QLoRA", "Custom LLM"),
-    ("Ollama", "LLM Runtime"),
-    ("AWS Bedrock", "Claude (Production)"),
-    ("H2 / PostgreSQL", "Database"),
-    ("Python + Java", "Multi-language"),
-    ("Gradle", "Build System"),
-    ("Jenkins", "CI/CD Pipeline"),
-    ("Docker", "Containerization"),
-    ("JPA / Hibernate", "ORM Layer"),
+    "Spring Boot 3.4", "ActiveMQ (JMS)", "JGraphT", "Llama 3.2 + QLoRA",
+    "Ollama", "AWS Bedrock (Claude)", "H2 / PostgreSQL", "Python + Java",
+    "Gradle", "Jenkins CI/CD", "Docker / K8s", "JPA / Hibernate"
 ]
-for i, (name, sub) in enumerate(techs):
-    tx = 80 + (i % 6) * 380
-    ty = 1110 + (i // 6) * 70
-    # Tech pill
-    rounded_rect(tx, ty, 350, 55, outline=PURPLE, radius=8, width=1)
-    draw.text((tx+15, ty+8), name, font=f_tech, fill=WHITE)
-    draw.text((tx+15, ty+32), sub, font=f_tech_sub, fill=GRAY)
+tx_start = 250
+for i, tech in enumerate(techs):
+    tx = tx_start + i * 185
+    if tx + 170 > W:
+        break
+    draw.rounded_rectangle([tx, y5+5, tx+175, y5+30], radius=6, fill=None, outline=PURPLE, width=1)
+    draw.text((tx+10, y5+8), tech, font=f_tech_sub, fill=GRAY)
 
-# ═══════════════════════════════════════════════════════════
-# FLOW LABELS (Right side)
-# ═══════════════════════════════════════════════════════════
-flow_labels = [
-    (240, "PERCEIVE"),
-    (450, "REASON"),
-    (700, "DECIDE"),
-    (920, "ACT"),
-]
-for y, label in flow_labels:
-    draw.text((W-120, y), label, font=f_label, fill='#334155')
-    # Vertical line
-draw.line([(W-70, 180), (W-70, 1020)], fill='#1e293b', width=2)
-for y, _ in flow_labels:
-    draw.ellipse([(W-76, y+3), (W-64, y+15)], fill=PURPLE)
+# Right-side flow indicators
+ry = [(y0+70, "PERCEIVE"), (y2+85, "REASON"), (y3+90, "DECIDE"), (y4+60, "ACT")]
+for y, label in ry:
+    draw.rounded_rectangle([W-160, y-5, W-50, y+20], radius=6, fill=None, outline='#1e293b', width=1)
+    draw.text((W-150, y-1), label, font=f_label, fill='#334155')
 
 # Save
 output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets', 'kavach-architecture.png')
 img.save(output_path, 'PNG', quality=95)
-print(f"✓ Architecture diagram saved: {output_path}")
-print(f"  Size: {W}x{H} pixels")
+print(f"Done! Saved: {output_path} ({W}x{H}px)")
