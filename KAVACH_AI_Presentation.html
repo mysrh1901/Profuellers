@@ -294,41 +294,41 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
     <div class="card" style="border-left:3px solid #f59e0b;padding:16px;">
       <h3 style="font-size:14px;">⚡ Chain Reactor Agent</h3>
       <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
-        <strong style="color:#e2e8f0;">What:</strong> Takes one event and traces impact across all 6 domains simultaneously — SOX, Security, TILA, ECOA, PCI, Contractual.<br>
-        <strong style="color:#e2e8f0;">How:</strong> Evaluates 26+ policies, traverses Knowledge Graph for causal paths, uses LLM for reasoning.<br>
-        <strong style="color:#e2e8f0;">Why:</strong> No other tool connects a code bug to a contract penalty to a SOX control — all at once.
+        <strong style="color:#e2e8f0;">What:</strong> Takes one event (code change, config update) and traces its compliance impact across all 6 domains simultaneously.<br>
+        <strong style="color:#e2e8f0;">How:</strong> Evaluates 26+ policies via our Policy Engine, traverses our Knowledge Graph for causal paths, uses our LLM for reasoning.<br>
+        <strong style="color:#e2e8f0;">Why:</strong> Today, a single code change can violate SOX + Security + Contractual simultaneously — but nobody connects the dots until audit. Chain Reactor does this in 2 seconds.
       </p>
     </div>
     <div class="card" style="border-left:3px solid #10b981;padding:16px;">
       <h3 style="font-size:14px;">📝 Audit Narrator Agent</h3>
       <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
-        <strong style="color:#e2e8f0;">What:</strong> Writes formal audit evidence automatically — documents who changed what, why, approvals, controls satisfied.<br>
-        <strong style="color:#e2e8f0;">How:</strong> LLM generates professional narratives from Git, Jira, SAST reports.<br>
-        <strong style="color:#e2e8f0;">Why:</strong> Audit prep that takes 3-4 weeks is reduced to zero — evidence generated as work happens.
+        <strong style="color:#e2e8f0;">What:</strong> Writes formal audit evidence automatically — documents who changed what, why, approvals obtained, and which controls are satisfied.<br>
+        <strong style="color:#e2e8f0;">How:</strong> Our LLM generates professional narratives from system activity (commits, approvals, scan results) — continuously, as work happens.<br>
+        <strong style="color:#e2e8f0;">Why:</strong> Auditors spend 3-4 weeks manually collecting evidence. KAVACH generates it in real-time — zero prep when audit starts.
       </p>
     </div>
     <div class="card" style="border-left:3px solid #ef4444;padding:16px;">
       <h3 style="font-size:14px;">🔍 Drift Sentinel Agent</h3>
       <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
-        <strong style="color:#e2e8f0;">What:</strong> Detects silent compliance degradation — things that slowly go wrong without anyone noticing.<br>
-        <strong style="color:#e2e8f0;">How:</strong> Monitors access creep, config drift, expired certs, orphaned accounts.<br>
-        <strong style="color:#e2e8f0;">Why:</strong> Most audit findings are drift — not active violations. Catches them before auditors do.
+        <strong style="color:#e2e8f0;">What:</strong> Detects silent compliance degradation — things that slowly go wrong without anyone noticing until an auditor catches them.<br>
+        <strong style="color:#e2e8f0;">How:</strong> Continuously monitors for permission creep, configuration changes, expired certificates, and inactive accounts that still have access.<br>
+        <strong style="color:#e2e8f0;">Why:</strong> Most audit findings are drift (gradual decay), not active attacks. This catches them proactively — before the auditor does.
       </p>
     </div>
     <div class="card" style="border-left:3px solid #a78bfa;padding:16px;">
       <h3 style="font-size:14px;">📜 Obligation Parser Agent</h3>
       <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
-        <strong style="color:#e2e8f0;">What:</strong> Reads contract text (MSA, SOW) and extracts machine-readable obligations — SLA deadlines, penalties, notifications.<br>
-        <strong style="color:#e2e8f0;">How:</strong> LLM reads legal language, maps clauses to enforceable rules.<br>
-        <strong style="color:#e2e8f0;">Why:</strong> Contracts are read once and forgotten. This makes every clause actively enforced.
+        <strong style="color:#e2e8f0;">What:</strong> Reads contract text (MSA, SOW) and extracts machine-readable obligations — SLA deadlines, penalties, notification requirements.<br>
+        <strong style="color:#e2e8f0;">How:</strong> Our LLM reads legal language and maps each clause to an enforceable rule in the Policy Engine.<br>
+        <strong style="color:#e2e8f0;">Why:</strong> Contracts are read once at signing and forgotten. This makes every clause actively monitored — breach triggers alert automatically.
       </p>
     </div>
     <div class="card" style="border-left:3px solid #fbbf24;padding:16px;">
       <h3 style="font-size:14px;">🧠 Control Ingestion Agent</h3>
       <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
-        <strong style="color:#e2e8f0;">What:</strong> Accepts raw regulation text and creates live policies the system enforces immediately.<br>
-        <strong style="color:#e2e8f0;">How:</strong> LLM parses legal text, extracts triggers, severity, SLA, creates policy in engine.<br>
-        <strong style="color:#e2e8f0;">Why:</strong> New regulation drops (DORA, HITRUST) → compliance team enforces same day, no developer needed.
+        <strong style="color:#e2e8f0;">What:</strong> Accepts raw regulation text and converts it into live policies that the system enforces immediately — no developer needed.<br>
+        <strong style="color:#e2e8f0;">How:</strong> Our LLM parses regulatory/legal text, determines trigger conditions, severity, SLA, and adds policy to the live engine.<br>
+        <strong style="color:#e2e8f0;">Why:</strong> New regulation published today → compliance team enforces it today. No engineering sprint, no code change, no deployment needed.
       </p>
     </div>
   </div>
