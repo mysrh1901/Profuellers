@@ -115,41 +115,45 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
 <!-- SLIDE 2: Problem Statement -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div class="slide" id="slide2">
-  <div class="label">The Problem</div>
-  <h2>One Code Commit Can Simultaneously Violate 6 Compliance Domains</h2>
-  <div class="grid-3" style="margin-top:30px;">
+  <div class="label">Problem & Solution</div>
+  <h2 style="margin-bottom:8px;">One Code Commit Can Simultaneously Violate 6 Compliance Domains</h2>
+  <div style="font-size:13px;color:#94a3b8;margin-bottom:20px;">In IT services, a single developer action can trigger SOX, Security, TILA, Fair Lending, Contractual, and PCI-DSS violations — but today these are caught by different teams, at different times, months after the fact.</div>
+  <div class="grid-3" style="margin-top:10px;">
     <div class="card">
-      <h3 style="color:#f87171;">Today's Reality</h3>
-      <p style="color:#94a3b8;font-size:14px;line-height:1.8;">
-        • SOX team finds issues in annual audit<br>
-        • Security team scans weekly<br>
-        • Legal reviews contracts quarterly<br>
-        • Fair lending tested semi-annually<br>
-        • <strong style="color:#f87171;">Violations found MONTHS later</strong>
+      <h3 style="color:#f87171;">The Problem — Today's Reality</h3>
+      <p style="color:#94a3b8;font-size:13px;line-height:2.0;">
+        • SOX audit team reviews once a year — finds issues 8-12 months late<br>
+        • Security scans run weekly but nobody maps findings to contracts<br>
+        • Legal team reviews MSA clauses quarterly — disconnected from code<br>
+        • Fair lending testing happens semi-annually — no real-time checks<br>
+        • Each team uses different tools with no shared context<br>
+        • <strong style="color:#f87171;">Result: Violations discovered during external audit = penalties, fines, client termination</strong>
       </p>
     </div>
     <div class="card">
-      <h3 style="color:#fbbf24;">The Gap</h3>
-      <p style="color:#94a3b8;font-size:14px;line-height:1.8;">
-        • Different teams, different tools<br>
-        • No cross-domain reasoning<br>
-        • No per-client context<br>
-        • Reactive, not predictive<br>
-        • <strong style="color:#fbbf24;">$50K+ per missed violation</strong>
+      <h3 style="color:#fbbf24;">The Gap — Why This Costs Real Money</h3>
+      <p style="color:#94a3b8;font-size:13px;line-height:2.0;">
+        • 4-5 separate teams, 4-5 separate tools, zero cross-talk<br>
+        • No tool connects a code bug to a contract penalty<br>
+        • No per-client context — same finding, different urgency per client<br>
+        • Reactive: find violation → scramble to fix → hope audit passes<br>
+        • Audit prep takes 3-4 weeks of manual evidence collection<br>
+        • <strong style="color:#fbbf24;">Cost: $50K-$150K per missed critical violation, $2-4M/year in audit overhead</strong>
       </p>
     </div>
     <div class="card">
-      <h3 style="color:#34d399;">KAVACH AI Solution</h3>
-      <p style="color:#94a3b8;font-size:14px;line-height:1.8;">
-        • AI reasons across ALL domains simultaneously<br>
-        • Per-engagement compliance twin<br>
-        • Predicts impact BEFORE deploy<br>
-        • Generates audit evidence in real-time<br>
-        • <strong style="color:#34d399;">Zero compliance surprises</strong>
+      <h3 style="color:#34d399;">KAVACH AI — How We Solve It</h3>
+      <p style="color:#94a3b8;font-size:13px;line-height:2.0;">
+        • AI analyzes every commit across ALL 6 domains in &lt;2 seconds<br>
+        • Per-client compliance twin — knows each client's specific SLAs<br>
+        • Predicts compliance impact BEFORE code reaches production<br>
+        • Blocks deployment when policy is violated — not after<br>
+        • Auto-generates audit evidence continuously — no manual prep<br>
+        • <strong style="color:#34d399;">Result: Auditors walk in → evidence already exists. Zero surprises. Penalties prevented.</strong>
       </p>
     </div>
   </div>
-  <div class="slide-num"><span>02</span> / 10</div>
+  <div class="slide-num"><span>02</span> / 11</div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
