@@ -559,31 +559,29 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
       </div>
     </div>
     <div class="card" style="padding:20px;">
-      <h3 style="margin-bottom:12px;">What the AI Produces</h3>
-      <div style="font-size:11px;color:#94a3b8;margin-bottom:10px;">Input: Raw DORA Article 19 text → Output: Machine-enforceable policy</div>
-      <div class="code" style="font-size:11px;padding:14px;">
-<span class="comment">// Compliance officer sends this:</span>
-<span class="string">"Article 19: Financial entities shall report
-major ICT incidents to competent authority
-within 4 hours of classification as major."</span>
-
-<span class="comment">// KAVACH AI generates this policy:</span>
-{
-  <span class="string">"id"</span>: <span class="string">"DORA-ICT-019"</span>,
-  <span class="string">"name"</span>: <span class="string">"ICT Incident Reporting"</span>,
-  <span class="string">"domain"</span>: <span class="string">"REGULATORY"</span>,
-  <span class="string">"severity"</span>: <span class="string">"CRITICAL"</span>,
-  <span class="string">"sla"</span>: <span class="string">"4 hours"</span>,
-  <span class="string">"blocking"</span>: <span class="keyword">true</span>,
-  <span class="string">"action"</span>: <span class="string">"Report to authority"</span>
-}
+      <h3 style="margin-bottom:10px;">What Happens Under the Hood</h3>
+      <div style="font-size:12px;color:#94a3b8;margin-bottom:12px;">
+        The compliance officer takes DORA Article 19 — written in legal language — and pastes it into KAVACH. Our LLM reads it and asks itself: <em style="color:#e2e8f0;">"What type of control is this? How severe? What should trigger it? Should it block deployments?"</em> Then it produces a structured policy that the engine can enforce.
       </div>
-      <div style="margin-top:12px;font-size:11px;color:#94a3b8;line-height:1.7;">
-        <strong style="color:#e2e8f0;">Why this matters for Hexaware:</strong><br>
-        • Client adopts new framework → we enforce it same day<br>
-        • No developer sprint needed → saves 2-4 weeks per framework<br>
-        • Compliance team can self-serve → reduces dependency on engineering<br>
-        • Scales to 100+ clients with different frameworks each
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;">
+        <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:10px;font-size:11px;">
+          <div style="color:#f87171;font-weight:700;margin-bottom:4px;">INPUT (Legal Text)</div>
+          <div style="color:#94a3b8;font-style:italic;">"Financial entities shall report major ICT incidents to competent authority within 4 hours..."</div>
+        </div>
+        <div style="font-size:20px;color:#818cf8;">→</div>
+        <div style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:8px;padding:10px;font-size:11px;">
+          <div style="color:#34d399;font-weight:700;margin-bottom:4px;">OUTPUT (Enforceable Policy)</div>
+          <div style="color:#94a3b8;">Domain: REGULATORY<br>Severity: CRITICAL<br>SLA: 4 hours<br>Blocking: Yes</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;font-size:12px;color:#e2e8f0;line-height:1.8;">
+        <strong style="color:#a5b4fc;">Business impact for Hexaware:</strong>
+      </div>
+      <div style="font-size:11px;color:#cbd5e1;line-height:1.9;margin-top:6px;">
+        • A client says "we're now subject to DORA" → we enforce it the same day, not next quarter<br>
+        • Compliance managers add controls themselves — no Jira ticket to engineering<br>
+        • Each new framework used to take 2-4 weeks of developer time → now takes minutes<br>
+        • We manage 100+ clients with different regulations — this scales without headcount
       </div>
     </div>
   </div>
