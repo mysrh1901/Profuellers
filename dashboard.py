@@ -455,8 +455,8 @@ body{{
         <div class="panel-title">Agent 02 · Chain Reactor</div>
         <h3>Cross-Domain Impact</h3>
         <div class="ch-trigger">
-            <b>Commit {code['commit_id']}</b> — {code['message'][:45]}<br>
-            {len(code['files_changed'])} files · {cr.total_domains_affected} domains affected · risk Δ -{cr.risk_score_delta:.0f}pts
+            <b>Code Change Detected</b> — {code['message'][:50]}<br>
+            {len(code['files_changed'])} files changed · {cr.total_domains_affected} compliance domains affected · risk impact: -{cr.risk_score_delta:.0f} pts
         </div>
         <div class="ch-list">
             {chain_steps}
