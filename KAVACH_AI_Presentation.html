@@ -286,22 +286,22 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
       </div>
     </div>
     <div class="card">
-      <h3>Graph Structure</h3>
-      <div class="code" style="font-size:12px;">
-<span class="comment">// Knowledge Graph Nodes</span>
-[SQL_INJECTION] ──violates──► [PCI-DSS-6.5]
-[SQL_INJECTION] ──violates──► [OWASP-A03]
-[SQL_INJECTION] ──triggers──► [MSA-§7.2-SLA]
-[MSA-§7.2-SLA] ──penalizes──► [$50K/incident]
-[PCI-DSS-6.5]  ──requires──► [CODE_REVIEW]
-[CODE_REVIEW]  ──satisfies──► [ITGC-CM-06]
-
-<span class="comment">// GraphRAG Query</span>
-Input: "SQL injection found in loan module"
-Traversal: 3-hop causal paths
-Retrieved: 6 connected compliance domains
-LLM Prompt: paths + code + client context
-Output: Structured multi-domain findings
+      <h3>Example: How One Finding Cascades</h3>
+      <div style="font-size:13px;color:#cbd5e1;line-height:1.8;margin-bottom:14px;">
+        A developer introduces SQL injection in the loan search module. Here's how KAVACH traces the full compliance impact through the graph:
+      </div>
+      <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(100,116,139,0.2);border-radius:10px;padding:18px;font-size:13px;line-height:2.2;">
+        <span style="color:#f87171;font-weight:700;">SQL Injection Found</span><br>
+        <span style="color:#64748b;">├──</span> violates <span style="color:#a5b4fc;font-weight:600;">PCI-DSS 6.5</span> <span style="color:#64748b;">(secure coding requirement)</span><br>
+        <span style="color:#64748b;">├──</span> violates <span style="color:#a5b4fc;font-weight:600;">OWASP A03</span> <span style="color:#64748b;">(injection prevention)</span><br>
+        <span style="color:#64748b;">├──</span> triggers <span style="color:#fbbf24;font-weight:600;">MSA §7.2 SLA</span> <span style="color:#64748b;">(48-hour clock starts)</span><br>
+        <span style="color:#64748b;">│   └──</span> penalty: <span style="color:#f87171;font-weight:600;">$50,000/incident</span><br>
+        <span style="color:#64748b;">├──</span> requires <span style="color:#34d399;font-weight:600;">Code Review</span> <span style="color:#64748b;">(before any fix can ship)</span><br>
+        <span style="color:#64748b;">│   └──</span> satisfies <span style="color:#34d399;">ITGC-CM-06</span> <span style="color:#64748b;">(SOX change control)</span><br>
+        <span style="color:#64748b;">└──</span> blocks <span style="color:#f87171;font-weight:600;">Deployment</span> <span style="color:#64748b;">(gate status: BLOCKED)</span>
+      </div>
+      <div style="margin-top:14px;font-size:12px;color:#94a3b8;border-left:3px solid #818cf8;padding-left:12px;">
+        <strong style="color:#e2e8f0;">What the AI receives:</strong> These traced paths + the actual code + the client's specific contract terms. It then generates a complete compliance assessment referencing specific regulation sections — not generic advice.
       </div>
     </div>
   </div>
