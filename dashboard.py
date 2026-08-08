@@ -401,22 +401,22 @@ body{{
 <!-- HEADER -->
 <div class="header">
     <div class="brand">
-        <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+        <svg width="36" height="36" viewBox="0 0 100 100" fill="none">
             <defs>
-                <linearGradient id="g1" x1="0" y1="0" x2="48" y2="48">
+                <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stop-color="#6366f1"/>
                     <stop offset="100%" stop-color="#a78bfa"/>
                 </linearGradient>
-                <linearGradient id="g2" x1="0" y1="0" x2="48" y2="48">
+                <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stop-color="#10b981"/>
-                    <stop offset="100%" stop-color="#6366f1"/>
+                    <stop offset="100%" stop-color="#34d399"/>
                 </linearGradient>
             </defs>
-            <rect x="2" y="2" width="44" height="44" rx="12" fill="none" stroke="url(#g1)" stroke-width="2"/>
-            <path d="M14 34V20l6-6h8l6 6v14" stroke="url(#g2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <circle cx="24" cy="24" r="4" fill="url(#g1)" opacity="0.8"/>
-            <path d="M24 14v-4M24 38v-4M14 24h-4M38 24h-4" stroke="url(#g1)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
-            <circle cx="24" cy="24" r="10" fill="none" stroke="url(#g1)" stroke-width="1" opacity="0.3" stroke-dasharray="3 3"/>
+            <path d="M50 6 L92 22 L92 52 C92 78 74 94 50 100 C26 94 8 78 8 52 L8 22 Z" fill="none" stroke="url(#g1)" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M50 16 L82 28 L82 52 C82 72 68 84 50 90 C32 84 18 72 18 52 L18 28 Z" fill="url(#g1)" opacity="0.1"/>
+            <circle cx="50" cy="50" r="18" fill="none" stroke="url(#g1)" stroke-width="2.5" opacity="0.8"/>
+            <circle cx="50" cy="50" r="7" fill="url(#g1)"/>
+            <path d="M38 52 L46 60 L64 40" fill="none" stroke="url(#g2)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <div class="brand-text">
             <div class="brand-name">KAVACH AI</div>
