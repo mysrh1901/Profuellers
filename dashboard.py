@@ -36,8 +36,9 @@ try:
 except ImportError:
     AI_SCANNER_AVAILABLE = False
 
-# Watched directory for Java files
+# Watched directories for Java files
 WATCH_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "watch-folder")
+DEMO_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "demo-compliance-classes")
 
 # Initialize baseline data from agents
 data = DashboardData()
@@ -51,15 +52,27 @@ def get_live_scan():
     INTELLIGENCE MODE:
       - If Ollama LLM is running → AI-powered reasoning (no hardcoded rules)
       - If Ollama is unavailable → Falls back to heuristic scanner
+    
+    Scans BOTH watch-folder/ AND demo-compliance-classes/
     """
     if AI_SCANNER_AVAILABLE:
         s = AIScanner(max_age_minutes=10)
         s.scan_recent(WATCH_DIR)
-        return s.findings, s.scanned_files, time.strftime("%Y-%m-%d %H:%M:%S")
+        # Also scan demo-compliance-classes
+        s2 = AIScanner(max_age_minutes=10)
+        s2.scan_recent(DEMO_DIR)
+        all_findings = s.findings + s2.findings
+        all_files = s.scanned_files + s2.scanned_files
+        return all_findings, all_files, time.strftime("%Y-%m-%d %H:%M:%S")
     else:
         s = JavaScanner(max_age_minutes=10)
         s.scan_recent(WATCH_DIR)
-        return s.findings, s.scanned_files, time.strftime("%Y-%m-%d %H:%M:%S")
+        # Also scan demo-compliance-classes
+        s2 = JavaScanner(max_age_minutes=10)
+        s2.scan_recent(DEMO_DIR)
+        all_findings = s.findings + s2.findings
+        all_files = s.scanned_files + s2.scanned_files
+        return all_findings, all_files, time.strftime("%Y-%m-%d %H:%M:%S")
 
 
 # Module-level state (updated on each request by generate_html)
