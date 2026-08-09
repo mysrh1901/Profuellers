@@ -125,7 +125,7 @@ class DashboardData:
         live_risk = self._live_risk_cost(live_findings)
         total_risk = base_risk + live_risk
         return {
-            "agents": 5,
+            "agents": 6,
             "domains": self.chain_reaction.total_domains_affected,
             "analysis_time": "<7s",
             "audit_saved": f"{int(self.twins[0].audit_readiness_pct)}%",

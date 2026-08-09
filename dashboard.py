@@ -504,7 +504,7 @@ body{{
 
     <!-- Panel 6: Business Value -->
     <div class="panel" style="display:flex;flex-direction:column;justify-content:center;">
-        <div class="panel-title">Business Impact</div>
+        <div class="panel-title">Agent 06 · Control Ingestion & Business Impact</div>
         <h3>Value Delivered</h3>
         <div class="val-row" style="margin-top:12px;">
             <div class="val-item"><div class="val-num">{values['audit_saved']}</div><div class="val-lbl">Audit Prep Saved</div></div>
