@@ -398,7 +398,7 @@ def get_mock_code_change():
 
     return {
         "commit_id": "a3f7b2c",
-        "author": "developer.patel@hexaware.com",
+        "author": "abhinav@hexaware.com",
         "timestamp": "2026-06-28T10:30:00Z",
         "branch": "feature/MORT-1542-arm-rate-adjustment",
         "message": "feat: Update ARM rate cap calculation logic for new CFPB guidance",
@@ -472,6 +472,6 @@ def get_mock_code_change():
                 }
             ]
         },
-        "pr_reviewers": ["lead.sharma@hexaware.com", "architect.jones@hexaware.com"],
+        "pr_reviewers": ["venkatesh@hexaware.com", "imam@hexaware.com"],
         "pr_approved": True
     }
