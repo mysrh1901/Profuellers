@@ -443,8 +443,8 @@ body{{
 <div class="view main active" id="view-dashboard">
     <!-- Panel 1: Digital Twin -->
     <div class="panel">
-        <div class="panel-title">Agent 01 · Digital Twin</div>
-        <h3>Compliance State Per Client</h3>
+        <div class="panel-title">Agent 01 · Digital Twin Agent</div>
+        <h3>Live Compliance Score Per Client</h3>
         <div class="twins-wrap">
             {twin_cards}
         </div>
@@ -452,7 +452,7 @@ body{{
 
     <!-- Panel 2: Chain Reactor -->
     <div class="panel">
-        <div class="panel-title">Agent 02 · Chain Reactor</div>
+        <div class="panel-title">Agent 02 · Chain Reactor Agent</div>
         <h3>Cross-Domain Impact</h3>
         <div class="ch-trigger">
             <b>Code Change Detected</b> — {code['message'][:50]}<br>
@@ -465,8 +465,8 @@ body{{
 
     <!-- Panel 3: Deployment Gate -->
     <div class="panel">
-        <div class="panel-title">Agent 03 · Deployment Gate</div>
-        <h3>Pre-Deploy Simulation</h3>
+        <div class="panel-title">Agent 03 · Obligation Parser Agent</div>
+        <h3>Contract SLA & Deployment Gate</h3>
         <div class="gate-badge">{'Deployment Blocked' if gate['requires_human'] else 'Review Required'}</div>
         <p style="font-size:9.5px;color:#6b7f99;margin-bottom:6px;">
             {gate['client_name']} — Score: {gate['current_score']:.0f}% → {gate['projected_score']:.0f}% (-{gate['score_delta']:.0f}pts)
@@ -488,14 +488,14 @@ body{{
 
     <!-- Panel 4: Audit Narrator -->
     <div class="panel">
-        <div class="panel-title">Agent 04 · Audit Narrator</div>
+        <div class="panel-title">Agent 04 · Audit Narrator Agent</div>
         <h3>Auto-Generated Evidence</h3>
         <div class="narrative">{narrative}</div>
     </div>
 
     <!-- Panel 5: Drift Detection -->
     <div class="panel">
-        <div class="panel-title">Agent 05 · Drift Sentinel</div>
+        <div class="panel-title">Agent 05 · Drift Sentinel Agent</div>
         <h3>Silent Compliance Drift</h3>
         <div class="drift-grid">
             {drift_cards}
@@ -504,8 +504,8 @@ body{{
 
     <!-- Panel 6: Business Value -->
     <div class="panel" style="display:flex;flex-direction:column;justify-content:center;">
-        <div class="panel-title">Agent 06 · Control Ingestion & Business Impact</div>
-        <h3>Value Delivered</h3>
+        <div class="panel-title">Agent 06 · Control Ingestion Agent</div>
+        <h3>Dynamic Policy & Business Value</h3>
         <div class="val-row" style="margin-top:12px;">
             <div class="val-item"><div class="val-num">{values['audit_saved']}</div><div class="val-lbl">Audit Prep Saved</div></div>
             <div class="val-item"><div class="val-num">{values['debt_avoided']}</div><div class="val-lbl">Risk Exposure</div></div>
