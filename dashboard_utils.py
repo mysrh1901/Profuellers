@@ -295,7 +295,7 @@ SAST: {sast.get('tool', 'N/A')} | C:{sast.get('critical', 0)} H:{sast.get('high'
 Segregation of Duties:
   Author:   {author.split('@')[0]}
   Reviewer: {reviewers[0].split('@')[0] if reviewers else 'N/A'} ✓
-  Approver: {reviewers[1].split('@')[0] if len(reviewers) > 1 else 'N/A'} ✓
+  Architect: {reviewers[1].split('@')[0] if len(reviewers) > 1 else 'N/A'} ✓
 
 Controls:
 {controls_lines}"""
@@ -376,7 +376,7 @@ Findings: {len(live_findings)} total"""
         events.append({
             "time": code["timestamp"][:16].replace("T", " ") + " UTC",
             "title": f"PR #{code['branch'].split('/')[-1]} — {code['message'][:40]}",
-            "meta": f"Author: {code['author'].split('@')[0]} · Reviewers: {', '.join(r.split('@')[0] for r in code.get('pr_reviewers', []))}",
+            "meta": f"Author: {code['author'].split('@')[0]} · Reviewer: {code.get('pr_reviewers', [''])[0].split('@')[0]} · Architect: {code.get('pr_reviewers', ['',''])[1].split('@')[0] if len(code.get('pr_reviewers', [])) > 1 else 'N/A'}",
             "status": controls_short,
             "color": "#10b981",
         })
