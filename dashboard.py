@@ -301,14 +301,30 @@ body{{
 .modal-overlay.active{{display:flex;}}
 @keyframes fadeIn{{from{{opacity:0;}}to{{opacity:1;}}}}
 .modal-content{{
-    background:rgba(20,26,40,0.85);border:1px solid rgba(100,116,139,0.3);
-    border-radius:16px;padding:30px 35px;
+    background:rgba(20,26,40,0.95);border:1px solid rgba(100,116,139,0.3);
+    border-radius:16px;padding:40px 50px;
     max-width:85vw;max-height:85vh;overflow-y:auto;
-    box-shadow:0 30px 80px rgba(0,0,0,0.4);
+    box-shadow:0 30px 80px rgba(0,0,0,0.5);
     backdrop-filter:blur(16px);
     animation:slideUp 0.25s ease;
     position:relative;min-width:500px;
+    font-size:16px;line-height:1.8;
 }}
+.modal-content .panel-title{{font-size:14px;}}
+.modal-content h3{{font-size:18px;margin-bottom:14px;}}
+.modal-content .tw-name{{font-size:16px;}}
+.modal-content .tw-row{{font-size:14px;}}
+.modal-content .ch-domain{{font-size:14px;}}
+.modal-content .ch-act{{font-size:13px;}}
+.modal-content .ch-trigger{{font-size:14px;}}
+.modal-content .gate-items li{{font-size:13px;padding:8px 12px;}}
+.modal-content .gate-risk-val{{font-size:24px;}}
+.modal-content .narrative{{font-size:13px;line-height:1.8;}}
+.modal-content .drift-t{{font-size:14px;}}
+.modal-content .drift-d{{font-size:13px;}}
+.modal-content .drift-sev{{font-size:11px;}}
+.modal-content .val-num{{font-size:28px;}}
+.modal-content .val-lbl{{font-size:12px;}}
 @keyframes slideUp{{from{{transform:translateY(20px);opacity:0;}}to{{transform:translateY(0);opacity:1;}}}}
 .modal-close{{
     position:absolute;top:14px;right:18px;
