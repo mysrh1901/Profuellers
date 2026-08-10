@@ -241,34 +241,32 @@ class DashboardData:
         return html
 
     def get_gate_data(self, live_findings=None):
-        """Deployment gate — live findings increase risk and add blockers."""
+        """Deployment gate — dynamic based on live findings only."""
         live_findings = live_findings or []
         twin = self.twins[0]
-        cr = self.chain_reaction
 
         penalty = self._live_score_penalty(live_findings)
         live_cost = self._live_risk_cost(live_findings)
 
         current_score = twin.overall_score
-        projected_score = max(0, current_score - cr.risk_score_delta - penalty)
-        total_risk = twin.compliance_debt_usd + live_cost
+        projected_score = max(0, current_score - penalty)
 
-        # Blocking items: baseline + live critical/high findings
-        blocking_items = list(cr.recommended_actions[:3])
+        # Blocking items from live findings only
+        blocking_items = []
         for f in live_findings:
             if f.severity in ("CRITICAL", "HIGH"):
                 blocking_items.append(f"{f.category}: {f.title[:50]}")
-        blocking_items = blocking_items[:6]  # cap at 6
+        blocking_items = blocking_items[:6]
 
         return {
             "client_name": twin.client.client_name,
             "current_score": current_score,
             "projected_score": projected_score,
-            "score_delta": cr.risk_score_delta + penalty,
+            "score_delta": penalty,
             "blocking_items": blocking_items,
-            "risk_usd": total_risk,
-            "requires_human": cr.requires_human_approval or self._live_critical_count(live_findings) > 0,
-            "domains_affected": cr.total_domains_affected + len(set(f.category for f in live_findings)),
+            "risk_usd": live_cost,
+            "requires_human": self._live_critical_count(live_findings) > 0,
+            "domains_affected": len(set(f.category for f in live_findings)),
         }
 
     def get_narrative_compact(self, live_findings=None):
