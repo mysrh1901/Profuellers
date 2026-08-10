@@ -203,7 +203,7 @@ class DashboardData:
         html += f"""
                 </div>
                 <div class="tw-fw" style="margin-top:8px;">{' · '.join(twin.client.applicable_frameworks[:6])}</div>
-                <div style="font-size:8px;color:#64748b;margin-top:4px;">Auditor: {twin.client.auditor} · Trend: {trend}</div>
+                <div style="font-size:8px;color:#64748b;margin-top:4px;">Auditor: {twin.client.auditor} · Trend: <span style="color:{'#ef4444' if trend == 'DEGRADING' else '#10b981'};font-weight:700;">{trend}</span></div>
             </div>"""
         return html
 
