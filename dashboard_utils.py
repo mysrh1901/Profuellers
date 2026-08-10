@@ -72,6 +72,14 @@ class DashboardData:
         self.twins = [self.twin_agent.build_twin(c) for c in self.clients]
         # Set primary client to healthy baseline for demo (score degrades when violations are found)
         self.twins[0].overall_score = 87.0
+        self.twins[0].trend = "STABLE"
+        self.twins[0].domain_scores = {
+            "SOX": 88,
+            "Security": 85,
+            "Regulatory": 84,
+            "Contractual": 90,
+            "Audit Readiness": 92
+        }
         self.chain_reaction = self.reactor_agent.analyze_code_change(
             self.code_change, self.clients[0]
         )
