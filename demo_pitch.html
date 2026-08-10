@@ -215,7 +215,7 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:#1a1a2e; color:#e
 <div class="slide">
   <div class="slide-label">Q&A Backup — Keep this ready</div>
   <h2>Common Questions & Answers</h2>
-  <div class="pitch" style="font-size:15px;line-height:1.9;">
+  <div class="pitch" style="font-size:14px;line-height:1.9;">
     <strong>Q: "Show me the LLM code"</strong><br>
     → Open: regulith-llm/Modelfile, regulith-llm/scripts/fine_tune.py, OllamaLLMService.java<br><br>
     <strong>Q: "Is the dashboard hardcoded?"</strong><br>
@@ -233,9 +233,38 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:#1a1a2e; color:#e
   </div>
 </div>
 
+<!-- SLIDE 13: More Q&A -->
+<div class="slide">
+  <div class="slide-label">Q&A Continued</div>
+  <h2>More Questions & Answers</h2>
+  <div class="pitch" style="font-size:14px;line-height:1.9;">
+    <strong>Q: "IDE and SonarQube already do scanning. What is different?"</strong><br>
+    → "SonarQube finds the bug. KAVACH tells you which 6 regulations it violates, which client's SLA it triggers, how much the penalty is, and auto-generates audit evidence. Those tools are INPUTS to KAVACH — they feed our pipeline. We add the compliance brain on top."<br><br>
+    <strong>Q: "How is the model 'yours' if you downloaded Llama?"</strong><br>
+    → "Same as downloading Linux and building a product on it. Llama is open-source (MIT license). We fine-tuned it on our data. The trained weights are our IP — unique to Hexaware. Nobody else has a model trained on our audit findings."<br><br>
+    <strong>Q: "Data goes to Llama/Meta servers?"</strong><br>
+    → "No. Llama is downloaded once and installed on our server — like installing any app. After that, all processing is local. Nothing goes to Meta. Think of it like Microsoft Word — you don't send documents to Microsoft."<br><br>
+    <strong>Q: "What if a regulation changes or a new one comes?"</strong><br>
+    → "That is exactly what Control Ingestion Agent does. Paste the new regulation text → AI parses it → policy enforced immediately. I showed this live with DORA. Zero code changes, zero developer involvement."<br><br>
+    <strong>Q: "How many training examples do you need?"</strong><br>
+    → "We have 15 now for POC. For production accuracy, we need 500-1000. These come from past audit findings, SAST reports, and MSA clauses — data Hexaware already has from years of engagements."<br><br>
+    <strong>Q: "What if the model hallucinates or gives false positives?"</strong><br>
+    → "Three safeguards: (1) Temperature 0.1 means consistent deterministic output. (2) Policy Engine evaluates independently — even if LLM misses something, rules catch it. (3) We can retrain to fix patterns. And false positive is better than false negative in compliance — better to flag and review than to miss a $50K violation."<br><br>
+    <strong>Q: "How does this help Hexaware commercially?"</strong><br>
+    → "Offer as managed service: $20-50K/month per client. 10 clients = $2.4-6M annual revenue. No competitor has this — first mover advantage. Also reduces delivery risk — prevents SLA breaches that cost us client relationships."<br><br>
+    <strong>Q: "Can you show the code that connects everything?"</strong><br>
+    → Open ChainReactorAgent.java. Show @JmsListener annotation. "This listens to the queue automatically. When event arrives, it calls policyEngine.evaluate() — that checks 26+ policies. Then calls narratorAgent.generateNarrative() — that writes evidence. Then updateClientScore(). All autonomous."<br><br>
+    <strong>Q: "What is your roadmap?"</strong><br>
+    → "Short term: Win this competition, get sponsorship for pilot. Medium term: Deploy for 1 real client engagement (8 weeks). Long term: Product-ize, offer to all Hexaware clients, eventually external market."<br><br>
+    <strong>Q: "Why should we invest in this vs buying a tool?"</strong><br>
+    → "No tool does what KAVACH does — cross-domain, per-client, auto-evidence. We checked Vanta ($50K/yr), ServiceNow ($200K/yr), Fieldguide ($80K/yr) — none does causal reasoning across 6 domains. And we own the IP — it becomes a revenue-generating product, not a cost center."
+  </div>
+</div>
+
+
 </div><!-- end slides -->
 
-<div class="nav">Use ↑↓ Arrow Keys or Scroll | <span>12</span> slides</div>
+<div class="nav">Use ↑↓ Arrow Keys or Scroll | <span>13</span> slides</div>
 
 <script>
 document.addEventListener('keydown', function(e) {
