@@ -42,10 +42,10 @@ RISK_COST = {
 
 # Score penalty per finding severity
 SCORE_PENALTY = {
-    "CRITICAL": 12,
-    "HIGH": 6,
-    "MEDIUM": 2,
-    "LOW": 0.5,
+    "CRITICAL": 1.5,
+    "HIGH": 0.8,
+    "MEDIUM": 0.3,
+    "LOW": 0.1,
 }
 
 
