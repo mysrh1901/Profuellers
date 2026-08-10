@@ -1,30 +1,25 @@
 package com.mortgage.service;
 
-// Rate calculation service for ARM loans
-public class RateCalculator {
+/**
+ * Loan Processing Service — Clean baseline
+ * This file has no violations. Uncomment blocks during demo to trigger findings.
+ */
+public class LoanProcessor {
 
-    // TODO: Fix this hardcoded API key before production
-    private static final String API_KEY = "sk-prod-4f8a9b2c1d3e5f6a7b8c9d0e";
-    private static final String SECRET = "mortgage-db-password-2024";
-    private static final String PWD = "Test@123";
-     private static final String SSN = "000-1230-433";
-
-
-    public double calculateAPR(double principal, double rate, int termYears, double closingCosts) {
-        // TILA Regulation Z requires accuracy to 1/8 of 1 percent
-        double totalCost = principal + closingCosts;
-        double monthlyRate = rate / 12;
-        int numPayments = termYears * 12;
-    
-        double payment = totalCost * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) /
-                         (Math.pow(1 + monthlyRate, numPayments) - 1);
-        double totalPaid = payment * numPayments;
-        return ((totalPaid - principal) / principal) / termYears;
+    public double getFixedRate(int creditScore) {
+        if (creditScore >= 750) return 0.0575;
+        if (creditScore >= 700) return 0.0625;
+        return 0.0675;
     }
 
-    public double calculateBorrowerEligibility(double income, double ssn, double creditScore) {
-        // Uses borrower personal data including SSN
-        double dti = calculateDTI(income);
-        return dti <= 0.43 ? 1.0 : 0.0;
+    public boolean isEligible(int creditScore, double dti) {
+        return creditScore >= 620 && dti <= 0.43;
     }
+
+    // ─── UNCOMMENT DURING DEMO TO TRIGGER VIOLATIONS ────────────
+
+    // public void searchLoans(String name) {
+    //     String sql = "SELECT * FROM LOANS WHERE name = '" + name + "'";
+    //     System.out.println("Executing: " + sql);
+    // }
 }
