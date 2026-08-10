@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>KAVACH AI — Demo Pitch Script</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',system-ui,sans-serif; background:#1a1a2e; color:#e0e0e0; }
+.slides { height:100vh; scroll-snap-type:y mandatory; overflow-y:scroll; scroll-behavior:smooth; }
+.slide { height:100vh; scroll-snap-align:start; padding:50px 80px; display:flex; flex-direction:column; justify-content:center; border-bottom:1px solid #333; position:relative; }
+.slide-label { font-size:12px; color:#818cf8; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
+.slide h2 { font-size:32px; font-weight:800; color:#f8fafc; margin-bottom:20px; }
+.slide h3 { font-size:20px; color:#a5b4fc; margin:18px 0 10px 0; }
+.pitch { font-size:18px; color:#cbd5e1; line-height:2.0; }
+.pitch strong { color:#f8fafc; }
+.pitch em { color:#fbbf24; font-style:normal; font-weight:600; }
+.action { background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); border-radius:10px; padding:16px 20px; margin:14px 0; font-size:15px; color:#6ee7b7; }
+.action::before { content:'▶ ACTION: '; font-weight:700; }
+.warn { background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); border-radius:10px; padding:14px 18px; margin:14px 0; font-size:15px; color:#fca5a5; }
+.warn::before { content:'⚠ IF ASKED: '; font-weight:700; }
+.code { font-family:monospace; background:rgba(15,23,42,0.8); border:1px solid #334155; border-radius:8px; padding:14px; font-size:14px; color:#94a3b8; margin:10px 0; white-space:pre-wrap; }
+.nav { position:fixed; bottom:20px; right:30px; font-size:13px; color:#475569; }
+.nav span { color:#818cf8; font-weight:700; }
+.tip { font-size:14px; color:#64748b; margin-top:12px; font-style:italic; }
+</style>
+</head>
+<body>
+<div class="slides">
+
+<!-- SLIDE 1: Opening -->
+<div class="slide">
+  <div class="slide-label">Opening — 30 seconds</div>
+  <h2>Introduction</h2>
+  <div class="pitch">
+    "Good morning. I am presenting <strong>KAVACH AI</strong> — which stands for <em>Knowledge-driven Audit, Vulnerability Analysis and Compliance Health</em>.<br><br>
+    In one line — when a developer commits code, our platform checks it against <em>6 compliance domains in under 2 seconds</em> and tells you exactly which regulations are violated, what the penalty is, and whether to block deployment.<br><br>
+    No manual review. No waiting for quarterly audits. Fully autonomous."
+  </div>
+  <div class="tip">Pause. Make eye contact. Then move to next slide.</div>
+</div>
+
+<!-- SLIDE 2: Problem -->
+<div class="slide">
+  <div class="slide-label">Problem Statement — 2 minutes</div>
+  <h2>The Problem We Are Solving</h2>
+  <div class="pitch">
+    "Let me explain why this matters.<br><br>
+    In IT services, we manage <strong>100+ clients across regulated industries</strong>. Each client has different compliance requirements — SOX for financial systems, TILA for mortgage calculations, PCI-DSS for card data, ECOA for fair lending, plus their own MSA contract terms.<br><br>
+    Today, a developer makes a code change, and <em>nobody checks it against compliance until months later</em>. SOX team finds it in annual audit. Security team finds it in weekly scan. Legal discovers the MSA breach quarterly. Fair lending violation caught semi-annually.<br><br>
+    By then — the violation has already happened. The penalty is <em>$50,000 to $150,000 per incident</em>. Client can terminate the engagement. Auditor issues a material weakness finding.<br><br>
+    The root cause: <strong>5 different teams, 5 different tools, zero cross-talk.</strong> Nobody connects a code bug to a contract penalty to a SOX control to a fair lending risk — until KAVACH."
+  </div>
+</div>
+
+<!-- SLIDE 3: Solution Overview -->
+<div class="slide">
+  <div class="slide-label">Solution — 90 seconds</div>
+  <h2>How KAVACH Solves It</h2>
+  <div class="pitch">
+    "KAVACH sits in the development pipeline. The moment code is committed:<br><br>
+    <strong>1. Perceive</strong> — File watcher detects the change within 3 seconds<br>
+    <strong>2. Reason</strong> — Our AI reads the code and evaluates 26+ compliance policies simultaneously<br>
+    <strong>3. Decide</strong> — Determines severity, which domains are affected, whether to block<br>
+    <strong>4. Act</strong> — Blocks deployment if violated, generates audit evidence, updates client score, sends alerts<br><br>
+    All of this happens in <em>under 2 seconds</em>. No human in the loop. No manual review. The developer gets immediate feedback — 'this commit violates your client's MSA Section 7.2, you have 48 hours to fix it, penalty is $50K.'"
+  </div>
+</div>
+
+<!-- SLIDE 4: Architecture -->
+<div class="slide">
+  <div class="slide-label">Architecture — 90 seconds</div>
+  <h2>Architecture Walkthrough</h2>
+  <div class="pitch">
+    "The architecture has 5 layers:<br><br>
+    <strong>Event Sources</strong> — Git hooks, Jenkins CI/CD, Jira, AWS Config, File Watcher. Any system change can trigger analysis.<br><br>
+    <strong>Message Queue</strong> — ActiveMQ. Decouples ingestion from processing. Handles high volume.<br><br>
+    <strong>6 Agents</strong> — Each autonomous. Digital Twin maintains client score. Chain Reactor traces cross-domain impact. Audit Narrator writes evidence. Drift Sentinel catches slow degradation. Obligation Parser reads contracts. Control Ingestion adds new frameworks.<br><br>
+    <strong>Intelligence Layer</strong> — Our own fine-tuned LLM, Knowledge Graph for causal reasoning, Policy Engine with 26+ rules.<br><br>
+    <strong>Outputs</strong> — Deployment gate (block/allow), auto-generated audit evidence, real-time dashboard, alerts."
+  </div>
+  <div class="action">Point to the architecture diagram on the HTML presentation (Slide 3)</div>
+</div>
+
+<!-- SLIDE 5: Our LLM -->
+<div class="slide">
+  <div class="slide-label">Our Own LLM — 2 minutes</div>
+  <h2>How We Built Our Own Model</h2>
+  <div class="pitch">
+    "A common question — are we just calling ChatGPT? No.<br><br>
+    We took <strong>Llama 3.2</strong>, which is an open-source model by Meta — free to download. We installed it on our server. Then we trained it on <em>our compliance data</em> — hundreds of examples showing 'when you see this code, the compliance issue is this.'<br><br>
+    After training, the model sits on <strong>our server permanently</strong>. When a developer commits code, that code goes to our machine for analysis. It never leaves our network. Not to Meta, not to OpenAI, not to anyone.<br><br>
+    <strong>Why this matters:</strong> Our clients are banks and mortgage companies. Their MSA says — 'do not send our source code to third parties.' If we used GPT API, every code analysis call would send their code to OpenAI's servers. That violates the contract. Our model avoids this completely.<br><br>
+    <strong>Cost:</strong> GPT API at 5000 events per day = $6000 per month. Our server = $1000 per month, unlimited calls. At scale, we save 80%."
+  </div>
+  <div class="warn">"But you are sending data to Llama?" → "No. Llama is installed on our server like any software. It is not a cloud service. Think of it like installing Microsoft Word — Microsoft does not see your documents."</div>
+</div>
+
+<!-- SLIDE 6: Graph RAG -->
+<div class="slide">
+  <div class="slide-label">Knowledge Graph — 90 seconds</div>
+  <h2>Graph RAG — How Regulations Connect</h2>
+  <div class="pitch">
+    "The second AI component is our Knowledge Graph.<br><br>
+    Regulations do not exist in isolation. A SQL injection violates PCI-DSS. PCI-DSS violation triggers the client's MSA SLA. MSA says fix in 48 hours or pay $50K. Fixing requires code review per SOX ITGC. These are <strong>connected</strong>.<br><br>
+    We model all these connections as a graph. When a finding occurs, we <strong>trace the connections</strong> to discover all downstream impacts. Then we pass those connections to our LLM so it can reason with full context — not guess from general knowledge.<br><br>
+    <strong>Example:</strong> SQL injection found in loan module. Our graph traces: violates PCI-DSS 6.5 → triggers MSA Section 7.2 (48h, $50K) → requires code review (ITGC-CM-06) → blocks deployment. <em>All in 2 seconds.</em>"
+  </div>
+  <div class="warn">"What is RAG?" → "RAG means Retrieval-Augmented Generation. Instead of the AI guessing, we first retrieve relevant regulation connections from our graph, then give those to the AI as context. The AI reasons with specific facts, not general knowledge."</div>
+</div>
+
+<!-- SLIDE 7: Live Demo -->
+<div class="slide">
+  <div class="slide-label">LIVE DEMO — 3 minutes</div>
+  <h2>Live Demo Script</h2>
+  <div class="pitch">
+    "Let me show this working live."
+  </div>
+  <div class="action">Open browser → http://localhost:8080 (show dashboard)</div>
+  <div class="pitch">
+    "This is the real-time dashboard. You can see 6 agent panels. The compliance score. The chain reaction results."
+  </div>
+  <div class="action">Open watch-folder/LoanService.java in editor</div>
+  <div class="pitch">
+    "This is a clean file — no violations. I am going to uncomment Block 5 which introduces a SQL injection."
+  </div>
+  <div class="action">Uncomment Block 5 (SQL injection lines), Save (Cmd+S)</div>
+  <div class="pitch">
+    "I saved it. Now watch the dashboard..."<br>
+    (Wait 5 seconds)<br>
+    "There — findings appeared. The system detected SQL injection. It mapped it to PCI-DSS, triggered the MSA SLA, updated the compliance score. All automatic."
+  </div>
+  <div class="action">Point to Live Scan tab → show "JUST MODIFIED" badge and findings</div>
+  <div class="tip">If dashboard doesn't update, hit Cmd+Shift+R to hard refresh.</div>
+</div>
+
+<!-- SLIDE 8: Adding New Control Live -->
+<div class="slide">
+  <div class="slide-label">LIVE DEMO — Dynamic Control — 2 minutes</div>
+  <h2>Adding a New Regulation — Zero Code Changes</h2>
+  <div class="pitch">
+    "Now I will show the most important feature — adding a new regulation with no code change."<br><br>
+    "Let us say our EU client just became subject to DORA regulation. Instead of writing code, I just paste the regulation text."
+  </div>
+  <div class="action">Open terminal, run this command:</div>
+  <div class="code">curl -X POST http://localhost:9090/api/controls/ingest \
+  -H "Content-Type: application/json" \
+  -d '{"framework":"DORA","controlText":"Article 19: Financial entities shall report major ICT incidents to competent authority within 4 hours of classification as major."}'</div>
+  <div class="pitch">
+    "See the response — the AI parsed the regulation text and created a policy. Domain: REGULATORY. Severity: CRITICAL. SLA: 4 hours. Blocking: true."
+  </div>
+  <div class="action">Now show policy count increased:</div>
+  <div class="code">curl -s http://localhost:9090/api/policies/summary | python3 -m json.tool</div>
+  <div class="pitch">
+    "Policy count went up. <em>DORA is now enforced.</em> No restart. No code change. No developer needed. The compliance team can do this themselves."
+  </div>
+</div>
+
+<!-- SLIDE 9: Business Value -->
+<div class="slide">
+  <div class="slide-label">Business Value — 2 minutes</div>
+  <h2>Revenue & Value Proposition</h2>
+  <div class="pitch">
+    "<strong>How we make money with this:</strong><br><br>
+    Offer KAVACH as a <em>premium managed service</em> to existing clients — $20,000 to $50,000 per month per engagement. 10 clients = $2.4 to $6 million annual revenue from a single product.<br><br>
+    <strong>What clients save:</strong><br>
+    • Audit prep time reduced by 70% — that is 3-4 weeks of senior people's time saved per audit cycle<br>
+    • Penalty avoidance — $50K to $150K per missed violation. Average client has 5-10 criticals per year, 2-3 breach SLA = $100-150K saved<br>
+    • Tool consolidation — replace 3-4 tools (Vanta $50K + ServiceNow $200K + Fieldguide $50K) with one platform<br>
+    • Total savings: $2-4 million per year across engagements<br><br>
+    <strong>Why Hexaware should invest:</strong><br>
+    • No competitor has this (TCS, Infosys, Wipro — nobody does cross-domain compliance)<br>
+    • First-mover advantage in a $15B GRC market growing at 14% annually<br>
+    • IP owned by Hexaware — model weights, policies, graph are our assets<br>
+    • Scales to any regulated industry — mortgage, healthcare, retail, airlines"
+  </div>
+</div>
+
+<!-- SLIDE 10: Comparison -->
+<div class="slide">
+  <div class="slide-label">Differentiation — 90 seconds</div>
+  <h2>Why We Are Better Than Existing Tools</h2>
+  <div class="pitch">
+    "If someone says 'SonarQube already does this' — here is the answer:<br><br>
+    <strong>SonarQube says:</strong> 'SQL injection on line 142. Fix it.'<br><br>
+    <strong>KAVACH says:</strong> 'This SQL injection:<br>
+    &nbsp;&nbsp;1. Violates PCI-DSS 6.5.1 — deployment blocked<br>
+    &nbsp;&nbsp;2. Triggers MSA Section 7.2 — 48 hour clock starts, $50K penalty<br>
+    &nbsp;&nbsp;3. Requires code review per SOX ITGC-CM-06<br>
+    &nbsp;&nbsp;4. Needs client notification per MSA Section 14.1<br>
+    &nbsp;&nbsp;5. Audit evidence auto-generated<br>
+    &nbsp;&nbsp;6. Client score drops from 87% to 72%'<br><br>
+    SonarQube is a <em>bug finder</em>. KAVACH is a <em>compliance brain</em>.<br><br>
+    And here is the key — <strong>SonarQube is an INPUT to KAVACH</strong>. It feeds findings into our pipeline. We do not replace these tools. We add the intelligence layer that connects code issues to business impact."
+  </div>
+</div>
+
+<!-- SLIDE 11: Closing -->
+<div class="slide">
+  <div class="slide-label">Closing — 30 seconds</div>
+  <h2>Summary & Close</h2>
+  <div class="pitch">
+    "To summarize — KAVACH AI does <strong>three things</strong> that no other tool in the market does:<br><br>
+    <em>One</em> — Cross-domain causal reasoning. One code change, six compliance domains checked simultaneously.<br><br>
+    <em>Two</em> — Auto-generates audit evidence continuously. Auditors walk in, evidence already exists.<br><br>
+    <em>Three</em> — Adapts to new regulations without code changes. Paste regulation text, enforced immediately.<br><br>
+    It runs on <strong>our own fine-tuned LLM</strong>. Client code <strong>never leaves our infrastructure</strong>. And it works for <strong>any regulated industry</strong> — mortgage, healthcare, retail, airlines.<br><br>
+    Thank you. Happy to take questions."
+  </div>
+  <div class="tip">Stop talking. Smile. Wait for questions.</div>
+</div>
+
+<!-- SLIDE 12: Q&A Cheat Sheet -->
+<div class="slide">
+  <div class="slide-label">Q&A Backup — Keep this ready</div>
+  <h2>Common Questions & Answers</h2>
+  <div class="pitch" style="font-size:15px;line-height:1.9;">
+    <strong>Q: "Show me the LLM code"</strong><br>
+    → Open: regulith-llm/Modelfile, regulith-llm/scripts/fine_tune.py, OllamaLLMService.java<br><br>
+    <strong>Q: "Is the dashboard hardcoded?"</strong><br>
+    → "Baseline client data is simulated for demo. But Live Scan, Chain Reactor, Control Ingestion are 100% real. I just showed it live."<br><br>
+    <strong>Q: "What if LLM gives wrong answer?"</strong><br>
+    → "Low temperature (0.1) for consistency. Policy Engine has 26+ rules as backup. Heuristic fallback if LLM is down. System never goes blind."<br><br>
+    <strong>Q: "Where is the GPU?"</strong><br>
+    → "For this POC, model runs on CPU. For production, NVIDIA A10G on AWS — $1000/month. Same architecture, just faster."<br><br>
+    <strong>Q: "Why 4 steps (Perceive/Reason/Decide/Act)?"</strong><br>
+    → "Standard AI agent design pattern from AI research. Any autonomous agent needs to sense, understand, judge, and act. We applied it to compliance."<br><br>
+    <strong>Q: "Can this work for healthcare/retail/airlines?"</strong><br>
+    → "Yes. Same platform. Just load different policies. HIPAA for healthcare, PCI-DSS for retail, FAA for airlines. The engine is domain-agnostic."<br><br>
+    <strong>Q: "How long to implement for a real client?"</strong><br>
+    → "Phase 1 (8 weeks): Core platform for 1 pilot client. Phase 2 (12 weeks): Add all agents. Phase 3 (16 weeks): Multi-client dashboard. Phase 4 (20 weeks): Full production."
+  </div>
+</div>
+
+</div><!-- end slides -->
+
+<div class="nav">Use ↑↓ Arrow Keys or Scroll | <span>12</span> slides</div>
+
+<script>
+document.addEventListener('keydown', function(e) {
+  const c = document.querySelector('.slides');
+  const h = window.innerHeight;
+  const cur = Math.round(c.scrollTop / h);
+  if (e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); c.scrollTo({top:(cur+1)*h, behavior:'smooth'}); }
+  if (e.key === 'ArrowUp') { e.preventDefault(); c.scrollTo({top:(cur-1)*h, behavior:'smooth'}); }
+});
+</script>
+</body>
+</html>
