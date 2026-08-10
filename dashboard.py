@@ -80,6 +80,21 @@ def generate_html():
     metrics = data.get_header_metrics(live_findings)
     twin_cards = data.get_twin_cards_html(live_findings)
     chain_steps = data.get_chain_steps_html(live_findings)
+    # Build chain reactor panel content dynamically
+    if not live_findings:
+        chain_reactor_html = '<div style="text-align:center;padding:20px;color:#10b981;font-size:11px;">✓ No compliance events detected. Pipeline is clear.</div>'
+    else:
+        num_domains = len(set(f.category for f in live_findings))
+        penalty = int(data._live_score_penalty(live_findings))
+        has_critical = any(f.severity == 'CRITICAL' for f in live_findings)
+        status = 'DEPLOYMENT BLOCKED' if has_critical else 'Review Required'
+        chain_reactor_html = f"""<div class="ch-trigger">
+            <b>Live Code Change Detected</b> — {len(live_findings)} findings across {num_domains} domains<br>
+            Risk impact: -{penalty} pts · Status: {status}
+        </div>
+        <div class="ch-list">
+            {chain_steps}
+        </div>"""
     gate = data.get_gate_data(live_findings)
     narrative = data.get_narrative_compact(live_findings)
     drift_cards = data.get_drift_cards_html(live_findings)
@@ -106,7 +121,7 @@ def generate_html():
                 </div>"""
 
     return _build_html(
-        metrics, twin_cards, chain_steps, gate, gate_items_html,
+        metrics, twin_cards, chain_steps, chain_reactor_html, gate, gate_items_html,
         narrative, drift_cards, audit_timeline, audit_controls_html, drift_alerts,
         drift_stats, drift_bars_html, values
     )
@@ -219,7 +234,7 @@ def _build_recent_files_html():
     return html
 
 
-def _build_html(metrics, twin_cards, chain_steps, gate, gate_items_html,
+def _build_html(metrics, twin_cards, chain_steps, chain_reactor_html, gate, gate_items_html,
                 narrative, drift_cards, audit_timeline, audit_controls_html, drift_alerts,
                 drift_stats, drift_bars_html, values):
     cr = data.chain_reaction
@@ -473,13 +488,7 @@ body{{
     <div class="panel">
         <div class="panel-title">Agent 02 · Chain Reactor Agent</div>
         <h3>Cross-Domain Impact</h3>
-        <div class="ch-trigger">
-            <b>Code Change Detected</b> — {code['message'][:50]}<br>
-            {len(code['files_changed'])} files changed · {cr.total_domains_affected} compliance domains affected · risk impact: -{cr.risk_score_delta:.0f} pts
-        </div>
-        <div class="ch-list">
-            {chain_steps}
-        </div>
+        {chain_reactor_html}
     </div>
 
     <!-- Panel 3: Deployment Gate -->
