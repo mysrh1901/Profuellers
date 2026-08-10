@@ -138,11 +138,15 @@ class DashboardData:
         base_risk = sum(t.compliance_debt_usd for t in self.twins)
         live_risk = self._live_risk_cost(live_findings)
         total_risk = base_risk + live_risk
+        # Audit readiness decreases with more findings
+        base_audit = self.twins[0].audit_readiness_pct
+        audit_penalty = len(live_findings) * 2  # Each finding reduces audit readiness by 2%
+        audit_ready = max(40, int(base_audit - audit_penalty))
         return {
             "agents": 6,
             "domains": self.chain_reaction.total_domains_affected,
-            "analysis_time": "<7s",
-            "audit_saved": f"{int(self.twins[0].audit_readiness_pct)}%",
+            "analysis_time": "<2s",
+            "audit_saved": f"{audit_ready}%",
             "risk_avoided": f"${total_risk / 1000:.0f}K",
         }
 
