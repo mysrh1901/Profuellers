@@ -73,6 +73,10 @@ class DashboardData:
         # Set primary client to healthy baseline for demo (score degrades when violations are found)
         self.twins[0].overall_score = 87.0
         self.twins[0].trend = "STABLE"
+        self.twins[0].open_risks = 0
+        self.twins[0].compliance_debt_usd = 50000
+        self.twins[0].audit_readiness_pct = 92.0
+        self.twins[0].security_findings = []
         self.twins[0].domain_scores = {
             "SOX": 88,
             "Security": 85,
