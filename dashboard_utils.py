@@ -270,67 +270,26 @@ class DashboardData:
         }
 
     def get_narrative_compact(self, live_findings=None):
-        """Compact narrative — prefers AI-generated from backend, falls back to local."""
+        """Compact narrative — only shows when there are live findings to narrate."""
         live_findings = live_findings or []
 
-        # Try to get AI-generated narrative from Spring Boot backend
-        backend_narrative = self.get_backend_narratives()
-        if backend_narrative:
-            text = f"[AI-GENERATED NARRATIVE]\n\n{backend_narrative[:600]}"
-            if live_findings:
-                text += f"\n\n━━━ LIVE SCAN ({datetime.now().strftime('%H:%M:%S')}) ━━━"
-                text += f"\nFindings: {len(live_findings)} total"
-                for f in live_findings[:4]:
-                    text += f"\n  [{f.severity}] {f.title[:45]}"
-            text += "\n\n— KAVACH AI Audit Narrator (LLM) —"
-            return text
+        # No findings = no narrative needed
+        if not live_findings:
+            return "✓ No compliance events to narrate.\n\nWhen a code change triggers findings, this agent\nautomatically generates audit-ready evidence\ndocumenting who changed what, why, and which\ncontrols are satisfied or violated.\n\n— KAVACH AI Audit Narrator Agent (standby) —"
 
-        # Fallback: local narrative generation
-        n = self.narrative
-        code = self.code_change
-        sast = code.get("sast_scan_result", {})
-        reviewers = code.get("pr_reviewers", [])
-        author = code["author"]
-
-        controls_lines = "\n".join(
-            f"  {c.split(':')[0]}: ✓" for c in n.controls_satisfied[:4]
-        )
-
-        text = f"""PR #{code['branch'].split('/')[-1]} by {author.split('@')[0]}
-{code['message']}
-
-Justification: {code.get('jira_description', 'N/A')[:50]}
-Jira: {code.get('jira_ticket', 'N/A')}
-
-SAST: {sast.get('tool', 'N/A')} | C:{sast.get('critical', 0)} H:{sast.get('high', 0)} M:{sast.get('medium', 0)}"""
-
-        if sast.get("details"):
-            for d in sast["details"][:2]:
-                text += f"\n  {d['severity']}: {d['title'][:40]}"
-
-        text += f"""
-
-Segregation of Duties:
-  Author:   {author.split('@')[0]}
-  Reviewer: {reviewers[0].split('@')[0] if reviewers else 'N/A'} ✓
-  Architect: {reviewers[1].split('@')[0] if len(reviewers) > 1 else 'N/A'} ✓
-
-Controls:
-{controls_lines}"""
-
-        # Append live findings summary
-        if live_findings:
-            text += f"""
-
-━━━ LIVE SCAN ({datetime.now().strftime('%H:%M:%S')}) ━━━
-Files scanned: recently modified .java
-Findings: {len(live_findings)} total"""
-            for f in live_findings[:4]:
-                text += f"\n  [{f.severity}] {f.title[:45]}"
-            if len(live_findings) > 4:
-                text += f"\n  ... +{len(live_findings)-4} more"
-
-        text += "\n\n— KAVACH AI Audit Narrator —"
+        # Generate narrative from live findings
+        text = f"AUDIT EVIDENCE NARRATIVE\nGenerated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
+        text += f"Client: {self.twins[0].client.client_name}\n\n"
+        text += f"EVENT: Live code change detected\n"
+        text += f"Findings: {len(live_findings)} total\n"
+        text += f"Critical: {self._live_critical_count(live_findings)} | High: {self._live_high_count(live_findings)}\n\n"
+        text += "VIOLATIONS DETECTED:\n"
+        for f in live_findings[:6]:
+            text += f"  [{f.severity}] {f.category}: {f.title[:45]}\n"
+        if len(live_findings) > 6:
+            text += f"  ... +{len(live_findings)-6} more\n"
+        text += f"\nSTATUS: {'DEPLOYMENT BLOCKED' if self._live_critical_count(live_findings) > 0 else 'Review Required'}\n"
+        text += "\n— KAVACH AI Audit Narrator Agent —"
         return text
 
     def get_drift_cards_html(self, live_findings=None):
