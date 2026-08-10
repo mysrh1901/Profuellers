@@ -167,7 +167,9 @@ class DashboardData:
 
         color = "#10b981" if score >= 80 else "#f59e0b" if score >= 60 else "#ef4444"
         pct = score * 3.267
-        trend = twin.trend
+        # Dynamic trend and audit based on live findings
+        audit_pct = max(40, int(twin.audit_readiness_pct - len(live_findings) * 2))
+        trend = "DEGRADING" if live_findings else twin.trend
 
         html = f"""
             <div class="twin-card" style="padding:14px 16px;">
@@ -189,7 +191,7 @@ class DashboardData:
                     <span><b>{critical}</b> Crit</span>
                     <span><b>{high}</b> High</span>
                     <span><b>${debt/1000:.0f}K</b> Debt</span>
-                    <span><b>{twin.audit_readiness_pct:.0f}%</b> Audit</span>
+                    <span><b>{audit_pct}%</b> Audit</span>
                 </div>
                 <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">"""
 
