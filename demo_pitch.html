@@ -72,7 +72,7 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:#1a1a2e; color:#e
   <h2>Architecture Walkthrough</h2>
   <div class="pitch">
     "The architecture has 5 layers:<br><br>
-    <strong>Event Sources</strong> — Git hooks, Jenkins CI/CD, Jira, AWS Config, File Watcher. Any system change can trigger analysis.<br><br>
+    <strong>Event Sources</strong> — Git hooks, Jenkins CI/CD, Jira, AWS Config, File Watcher. Any system change can trigger analysis. How? Each tool sends a webhook (HTTP POST) to our API when something happens. Git sends a webhook after every commit. Jenkins sends one after every build. Jira sends one when a ticket moves. Our API receives it, creates an event, and puts it in the queue. It is a standard integration — every modern tool supports webhooks out of the box.<br><br>
     <strong>Message Queue</strong> — ActiveMQ. Decouples ingestion from processing. Handles high volume.<br><br>
     <strong>6 Agents</strong> — Each autonomous. Digital Twin maintains client score. Chain Reactor traces cross-domain impact. Audit Narrator writes evidence. Drift Sentinel catches slow degradation. Obligation Parser reads contracts. Control Ingestion adds new frameworks.<br><br>
     <strong>Intelligence Layer</strong> — Our own fine-tuned LLM, Knowledge Graph for causal reasoning, Policy Engine with 26+ rules.<br><br>
