@@ -336,39 +336,26 @@ Findings: {len(live_findings)} total"""
         return text
 
     def get_drift_cards_html(self, live_findings=None):
-        """Drift cards from agent + live findings as new drifts."""
+        """Drift cards — only show when live findings exist (drift = something went wrong)."""
         live_findings = live_findings or []
         html = ""
         sev_class_map = {"CRITICAL": "crit", "HIGH": "high", "MEDIUM": "med", "LOW": "low"}
         sev_color_map = {"CRITICAL": "#ef4444", "HIGH": "#f59e0b", "MEDIUM": "#eab308", "LOW": "#6366f1"}
 
-        # Show live findings first if they exist (they're the "new drifts")
-        seen = set()
-        for f in live_findings[:2]:
-            if f.category not in seen:
-                seen.add(f.category)
-                cls = sev_class_map.get(f.severity, "med")
-                color = sev_color_map.get(f.severity, "#eab308")
-                html += f"""
+        if not live_findings:
+            html = '<div style="text-align:center;padding:20px;color:#10b981;font-size:11px;">✓ No compliance drift detected. All systems healthy.</div>'
+            return html
+
+        # Show live findings as detected drifts
+        for f in live_findings[:4]:
+            cls = sev_class_map.get(f.severity, "med")
+            color = sev_color_map.get(f.severity, "#eab308")
+            html += f"""
                 <div class="drift-item {cls}">
-                    <div class="drift-sev" style="color:{color}">LIVE · {f.severity}</div>
+                    <div class="drift-sev" style="color:{color}">DETECTED · {f.severity}</div>
                     <div class="drift-t">{f.title[:30]}</div>
                     <div class="drift-d">{f.description[:70]}</div>
                     <div class="drift-f">✓ {f.remediation[:45]}</div>
-                </div>"""
-
-        # Fill rest with baseline drifts
-        remaining = 4 - len(seen)
-        for drift in self.drifts[:remaining]:
-            sev = drift["severity"]
-            cls = sev_class_map.get(sev, "med")
-            color = sev_color_map.get(sev, "#eab308")
-            html += f"""
-                <div class="drift-item {cls}">
-                    <div class="drift-sev" style="color:{color}">{sev}</div>
-                    <div class="drift-t">{drift['title'][:30]}</div>
-                    <div class="drift-d">{drift['impact'][:70]}</div>
-                    <div class="drift-f">✓ {drift['remediation'][:45]}</div>
                 </div>"""
         return html
 
