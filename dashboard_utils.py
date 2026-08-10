@@ -493,8 +493,8 @@ Findings: {len(live_findings)} total"""
             "debt_avoided": f"${total_debt/1000:.0f}K",
             "domains_per_commit": str(domains),
             "findings_prevented": f"{findings_prevented}%",
-            "agents_active": "5",
-            "analysis_time": "<7s",
+            "agents_active": "6",
+            "analysis_time": "<2s",
         }
 
     def get_audit_controls(self, live_findings=None):
