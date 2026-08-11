@@ -317,52 +317,33 @@ class DashboardData:
         return html
 
     def get_audit_timeline_html(self, live_findings=None):
-        """Audit timeline — live findings appear as new events at the top."""
+        """Audit timeline — only shows live events, clean when no findings."""
         live_findings = live_findings or []
         events = []
 
-        # Live findings as most recent events (they just happened)
-        if live_findings:
-            crit_count = self._live_critical_count(live_findings)
-            high_count = self._live_high_count(live_findings)
-            events.append({
-                "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " (LIVE)",
-                "title": f"Live Scan: {len(live_findings)} findings in recently modified code",
-                "meta": f"Critical: {crit_count} · High: {high_count} · Categories: {', '.join(set(f.category for f in live_findings[:3]))}",
-                "status": f"✗ {'DEPLOYMENT BLOCKED' if crit_count > 0 else 'Review Required'} — resolve before merge",
-                "color": "#ef4444" if crit_count > 0 else "#f59e0b",
-            })
+        if not live_findings:
+            return '<div style="text-align:center;padding:20px;color:#10b981;font-size:11px;">✓ No compliance events in timeline. All clear.</div>'
 
-        # Baseline events
-        code = self.code_change
-        controls_satisfied = self.narrative.controls_satisfied
-        controls_short = " · ".join(f"✓ {c.split(':')[0]}" for c in controls_satisfied[:4])
+        # Live findings as events
+        crit_count = self._live_critical_count(live_findings)
+        high_count = self._live_high_count(live_findings)
         events.append({
-            "time": code["timestamp"][:16].replace("T", " ") + " UTC",
-            "title": f"PR #{code['branch'].split('/')[-1]} — {code['message'][:40]}",
-            "meta": f"Author: {code['author'].split('@')[0]} · Reviewer: {code.get('pr_reviewers', [''])[0].split('@')[0]} · Architect: {code.get('pr_reviewers', ['',''])[1].split('@')[0] if len(code.get('pr_reviewers', [])) > 1 else 'N/A'}",
-            "status": controls_short,
-            "color": "#10b981",
+            "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " (LIVE)",
+            "title": f"Live Scan: {len(live_findings)} findings detected in modified code",
+            "meta": f"Critical: {crit_count} · High: {high_count} · Categories: {', '.join(set(f.category for f in live_findings[:3]))}",
+            "status": f"✗ {'DEPLOYMENT BLOCKED' if crit_count > 0 else 'Review Required'} — resolve before merge",
+            "color": "#ef4444" if crit_count > 0 else "#f59e0b",
         })
 
-        sast = code.get("sast_scan_result", {})
-        if sast.get("high", 0) > 0 or sast.get("critical", 0) > 0:
+        # Add individual findings as timeline entries
+        for f in live_findings[:4]:
+            sev_color = "#ef4444" if f.severity == "CRITICAL" else "#f59e0b" if f.severity == "HIGH" else "#eab308"
             events.append({
-                "time": code["timestamp"][:10] + " (during scan)",
-                "title": f"SAST: {sast.get('critical',0)} Critical, {sast.get('high',0)} High findings",
-                "meta": f"Tool: {sast.get('tool','N/A')}",
-                "status": "⚠ ITGC-SD-01 requires resolution before deploy",
-                "color": "#f59e0b",
-            })
-
-        twin = self.twins[0]
-        for finding in [f for f in twin.security_findings if f.severity == Severity.CRITICAL][:2]:
-            events.append({
-                "time": finding.discovered_at[:16].replace("T", " ") + " UTC" if finding.discovered_at else "Unknown",
-                "title": finding.title[:50],
-                "meta": f"Source: {finding.source_tool} · Component: {finding.affected_component}",
-                "status": f"✗ {finding.severity.value}",
-                "color": "#ef4444",
+                "time": f.timestamp[:19] if f.timestamp else "Now",
+                "title": f"{f.category}: {f.title[:45]}",
+                "meta": f"Severity: {f.severity} · Line: {f.line_number}",
+                "status": f"Fix: {f.remediation[:50]}",
+                "color": sev_color,
             })
 
         html = ""
