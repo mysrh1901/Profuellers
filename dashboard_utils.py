@@ -196,10 +196,26 @@ class DashboardData:
                 </div>
                 <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">"""
 
-        # Domain scores
+        # Domain scores — adjust dynamically based on live findings
+        # Map finding categories to domains
+        domain_hits = {"SOX": 0, "Security": 0, "Regulatory": 0, "Contractual": 0, "Audit Readiness": 0}
+        for f in live_findings:
+            cat = f.category.upper()
+            if "SOX" in cat or "ITGC" in cat or "CHANGE" in cat:
+                domain_hits["SOX"] += 5
+            if "SECURITY" in cat or "SQL" in cat or "SECRET" in cat or "HARDCODED" in cat or "CRYPTO" in cat:
+                domain_hits["Security"] += 5
+            if "REGULATORY" in cat or "TILA" in cat or "ECOA" in cat or "FAIR" in cat:
+                domain_hits["Regulatory"] += 5
+            if "CONTRACT" in cat or "MSA" in cat or "SLA" in cat or "HTTP" in cat:
+                domain_hits["Contractual"] += 5
+            if "AUDIT" in cat or "LOG" in cat:
+                domain_hits["Audit Readiness"] += 5
+
         for domain, dscore in twin.domain_scores.items():
-            dcolor = "#10b981" if dscore >= 80 else "#f59e0b" if dscore >= 60 else "#ef4444"
-            html += f"""<span style="font-size:8px;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,0.3);border:1px solid {dcolor}33;color:{dcolor};">{domain} {dscore:.0f}%</span>"""
+            adjusted = max(30, dscore - domain_hits.get(domain, 0))
+            dcolor = "#10b981" if adjusted >= 80 else "#f59e0b" if adjusted >= 60 else "#ef4444"
+            html += f"""<span style="font-size:8px;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,0.3);border:1px solid {dcolor}33;color:{dcolor};">{domain} {adjusted:.0f}%</span>"""
 
         html += f"""
                 </div>
