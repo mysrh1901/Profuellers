@@ -222,7 +222,7 @@ def _build_live_compliance_impact_html():
         html += f"""
             <div style="background:transparent;border:1px solid rgba(150,160,180,0.2);border-radius:6px;padding:10px 12px;border-left:2px solid {color};">
                 <div style="font-size:8px;font-weight:700;color:{color};letter-spacing:0.5px;margin-bottom:3px;">{framework}</div>
-                <div style="font-size:9.5px;color:#d0d8e8;">{len(findings)} finding(s) — worst: {worst_sev}</div>
+                <div style="font-size:9.5px;color:#d0d8e8;">{len(findings)} finding(s) — highest severity: {worst_sev}</div>
                 <div style="font-size:8.5px;color:#6b7f99;margin-top:3px;">
                     {', '.join(set(f.category for f in findings))}
                 </div>
