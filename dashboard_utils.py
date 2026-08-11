@@ -358,49 +358,36 @@ class DashboardData:
         return html
 
     def get_drift_view_alerts_html(self, live_findings=None):
-        """Full drift alerts for drift monitor view — includes live."""
+        """Full drift alerts for drift monitor view — dynamic based on live findings only."""
         live_findings = live_findings or []
         html = ""
+
+        if not live_findings:
+            return '<div style="text-align:center;padding:30px;color:#10b981;font-size:12px;">✓ No active drift alerts. All systems compliant.</div>'
+
         sev_class_map = {"CRITICAL": "crit", "HIGH": "high", "MEDIUM": "med", "LOW": "low"}
         sev_color_map = {"CRITICAL": "#ef4444", "HIGH": "#f59e0b", "MEDIUM": "#eab308", "LOW": "#6366f1"}
 
-        # Live findings first
         for f in live_findings:
             cls = sev_class_map.get(f.severity, "med")
             color = sev_color_map.get(f.severity, "#eab308")
             html += f"""
             <div class="drift-item {cls}" style="border-left-width:3px;">
-                <div class="drift-sev" style="color:{color}">LIVE · {f.severity} · {f.category}</div>
+                <div class="drift-sev" style="color:{color}">{f.severity} · {f.category}</div>
                 <div class="drift-t">{f.title[:45]}</div>
                 <div class="drift-d">{f.description[:90]}</div>
                 <div class="drift-f">✓ {f.remediation[:55]}</div>
             </div>"""
-
-        # Baseline drifts
-        for drift in self.drifts:
-            sev = drift["severity"]
-            cls = sev_class_map.get(sev, "med")
-            color = sev_color_map.get(sev, "#eab308")
-            html += f"""
-            <div class="drift-item {cls}" style="border-left-width:3px;">
-                <div class="drift-sev" style="color:{color}">{sev} · {drift['category']}</div>
-                <div class="drift-t">{drift['title'][:45]}</div>
-                <div class="drift-d">{drift['impact'][:90]}</div>
-                <div class="drift-f">✓ {drift['remediation'][:55]}</div>
-            </div>"""
         return html
 
     def get_drift_stats(self, live_findings=None):
-        """Drift statistics — includes live findings in counts."""
+        """Drift statistics — based on live findings only."""
         live_findings = live_findings or []
-        total = len(self.drifts) + len(live_findings)
-        auto_fixable = len([d for d in self.drifts if "YES" in d["auto_fixable"]])
+        total = len(live_findings)
+        auto_fixable = len([f for f in live_findings if f.severity in ("MEDIUM", "LOW")])
         pending = total - auto_fixable
 
         by_category = {}
-        for d in self.drifts:
-            cat = d["category"].split("/")[0].strip()[:12]
-            by_category[cat] = by_category.get(cat, 0) + 1
         for f in live_findings:
             cat = f.category[:12]
             by_category[cat] = by_category.get(cat, 0) + 1
