@@ -197,20 +197,22 @@ class DashboardData:
                 <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">"""
 
         # Domain scores — adjust dynamically based on live findings
-        # Map finding categories to domains
+        # Map finding categories AND compliance_impact to domains
         domain_hits = {"SOX": 0, "Security": 0, "Regulatory": 0, "Contractual": 0, "Audit Readiness": 0}
         for f in live_findings:
             cat = f.category.upper()
-            if "SOX" in cat or "ITGC" in cat or "CHANGE" in cat:
-                domain_hits["SOX"] += 5
-            if "SECURITY" in cat or "SQL" in cat or "SECRET" in cat or "HARDCODED" in cat or "CRYPTO" in cat:
-                domain_hits["Security"] += 5
-            if "REGULATORY" in cat or "TILA" in cat or "ECOA" in cat or "FAIR" in cat:
-                domain_hits["Regulatory"] += 5
-            if "CONTRACT" in cat or "MSA" in cat or "SLA" in cat or "HTTP" in cat:
-                domain_hits["Contractual"] += 5
-            if "AUDIT" in cat or "LOG" in cat:
-                domain_hits["Audit Readiness"] += 5
+            impacts = " ".join(f.compliance_impact).upper() if f.compliance_impact else ""
+            combined = cat + " " + impacts
+            if "SOX" in combined or "ITGC" in combined or "CHANGE" in combined:
+                domain_hits["SOX"] += 4
+            if "SECURITY" in combined or "SQL" in combined or "SECRET" in combined or "HARDCODED" in combined or "CRYPTO" in combined or "OWASP" in combined or "PCI" in combined or "CWE" in combined:
+                domain_hits["Security"] += 4
+            if "TILA" in combined or "ECOA" in combined or "FAIR" in combined or "REGULATORY" in combined or "NIST" in combined or "FIPS" in combined:
+                domain_hits["Regulatory"] += 4
+            if "CONTRACT" in combined or "MSA" in combined or "SLA" in combined or "HTTP" in combined:
+                domain_hits["Contractual"] += 4
+            if "AUDIT" in combined or "LOG" in combined or "TRAIL" in combined or "OP-01" in combined:
+                domain_hits["Audit Readiness"] += 4
 
         for domain, dscore in twin.domain_scores.items():
             adjusted = max(30, dscore - domain_hits.get(domain, 0))
