@@ -128,10 +128,12 @@ def generate_html():
 
 
 def _build_remediation_log():
-    """Generate remediation log HTML from drift agent data."""
+    """Generate remediation log HTML — dynamic based on live findings."""
+    if not live_findings:
+        return '<div style="text-align:center;padding:20px;color:#10b981;font-size:10px;">✓ No remediation actions needed. All systems healthy.</div>'
     html = ""
-    for drift in data.drifts:
-        if "YES" in drift["auto_fixable"]:
+    for f in live_findings[:6]:
+        if f.severity in ("MEDIUM", "LOW"):
             status_color = "#10b981"
             status_text = "✓ AUTO-REMEDIATED"
         else:
@@ -140,7 +142,7 @@ def _build_remediation_log():
         html += f"""
             <div style="background:transparent;border:1px solid rgba(150,160,180,0.2);border-radius:6px;padding:8px 10px;">
                 <div style="font-size:8px;color:{status_color};">{status_text}</div>
-                <div style="font-size:9.5px;color:#d0d8e8;margin-top:2px;">{drift['remediation'][:60]}</div>
+                <div style="font-size:9.5px;color:#d0d8e8;margin-top:2px;">{f.remediation[:60]}</div>
             </div>"""
     return html
 
