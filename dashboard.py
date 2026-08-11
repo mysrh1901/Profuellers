@@ -96,6 +96,10 @@ def generate_html():
             {chain_steps}
         </div>"""
     gate = data.get_gate_data(live_findings)
+    # Gate blocking items as HTML (must be built before gate_panel_html)
+    gate_items_html = ""
+    for item in gate["blocking_items"]:
+        gate_items_html += f'<li>{item[:70]}</li>'
     # Build gate panel content dynamically
     if not live_findings:
         gate_panel_html = '<div style="text-align:center;padding:20px;"><div style="color:#10b981;font-size:24px;margin-bottom:8px;">✓</div><div style="color:#10b981;font-size:12px;font-weight:600;">Deployment Approved</div><div style="color:#64748b;font-size:11px;margin-top:6px;">No compliance violations detected. Pipeline is clear to deploy.</div></div>'
@@ -125,11 +129,6 @@ def generate_html():
     drift_alerts = data.get_drift_view_alerts_html(live_findings)
     drift_stats = data.get_drift_stats(live_findings)
     values = data.get_value_metrics(live_findings)
-
-    # Gate blocking items as HTML
-    gate_items_html = ""
-    for item in gate["blocking_items"]:
-        gate_items_html += f'<li>{item[:70]}</li>'
 
     # Drift stats bars
     drift_bars_html = ""
