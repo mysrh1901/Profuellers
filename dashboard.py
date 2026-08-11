@@ -96,6 +96,28 @@ def generate_html():
             {chain_steps}
         </div>"""
     gate = data.get_gate_data(live_findings)
+    # Build gate panel content dynamically
+    if not live_findings:
+        gate_panel_html = '<div style="text-align:center;padding:20px;"><div style="color:#10b981;font-size:24px;margin-bottom:8px;">✓</div><div style="color:#10b981;font-size:12px;font-weight:600;">Deployment Approved</div><div style="color:#64748b;font-size:11px;margin-top:6px;">No compliance violations detected. Pipeline is clear to deploy.</div></div>'
+    else:
+        badge = 'Deployment Blocked' if gate['requires_human'] else 'Review Required'
+        gate_panel_html = f"""<div class="gate-badge">{badge}</div>
+        <p style="font-size:9.5px;color:#6b7f99;margin-bottom:6px;">
+            {gate['client_name']} — Score: {gate['current_score']:.0f}% → {gate['projected_score']:.0f}% (-{gate['score_delta']:.0f}pts)
+        </p>
+        <ul class="gate-items">
+            {gate_items_html}
+        </ul>
+        <div class="gate-bottom">
+            <div class="gate-risk">
+                <div class="gate-risk-val">${gate['risk_usd']/1000:.0f}K</div>
+                <div class="gate-risk-lbl">Risk if Deployed</div>
+            </div>
+            <div class="gate-rec">
+                <b>Recommendation</b>
+                Hold deployment. {len(gate['blocking_items'])} actions required. {gate['domains_affected']} domains affected.
+            </div>
+        </div>"""
     narrative = data.get_narrative_compact(live_findings)
     drift_cards = data.get_drift_cards_html(live_findings)
     audit_timeline = data.get_audit_timeline_html(live_findings)
@@ -121,7 +143,7 @@ def generate_html():
                 </div>"""
 
     return _build_html(
-        metrics, twin_cards, chain_steps, chain_reactor_html, gate, gate_items_html,
+        metrics, twin_cards, chain_steps, chain_reactor_html, gate, gate_items_html, gate_panel_html,
         narrative, drift_cards, audit_timeline, audit_controls_html, drift_alerts,
         drift_stats, drift_bars_html, values
     )
@@ -236,7 +258,7 @@ def _build_recent_files_html():
     return html
 
 
-def _build_html(metrics, twin_cards, chain_steps, chain_reactor_html, gate, gate_items_html,
+def _build_html(metrics, twin_cards, chain_steps, chain_reactor_html, gate, gate_items_html, gate_panel_html,
                 narrative, drift_cards, audit_timeline, audit_controls_html, drift_alerts,
                 drift_stats, drift_bars_html, values):
     cr = data.chain_reaction
@@ -497,23 +519,7 @@ body{{
     <div class="panel">
         <div class="panel-title">Agent 03 · Obligation Parser Agent</div>
         <h3>Contract SLA & Deployment Gate</h3>
-        <div class="gate-badge">{'Deployment Blocked' if gate['requires_human'] else 'Review Required'}</div>
-        <p style="font-size:9.5px;color:#6b7f99;margin-bottom:6px;">
-            {gate['client_name']} — Score: {gate['current_score']:.0f}% → {gate['projected_score']:.0f}% (-{gate['score_delta']:.0f}pts)
-        </p>
-        <ul class="gate-items">
-            {gate_items_html}
-        </ul>
-        <div class="gate-bottom">
-            <div class="gate-risk">
-                <div class="gate-risk-val">${gate['risk_usd']/1000:.0f}K</div>
-                <div class="gate-risk-lbl">Risk if Deployed</div>
-            </div>
-            <div class="gate-rec">
-                <b>Recommendation</b>
-                Hold deployment. {len(gate['blocking_items'])} actions required. {gate['domains_affected']} domains affected.
-            </div>
-        </div>
+        {gate_panel_html}
     </div>
 
     <!-- Panel 4: Audit Narrator -->
