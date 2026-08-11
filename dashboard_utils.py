@@ -70,13 +70,14 @@ class DashboardData:
 
         # Compute baseline
         self.twins = [self.twin_agent.build_twin(c) for c in self.clients]
-        # Set primary client to healthy baseline for demo (score degrades when violations are found)
-        self.twins[0].overall_score = 87.0
-        self.twins[0].trend = "STABLE"
-        self.twins[0].open_risks = 0
-        self.twins[0].compliance_debt_usd = 0
-        self.twins[0].audit_readiness_pct = 92.0
-        self.twins[0].security_findings = []
+        # Set all clients to healthy baseline for demo
+        for twin in self.twins:
+            twin.overall_score = 87.0
+            twin.trend = "STABLE"
+            twin.open_risks = 0
+            twin.compliance_debt_usd = 0
+            twin.audit_readiness_pct = 92.0
+            twin.security_findings = []
         self.twins[0].domain_scores = {
             "SOX": 88,
             "Security": 85,
