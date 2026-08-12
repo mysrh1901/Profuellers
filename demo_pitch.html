@@ -271,7 +271,9 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:#1a1a2e; color:#e
     &nbsp;&nbsp;↓<br>
     <span style="color:#818cf8;">dashboard.py</span> detects modified file (every 5 sec)<br>
     &nbsp;&nbsp;↓<br>
-    <span style="color:#818cf8;">ai_scanner.py</span> reads content → finds violations<br>
+    <span style="color:#818cf8;">ai_scanner.py</span> reads content → sends to <span style="color:#a78bfa;">KAVACH LLM</span> for reasoning<br>
+    &nbsp;&nbsp;↓<br>
+    <span style="color:#a78bfa;">KAVACH LLM (OllamaLLMService)</span> analyzes code → returns compliance findings<br>
     &nbsp;&nbsp;↓<br>
     <span style="color:#818cf8;">ai_scanner.py</span> sends HTTP POST to Spring Boot<br>
     &nbsp;&nbsp;↓<br>
