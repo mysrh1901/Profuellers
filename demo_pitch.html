@@ -307,36 +307,36 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:#1a1a2e; color:#e
 <!-- SLIDE 16: Java Files - Agents -->
 <div class="slide">
   <div class="slide-label">Code Walkthrough — Java Agents</div>
-  <h2>Java Files (Spring Boot Agents)</h2>
-  <div class="pitch" style="font-size:13px;line-height:1.8;">
-    <strong style="color:#f87171;">5. ChainReactorAgent.java</strong> — THE BRAIN<br>
-    <span style="color:#94a3b8;">Listens to ActiveMQ queue (@JmsListener). When event arrives: builds context → calls PolicyEngine.evaluate() → calls GraphRAG → calls AuditNarrator → updates client score. All automatic, no human trigger.</span><br><br>
-    <strong style="color:#fbbf24;">6. CompliancePolicyEngine.java</strong> — Rule Engine (26+ policies)<br>
-    <span style="color:#94a3b8;">Each policy is a data object: {id, domain, trigger, severity, action, blocking}. The evaluate() method loops all policies and checks trigger condition against event context. NOT hardcoded if/else — adding a policy = adding data.</span><br><br>
-    <strong style="color:#34d399;">7. AuditNarratorAgent.java</strong> — Evidence Writer<br>
-    <span style="color:#94a3b8;">Called by Chain Reactor after policy evaluation. Formats event + impacts → sends to LLM → LLM writes professional audit narrative → saves to database.</span><br><br>
-    <strong style="color:#a78bfa;">8. ControlIngestionAgent.java</strong> — Dynamic Policy Creator<br>
-    <span style="color:#94a3b8;">Accepts regulation text via API → sends to LLM → LLM parses into structured policy → adds to live PolicyEngine. No restart. This is how we add DORA/HITRUST with zero code changes.</span><br><br>
-    <strong style="color:#818cf8;">9. OllamaLLMService.java</strong> — Our LLM Interface<br>
-    <span style="color:#94a3b8;">Sends prompts to localhost:11434 (Ollama). The reason() method: takes file content + client context → LLM returns structured findings (DOMAIN, SEVERITY, REGULATION, ACTION).</span>
+  <h2>Java Agents (Spring Boot)</h2>
+  <div class="pitch" style="font-size:12px;line-height:1.7;">
+    <strong style="color:#f87171;">ChainReactorAgent.java</strong> — THE BRAIN<br>
+    <span style="color:#94a3b8;">@JmsListener on queue. Event arrives → builds context → PolicyEngine.evaluate() → GraphRAG → AuditNarrator → updates score. All automatic.</span><br><br>
+    <strong style="color:#fbbf24;">CompliancePolicyEngine.java</strong> — 26+ Rules<br>
+    <span style="color:#94a3b8;">Each policy = data object {trigger, severity, action, blocking}. evaluate() loops all, checks triggers. NOT if/else.</span><br><br>
+    <strong style="color:#34d399;">AuditNarratorAgent.java</strong> — Evidence Writer<br>
+    <span style="color:#94a3b8;">Called by Chain Reactor. Formats event + impacts → LLM writes audit narrative → saves to DB.</span><br><br>
+    <strong style="color:#a78bfa;">ControlIngestionAgent.java</strong> — Policy Creator<br>
+    <span style="color:#94a3b8;">Accepts regulation text → LLM parses → adds to live PolicyEngine. Zero code, zero restart.</span><br><br>
+    <strong style="color:#818cf8;">OllamaLLMService.java</strong> — Our LLM<br>
+    <span style="color:#94a3b8;">Sends file content to localhost:11434 → LLM returns: DOMAIN, SEVERITY, FINDING, REGULATION, ACTION.</span>
   </div>
 </div>
 
 <!-- SLIDE 17: Java Files - Infrastructure -->
 <div class="slide">
   <div class="slide-label">Code Walkthrough — Infrastructure</div>
-  <h2>Java Files (Infra & Data)</h2>
-  <div class="pitch" style="font-size:14px;line-height:1.9;">
-    <strong style="color:#fbbf24;">10. WebhookController.java</strong> — Event Entry Point<br>
-    <span style="color:#94a3b8;">Accepts POST from any system (Git, Jenkins, Jira, our Python scanner). Saves event to H2 database → publishes to ActiveMQ queue. This is how ANY tool integrates with KAVACH.</span><br><br>
-    <strong style="color:#34d399;">11. FileSystemWatcher.java</strong> — Real-Time Monitor<br>
-    <span style="color:#94a3b8;">@Scheduled every 3 seconds. Checks watch-folder/ for modified files. Reads content → sends to OllamaLLMService → fires event to queue. This is the Spring Boot side of live scanning.</span><br><br>
-    <strong style="color:#a78bfa;">12. GraphRAGService.java</strong> — Knowledge Graph + RAG<br>
-    <span style="color:#94a3b8;">JGraphT graph with nodes (regulations, controls, penalties) and edges (violates, requires, triggers). When finding occurs, traverses 3 hops to find all connected impacts. Passes paths as context to LLM.</span><br><br>
-    <strong style="color:#818cf8;">13. BedrockClaudeService.java</strong> — Cloud LLM (Production)<br>
-    <span style="color:#94a3b8;">Same as Ollama but calls Claude on AWS Bedrock. Used for production scale. Has local fallback if AWS not configured.</span><br><br>
-    <strong style="color:#64748b;">14. Data Models</strong> — ComplianceEvent, ClientEngagement, ChainReactionResult, AuditNarrative<br>
-    <span style="color:#94a3b8;">JPA entities stored in H2 database. Every event, every finding, every narrative is persisted with full audit trail.</span>
+  <h2>Java Infra & Data</h2>
+  <div class="pitch" style="font-size:12px;line-height:1.7;">
+    <strong style="color:#fbbf24;">WebhookController.java</strong> — Event Entry<br>
+    <span style="color:#94a3b8;">Accepts POST from Git/Jenkins/Jira/our scanner. Saves to DB → puts in ActiveMQ queue.</span><br><br>
+    <strong style="color:#34d399;">FileSystemWatcher.java</strong> — File Monitor<br>
+    <span style="color:#94a3b8;">@Scheduled every 3s. Detects modified files → reads content → sends to LLM → fires event.</span><br><br>
+    <strong style="color:#a78bfa;">GraphRAGService.java</strong> — Knowledge Graph<br>
+    <span style="color:#94a3b8;">JGraphT graph. Nodes=regulations, edges=violates/requires/triggers. Traverses 3 hops for causal paths.</span><br><br>
+    <strong style="color:#818cf8;">BedrockClaudeService.java</strong> — Cloud LLM<br>
+    <span style="color:#94a3b8;">AWS Bedrock (Claude) for production. Fallback to local template if not configured.</span><br><br>
+    <strong style="color:#64748b;">Data Models</strong> — 4 JPA Entities<br>
+    <span style="color:#94a3b8;">ComplianceEvent, ClientEngagement, ChainReactionResult, AuditNarrative. All persisted in H2.</span>
   </div>
 </div>
 
