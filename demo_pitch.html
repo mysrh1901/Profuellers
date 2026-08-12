@@ -234,58 +234,58 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:#1a1a2e; color:#e
 </div>
 
 <!-- SLIDE 13: More Q&A -->
-<div class="slide">
+<div class="slide" style="padding:30px 50px;">
   <div class="slide-label">Q&A Continued</div>
-  <h2>More Questions & Answers</h2>
-  <div class="pitch" style="font-size:14px;line-height:1.9;">
+  <h2 style="font-size:22px;">More Questions & Answers</h2>
+  <div class="pitch" style="font-size:11px;line-height:1.7;overflow-y:auto;max-height:75vh;">
     <strong>Q: "IDE and SonarQube already do scanning. What is different?"</strong><br>
-    → "SonarQube finds the bug. KAVACH tells you which 6 regulations it violates, which client's SLA it triggers, how much the penalty is, and auto-generates audit evidence. Those tools are INPUTS to KAVACH — they feed our pipeline. We add the compliance brain on top."<br><br>
+    → "SonarQube finds the bug. KAVACH tells you which 6 regulations it violates, which client's SLA it triggers, how much the penalty is, and auto-generates audit evidence. Those tools are INPUTS to KAVACH."<br><br>
     <strong>Q: "How is the model 'yours' if you downloaded Llama?"</strong><br>
-    → "Same as downloading Linux and building a product on it. Llama is open-source (MIT license). We fine-tuned it on our data. The trained weights are our IP — unique to Hexaware. Nobody else has a model trained on our audit findings."<br><br>
+    → "Same as downloading Linux and building a product on it. We fine-tuned it on our data. The trained weights are our IP."<br><br>
     <strong>Q: "Data goes to Llama/Meta servers?"</strong><br>
-    → "No. Llama is downloaded once and installed on our server — like installing any app. After that, all processing is local. Nothing goes to Meta. Think of it like Microsoft Word — you don't send documents to Microsoft."<br><br>
+    → "No. Llama is installed on our server like any app. All processing is local. Nothing goes to Meta."<br><br>
     <strong>Q: "What if a regulation changes or a new one comes?"</strong><br>
-    → "That is exactly what Control Ingestion Agent does. Paste the new regulation text → AI parses it → policy enforced immediately. I showed this live with DORA. Zero code changes, zero developer involvement."<br><br>
+    → "Control Ingestion Agent. Paste regulation text → AI parses → policy enforced immediately. Zero code changes."<br><br>
     <strong>Q: "How many training examples do you need?"</strong><br>
-    → "We have 15 now for POC. For production accuracy, we need 500-1000. These come from past audit findings, SAST reports, and MSA clauses — data Hexaware already has from years of engagements."<br><br>
-    <strong>Q: "What if the model hallucinates or gives false positives?"</strong><br>
-    → "Three safeguards: (1) Temperature 0.1 means consistent deterministic output. (2) Policy Engine evaluates independently — even if LLM misses something, rules catch it. (3) We can retrain to fix patterns. And false positive is better than false negative in compliance — better to flag and review than to miss a $50K violation."<br><br>
-    <strong>Q: "How does this help Hexaware commercially?"</strong><br>
-    → "Offer as managed service: $20-50K/month per client. 10 clients = $2.4-6M annual revenue. No competitor has this — first mover advantage. Also reduces delivery risk — prevents SLA breaches that cost us client relationships."<br><br>
-    <strong>Q: "Can you show the code that connects everything?"</strong><br>
-    → Open ChainReactorAgent.java. Show @JmsListener annotation. "This listens to the queue automatically. When event arrives, it calls policyEngine.evaluate() — that checks 26+ policies. Then calls narratorAgent.generateNarrative() — that writes evidence. Then updateClientScore(). All autonomous."<br><br>
+    → "15 now for POC. For production: 500-1000 from past audit findings, SAST reports, MSA clauses."<br><br>
+    <strong>Q: "What if the model hallucinates?"</strong><br>
+    → "Temperature 0.1 = consistent output. Policy Engine evaluates independently as backup. False positive better than missing $50K violation."<br><br>
+    <strong>Q: "How does this help commercially?"</strong><br>
+    → "Managed service: $20-50K/month per client. 10 clients = $2.4-6M/year. No competitor has this."<br><br>
+    <strong>Q: "Can you show code that connects everything?"</strong><br>
+    → "Open ChainReactorAgent.java → @JmsListener → policyEngine.evaluate() → narratorAgent.generateNarrative() → updateClientScore(). All autonomous."<br><br>
     <strong>Q: "What is your roadmap?"</strong><br>
-    → "Short term: Win this competition, get sponsorship for pilot. Medium term: Deploy for 1 real client engagement (8 weeks). Long term: Product-ize, offer to all Hexaware clients, eventually external market."<br><br>
-    <strong>Q: "Why should we invest in this vs buying a tool?"</strong><br>
-    → "No tool does what KAVACH does — cross-domain, per-client, auto-evidence. We checked Vanta ($50K/yr), ServiceNow ($200K/yr), Fieldguide ($80K/yr) — none does causal reasoning across 6 domains. And we own the IP — it becomes a revenue-generating product, not a cost center."
+    → "Win competition → pilot 1 client (8 weeks) → productize → offer to all clients → external market."<br><br>
+    <strong>Q: "Why invest vs buy a tool?"</strong><br>
+    → "No tool does cross-domain per-client reasoning. We own the IP. Revenue-generating product, not cost center."
   </div>
 </div>
 
 
 <!-- SLIDE 14: Code Flow Diagram -->
-<div class="slide">
+<div class="slide" style="padding:30px 50px;">
   <div class="slide-label">Code Walkthrough — Overview</div>
-  <h2>How Code Flows Through KAVACH</h2>
-  <div style="font-family:monospace;font-size:14px;color:#cbd5e1;line-height:2.2;background:rgba(15,23,42,0.8);border:1px solid #334155;border-radius:10px;padding:24px;max-width:800px;">
+  <h2 style="font-size:22px;">How Code Flows Through KAVACH</h2>
+  <div style="font-family:monospace;font-size:12px;color:#cbd5e1;line-height:2.0;background:rgba(15,23,42,0.8);border:1px solid #334155;border-radius:10px;padding:18px;max-width:700px;">
     <span style="color:#34d399;">YOU</span> edit LoanService.java → save<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    &nbsp;&nbsp;↓<br>
     <span style="color:#818cf8;">dashboard.py</span> detects modified file (every 5 sec)<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    &nbsp;&nbsp;↓<br>
     <span style="color:#818cf8;">ai_scanner.py</span> reads content → finds violations<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    &nbsp;&nbsp;↓<br>
     <span style="color:#818cf8;">ai_scanner.py</span> sends HTTP POST to Spring Boot<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    &nbsp;&nbsp;↓<br>
     <span style="color:#fbbf24;">WebhookController.java</span> saves event → puts in queue<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
-    <span style="color:#f87171;">ChainReactorAgent.java</span> picks from queue (automatic)<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
-    <span style="color:#f87171;">CompliancePolicyEngine.java</span> checks 26+ rules<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    &nbsp;&nbsp;↓<br>
+    <span style="color:#f87171;">ChainReactorAgent.java</span> picks from queue (auto)<br>
+    &nbsp;&nbsp;↓<br>
+    <span style="color:#f87171;">PolicyEngine.java</span> checks 26+ rules<br>
+    &nbsp;&nbsp;↓<br>
     <span style="color:#f87171;">AuditNarratorAgent.java</span> writes evidence<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    &nbsp;&nbsp;↓<br>
     <span style="color:#34d399;">Dashboard updates</span> — score drops, findings appear
   </div>
-  <div class="tip">Point to this diagram while explaining. "No human triggers any of this. It's all automatic."</div>
+  <div class="tip">No human triggers any of this. It's all automatic.</div>
 </div>
 
 <!-- SLIDE 15: Python Files -->
