@@ -299,7 +299,8 @@ class AIScanner:
         return all_findings
 
     def _analyze_file(self, file_info: dict) -> List[AIFinding]:
-        """Analyze a single file — AI only for recent files, heuristic for old ones."""
+        """Analyze a single file — always use heuristic for dashboard speed.
+        LLM is used by Spring Boot FileSystemWatcher separately."""
         file_path = file_info["path"]
         modified_time = file_info["mtime_str"]
 
@@ -312,11 +313,7 @@ class AIScanner:
         if not content.strip():
             return []
 
-        # Only use AI for recently modified files (saves time on old files)
-        if self.ollama_available and file_info.get("is_recent", False):
-            return self._analyze_with_ai(content, file_path, modified_time)
-        else:
-            return self._analyze_with_heuristic(content, file_path, modified_time)
+        return self._analyze_with_heuristic(content, file_path, modified_time)
 
     def _analyze_with_ai(self, content: str, file_path: str, modified_time: str) -> List[AIFinding]:
         """Send file to Ollama LLM for AI-powered compliance reasoning."""
