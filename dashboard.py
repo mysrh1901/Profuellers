@@ -477,7 +477,7 @@ body{{
         </svg>
         <div class="brand-text">
             <div class="brand-name">KAVACH AI</div>
-            <div class="brand-sub">Knowledge-driven Audit, Vulnerability Analysis & Compliance Health</div>
+            <div class="brand-sub">Kontinuous Audit & Vulnerability Analysis for Compliant Hardening</div>
         </div>
     </div>
     <div class="nav">

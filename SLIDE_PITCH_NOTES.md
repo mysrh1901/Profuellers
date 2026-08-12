@@ -6,7 +6,7 @@
 
 **What to say (30 seconds):**
 
-"Good morning/afternoon. I am presenting KAVACH AI — which stands for Knowledge-driven Audit, Vulnerability Analysis and Compliance Health. This is an agentic AI platform that I built for the Agentic Arena competition. The core idea is simple — when a developer makes a code change, our system checks it against 6 compliance domains in under 2 seconds and tells you exactly what regulations are violated, what penalties apply, and whether to block deployment. No manual review, no waiting for quarterly audits."
+"Good morning/afternoon. I am presenting KAVACH AI — which stands for Kontinuous Audit & Vulnerability Analysis for Compliant Hardening. This is an agentic AI platform that I built for the Agentic Arena competition. The core idea is simple — when a developer makes a code change, our system checks it against 6 compliance domains in under 2 seconds and tells you exactly what regulations are violated, what penalties apply, and whether to block deployment. No manual review, no waiting for quarterly audits."
 
 **Key points to hit:**
 - KAVACH = Shield (Hindi) — protecting every client engagement

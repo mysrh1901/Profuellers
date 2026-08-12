@@ -126,7 +126,7 @@ class ComplianceTwinOrchestrator:
 ╔══════════════════════════════════════════════════════════════════════════╗
 ║                                                                          ║
 ║          🛡️  KAVACH AI                                                   ║
-║          Knowledge-driven Audit, Vulnerability Analysis &                ║
+║          Kontinuous Audit & Vulnerability Analysis for                ║
 ║          Compliance Health                                               ║
 ║                                                                          ║
 ║          "One commit. Six domains. Zero breaches."                       ║

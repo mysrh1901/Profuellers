@@ -77,7 +77,7 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
   <a href="#slide1"></a><a href="#slide2"></a><a href="#slide3"></a>
   <a href="#slide4"></a><a href="#slide5"></a><a href="#slide6"></a>
   <a href="#slide7"></a><a href="#slide8"></a><a href="#slide9"></a>
-  <a href="#slide10"></a><a href="#slide11"></a>
+  <a href="#slide10"></a>
 </div>
 
 <div class="slides">
@@ -87,20 +87,9 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div class="slide" id="slide1">
   <div class="label">Hexaware Profuellers · Agentic Arena 2026</div>
-  <div style="display:flex;align-items:center;gap:20px;">
-    <svg width="70" height="70" viewBox="0 0 100 100">
-      <defs><linearGradient id="sg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient>
-      <linearGradient id="ag1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#34d399"/></linearGradient></defs>
-      <path d="M50 6 L92 22 L92 52 C92 78 74 94 50 100 C26 94 8 78 8 52 L8 22 Z" fill="none" stroke="url(#sg1)" stroke-width="4" stroke-linejoin="round"/>
-      <path d="M50 16 L82 28 L82 52 C82 72 68 84 50 90 C32 84 18 72 18 52 L18 28 Z" fill="url(#sg1)" opacity="0.1"/>
-      <circle cx="50" cy="50" r="18" fill="none" stroke="url(#sg1)" stroke-width="2.5" opacity="0.8"/>
-      <circle cx="50" cy="50" r="7" fill="url(#sg1)"/>
-      <path d="M38 52 L46 60 L64 40" fill="none" stroke="url(#ag1)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    <h1 style="background:linear-gradient(135deg,#6366f1,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
-    KAVACH AI</h1>
-  </div>
-  <div class="subtitle">Kontinuous Audit & Vulnerability Analysis for Compliant Hardening</div>
+  <h1 style="background:linear-gradient(135deg,#f8fafc,#a5b4fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+    🛡️ KAVACH AI</h1>
+  <div class="subtitle">Knowledge-driven Audit, Vulnerability Analysis & Compliance Health</div>
   <div class="tagline">"One commit. Six domains. Zero breaches."</div>
   <div style="margin-top:40px;">
     <span class="tag tag-purple">Multi-Agent AI</span>
@@ -115,55 +104,92 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
 <!-- SLIDE 2: Problem Statement -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div class="slide" id="slide2">
-  <div class="label">Problem & Solution</div>
-  <h2 style="margin-bottom:8px;white-space:nowrap;">One Code Commit Can Simultaneously Violate 6 Compliance Domains</h2>
-  <div style="font-size:13px;color:#94a3b8;margin-bottom:20px;">In IT services, a single developer action can trigger SOX, Security, TILA, Fair Lending, Contractual, and PCI-DSS violations — but today these are caught by different teams, at different times, months after the fact.</div>
-  <div class="grid-3" style="margin-top:10px;">
+  <div class="label">The Problem</div>
+  <h2>One Code Commit Can Simultaneously Violate 6 Compliance Domains</h2>
+  <div class="grid-3" style="margin-top:30px;">
     <div class="card">
-      <h3 style="color:#f87171;font-size:14px;">The Problem — Today's Reality</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
-        • SOX team reviews annually — issues found 8-12 months late<br>
-        • Security scans weekly — nobody maps findings to contracts<br>
-        • Legal reviews MSA quarterly — disconnected from code<br>
-        • Fair lending tested semi-annually — no real-time checks<br>
-        • Each team uses different tools, no shared context<br>
-        • <strong style="color:#f87171;">Result: Violations found in audit = penalties, fines, termination</strong>
+      <h3 style="color:#f87171;">Today's Reality</h3>
+      <p style="color:#94a3b8;font-size:14px;line-height:1.8;">
+        • SOX team finds issues in annual audit<br>
+        • Security team scans weekly<br>
+        • Legal reviews contracts quarterly<br>
+        • Fair lending tested semi-annually<br>
+        • <strong style="color:#f87171;">Violations found MONTHS later</strong>
       </p>
     </div>
     <div class="card">
-      <h3 style="color:#fbbf24;font-size:14px;">The Gap — Why This Costs Real Money</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
-        • 4-5 teams, 4-5 tools, zero cross-talk between them<br>
-        • No tool connects a code bug to a contract penalty<br>
-        • No per-client context — same finding, different urgency<br>
-        • Reactive: find violation → scramble → hope audit passes<br>
-        • Audit prep takes 3-4 weeks of manual evidence collection<br>
-        • <strong style="color:#fbbf24;">Cost: $50K-$150K per missed violation, $2-4M/yr overhead</strong>
+      <h3 style="color:#fbbf24;">The Gap</h3>
+      <p style="color:#94a3b8;font-size:14px;line-height:1.8;">
+        • Different teams, different tools<br>
+        • No cross-domain reasoning<br>
+        • No per-client context<br>
+        • Reactive, not predictive<br>
+        • <strong style="color:#fbbf24;">$50K+ per missed violation</strong>
       </p>
     </div>
     <div class="card">
-      <h3 style="color:#34d399;font-size:14px;">KAVACH AI — How We Solve It</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
-        • AI analyzes every commit across ALL 6 domains in &lt;2 seconds<br>
-        • Per-client compliance twin — knows each client's SLAs<br>
-        • Predicts impact BEFORE code reaches production<br>
-        • Blocks deployment when policy is violated — not after<br>
-        • Auto-generates audit evidence continuously — no manual prep<br>
-        • <strong style="color:#34d399;">Result: Auditors walk in → evidence exists. Zero surprises.</strong>
+      <h3 style="color:#34d399;">KAVACH AI Solution</h3>
+      <p style="color:#94a3b8;font-size:14px;line-height:1.8;">
+        • AI reasons across ALL domains simultaneously<br>
+        • Per-engagement compliance twin<br>
+        • Predicts impact BEFORE deploy<br>
+        • Generates audit evidence in real-time<br>
+        • <strong style="color:#34d399;">Zero compliance surprises</strong>
       </p>
     </div>
   </div>
-  <div class="slide-num"><span>02</span> / 11</div>
+  <div class="slide-num"><span>02</span> / 10</div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <!-- SLIDE 3: Platform Architecture -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
-<div class="slide" id="slide3" style="padding:30px 50px;">
+<div class="slide" id="slide3">
   <div class="label">Platform Architecture</div>
-  <h2 style="margin-bottom:16px;">End-to-End Agentic AI Pipeline</h2>
-  <div style="font-size:12px;color:#94a3b8;margin-bottom:16px;">Every event flows through the same pipeline: Perceive → Reason → Decide → Act. No human in the loop for standard processing.</div>
-  <img src="assets/kavach-architecture.svg" style="width:100%;max-height:calc(100vh - 200px);object-fit:contain;" alt="KAVACH AI Architecture"/>
+  <h2>End-to-End Agentic AI Pipeline</h2>
+  <div style="display:grid;grid-template-columns:1fr;gap:14px;margin-top:20px;">
+    <!-- Row 1: Event Sources -->
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;">
+      <div class="arch-box"><div class="box-title">Git Hooks</div><div class="box-sub">Post-commit events</div></div>
+      <div class="arch-box"><div class="box-title">Jenkins CI</div><div class="box-sub">Pipeline webhooks</div></div>
+      <div class="arch-box"><div class="box-title">Jira</div><div class="box-sub">Ticket state changes</div></div>
+      <div class="arch-box"><div class="box-title">AWS Config</div><div class="box-sub">Infra drift events</div></div>
+      <div class="arch-box"><div class="box-title">File Watcher</div><div class="box-sub">Real-time scanning</div></div>
+    </div>
+    <div class="arrow">▼ Events flow into unified queue (ActiveMQ)</div>
+    <!-- Row 2: Agent Layer -->
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;">
+      <div class="arch-box highlight"><div class="box-title">🏗️ Digital Twin</div><div class="box-sub">Per-client state</div></div>
+      <div class="arch-box highlight"><div class="box-title">⚡ Chain Reactor</div><div class="box-sub">Cross-domain impact</div></div>
+      <div class="arch-box highlight"><div class="box-title">📝 Audit Narrator</div><div class="box-sub">Evidence generation</div></div>
+      <div class="arch-box highlight"><div class="box-title">🔍 Drift Sentinel</div><div class="box-sub">Silent degradation</div></div>
+      <div class="arch-box highlight"><div class="box-title">📜 Obligation Parser</div><div class="box-sub">Contract → rules</div></div>
+    </div>
+    <div class="arrow">▼ Agents reason using custom LLM + Knowledge Graph</div>
+    <!-- Row 3: Intelligence Layer -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div class="arch-box" style="border-color:#a78bfa;">
+        <div class="box-title">🧠 KAVACH LLM</div>
+        <div class="box-sub">Fine-tuned Llama 3.2 (QLoRA)</div>
+      </div>
+      <div class="arch-box" style="border-color:#fbbf24;">
+        <div class="box-title">🕸️ Knowledge Graph</div>
+        <div class="box-sub">JGraphT + GraphRAG</div>
+      </div>
+      <div class="arch-box" style="border-color:#f87171;">
+        <div class="box-title">⚙️ Policy Engine</div>
+        <div class="box-sub">26+ live policies</div>
+      </div>
+    </div>
+    <div class="arrow">▼ Results persisted + Dashboard updated</div>
+    <!-- Row 4: Output -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;">
+      <div class="arch-box"><div class="box-title">Dashboard</div><div class="box-sub">Real-time UI</div></div>
+      <div class="arch-box"><div class="box-title">Deployment Gate</div><div class="box-sub">Block/Allow</div></div>
+      <div class="arch-box"><div class="box-title">Audit Evidence</div><div class="box-sub">Auto-generated</div></div>
+      <div class="arch-box"><div class="box-title">Alerts</div><div class="box-sub">Slack/Email/PagerDuty</div></div>
+    </div>
+  </div>
   <div class="slide-num"><span>03</span> / 10</div>
 </div>
 
@@ -194,34 +220,41 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
       </div>
     </div>
     <div class="card">
-      <h3>Why We Built Our Own — Not Using Third-Party APIs</h3>
-      <div style="font-size:12px;color:#cbd5e1;line-height:1.9;margin-top:12px;">
-        <strong style="color:#f87171;">The risk with GPT/Claude APIs:</strong> Client source code gets sent to OpenAI or Anthropic servers for processing. For regulated clients (banks, mortgage companies), this is a non-starter — their MSA prohibits sending code to external parties.
-      </div>
-      <div style="font-size:12px;color:#cbd5e1;line-height:1.9;margin-top:12px;">
-        <strong style="color:#34d399;">What we did instead:</strong> We downloaded Llama 3.2 (open-source model) and installed it on our own server — like installing software. We then trained it on our compliance data. When code is analyzed, it's processed on OUR machine. Nothing is sent to Meta, OpenAI, or any external server. The model runs inside our network like any other application.
-      </div>
-      <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px;">
-        <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:12px;">
-          <div style="color:#f87171;font-weight:700;margin-bottom:8px;">GPT/Claude API (their servers)</div>
-          <div style="color:#94a3b8;line-height:1.8;">
-            • Code sent over internet to their servers<br>
-            • Processed on machines you don't control<br>
-            • ~$6,000/month at 5K events/day<br>
-            • Trained on generic internet data<br>
-            • Model owned by OpenAI/Anthropic
-          </div>
-        </div>
-        <div style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:8px;padding:12px;">
-          <div style="color:#34d399;font-weight:700;margin-bottom:8px;">KAVACH LLM (installed on our server)</div>
-          <div style="color:#94a3b8;line-height:1.8;">
-            • Code processed locally — never leaves our network<br>
-            • Model runs on our machine like any installed software<br>
-            • ~$1,000/month (same server, unlimited calls)<br>
-            • Trained on OUR compliance data<br>
-            • Model weights = Hexaware's IP
-          </div>
-        </div>
+      <h3>Why "Our Own" — Not Just a Wrapper</h3>
+      <table style="width:100%;font-size:13px;color:#94a3b8;border-collapse:collapse;">
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.2);">
+          <th style="text-align:left;padding:10px;color:#64748b;">Question</th>
+          <th style="text-align:left;padding:10px;color:#f87171;">Using GPT/Claude API</th>
+          <th style="text-align:left;padding:10px;color:#34d399;">KAVACH LLM</th>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);">
+          <td style="padding:10px;">Who sees client code?</td>
+          <td style="padding:10px;color:#f87171;">OpenAI / Anthropic</td>
+          <td style="padding:10px;color:#34d399;">Nobody (runs on our GPU)</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);">
+          <td style="padding:10px;">Cost @ 5K events/day</td>
+          <td style="padding:10px;color:#f87171;">~$6,000/month</td>
+          <td style="padding:10px;color:#34d399;">~$1,000/month (1 GPU)</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);">
+          <td style="padding:10px;">Where does it learn?</td>
+          <td style="padding:10px;color:#f87171;">General internet data</td>
+          <td style="padding:10px;color:#34d399;">OUR audit findings & controls</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);">
+          <td style="padding:10px;">Can we improve it?</td>
+          <td style="padding:10px;color:#f87171;">No (prompt only)</td>
+          <td style="padding:10px;color:#34d399;">Yes — retrain anytime</td>
+        </tr>
+        <tr>
+          <td style="padding:10px;">Who owns the model?</td>
+          <td style="padding:10px;color:#f87171;">OpenAI / Anthropic</td>
+          <td style="padding:10px;color:#34d399;">Hexaware (our IP)</td>
+        </tr>
+      </table>
+      <div style="margin-top:16px;padding:12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);border-radius:8px;font-size:13px;color:#6ee7b7;text-align:center;">
+        "We took an open-source model, taught it our compliance domain using our own audit data, and now it runs locally. The model weights are our intellectual property."
       </div>
     </div>
   </div>
@@ -280,59 +313,52 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div class="slide" id="slide6">
   <div class="label">Agentic Architecture</div>
-  <h2 style="margin-bottom:6px;">6 Autonomous Agents — Perceive, Reason, Act</h2>
-  <div style="font-size:12px;color:#94a3b8;margin-bottom:14px;">Each agent operates independently — perceives events, reasons about compliance impact, and takes action without human intervention. Together they cover the full compliance lifecycle.</div>
-  <div class="grid-3" style="gap:14px;">
-    <div class="card" style="border-left:3px solid #818cf8;padding:16px;">
-      <h3 style="font-size:14px;">🏗️ Digital Twin Agent</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
-        <strong style="color:#e2e8f0;">What:</strong> Maintains a live compliance score for each client engagement — a real-time view of their risk across all frameworks.<br>
-        <strong style="color:#e2e8f0;">How:</strong> Collects findings from our own AI scanner + integrates with client's existing security tools (SAST, cloud scanners, ITSM). Single pane of glass.<br>
-        <strong style="color:#e2e8f0;">Why:</strong> Without this, nobody knows the actual compliance state until audit day — by then it's too late to fix.
+  <h2>5 Autonomous Agents — Perceive, Reason, Act</h2>
+  <div class="grid-3" style="margin-top:24px;">
+    <div class="card" style="border-left:3px solid #818cf8;">
+      <h3>🏗️ Digital Twin Agent</h3>
+      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
+        Maintains live compliance state for each client engagement. Aggregates findings from Snyk, Checkmarx, Wiz, ServiceNow into a unified compliance score.
       </p>
+      <div style="margin-top:10px;"><span class="tag tag-purple">Per-Client</span><span class="tag tag-green">Real-Time</span></div>
     </div>
-    <div class="card" style="border-left:3px solid #f59e0b;padding:16px;">
-      <h3 style="font-size:14px;">⚡ Chain Reactor Agent</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
-        <strong style="color:#e2e8f0;">What:</strong> Takes one event (code change, config update) and traces its compliance impact across all 6 domains simultaneously.<br>
-        <strong style="color:#e2e8f0;">How:</strong> Evaluates 26+ policies via our Policy Engine, traverses our Knowledge Graph for causal paths, uses our LLM for reasoning.<br>
-        <strong style="color:#e2e8f0;">Why:</strong> Today, a single code change can violate SOX + Security + Contractual simultaneously — but nobody connects the dots until audit. Chain Reactor does this in 2 seconds.
+    <div class="card" style="border-left:3px solid #f59e0b;">
+      <h3>⚡ Chain Reactor Agent</h3>
+      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
+        Takes ONE event and propagates impact across all 6 domains simultaneously. Uses Policy Engine + GraphRAG for causal reasoning.
       </p>
+      <div style="margin-top:10px;"><span class="tag tag-amber">Cross-Domain</span><span class="tag tag-red">Blocking</span></div>
     </div>
-    <div class="card" style="border-left:3px solid #10b981;padding:16px;">
-      <h3 style="font-size:14px;">📝 Audit Narrator Agent</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
-        <strong style="color:#e2e8f0;">What:</strong> Writes formal audit evidence automatically — documents who changed what, why, approvals obtained, and which controls are satisfied.<br>
-        <strong style="color:#e2e8f0;">How:</strong> Our LLM generates professional narratives from system activity (commits, approvals, scan results) — continuously, as work happens.<br>
-        <strong style="color:#e2e8f0;">Why:</strong> Auditors spend 3-4 weeks manually collecting evidence. KAVACH generates it in real-time — zero prep when audit starts.
+    <div class="card" style="border-left:3px solid #10b981;">
+      <h3>📝 Audit Narrator Agent</h3>
+      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
+        Autonomously generates audit-ready evidence narratives from system activity. Uses LLM to write like a senior auditor (EY/Deloitte ready).
       </p>
+      <div style="margin-top:10px;"><span class="tag tag-green">LLM-Powered</span><span class="tag tag-purple">Auto-Evidence</span></div>
     </div>
-    <div class="card" style="border-left:3px solid #ef4444;padding:16px;">
-      <h3 style="font-size:14px;">🔍 Drift Sentinel Agent</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
-        <strong style="color:#e2e8f0;">What:</strong> Detects silent compliance degradation — things that slowly go wrong without anyone noticing until an auditor catches them.<br>
-        <strong style="color:#e2e8f0;">How:</strong> Continuously monitors for permission creep, configuration changes, expired certificates, and inactive accounts that still have access.<br>
-        <strong style="color:#e2e8f0;">Why:</strong> Most audit findings are drift (gradual decay), not active attacks. This catches them proactively — before the auditor does.
+    <div class="card" style="border-left:3px solid #ef4444;">
+      <h3>🔍 Drift Sentinel Agent</h3>
+      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
+        Detects silent compliance degradation before auditors do. Catches access creep, config drift, expired certifications, orphaned permissions.
       </p>
+      <div style="margin-top:10px;"><span class="tag tag-red">Proactive</span><span class="tag tag-amber">Auto-Remediate</span></div>
     </div>
-    <div class="card" style="border-left:3px solid #a78bfa;padding:16px;">
-      <h3 style="font-size:14px;">📜 Obligation Parser Agent</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
-        <strong style="color:#e2e8f0;">What:</strong> Reads contract text (MSA, SOW) and extracts machine-readable obligations — SLA deadlines, penalties, notification requirements.<br>
-        <strong style="color:#e2e8f0;">How:</strong> Our LLM reads legal language and maps each clause to an enforceable rule in the Policy Engine.<br>
-        <strong style="color:#e2e8f0;">Why:</strong> Contracts are read once at signing and forgotten. This makes every clause actively monitored — breach triggers alert automatically.
+    <div class="card" style="border-left:3px solid #a78bfa;">
+      <h3>📜 Obligation Parser Agent</h3>
+      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
+        Reads MSA/contract text and extracts machine-readable obligations. Maps clauses to controls automatically using LLM.
       </p>
+      <div style="margin-top:10px;"><span class="tag tag-purple">NLP</span><span class="tag tag-green">Contract→Rules</span></div>
     </div>
-    <div class="card" style="border-left:3px solid #fbbf24;padding:16px;">
-      <h3 style="font-size:14px;">🧠 Control Ingestion Agent</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.8;">
-        <strong style="color:#e2e8f0;">What:</strong> Accepts raw regulation text and converts it into live policies that the system enforces immediately — no developer needed.<br>
-        <strong style="color:#e2e8f0;">How:</strong> Our LLM parses regulatory/legal text, determines trigger conditions, severity, SLA, and adds policy to the live engine.<br>
-        <strong style="color:#e2e8f0;">Why:</strong> New regulation published today → compliance team enforces it today. No engineering sprint, no code change, no deployment needed.
+    <div class="card" style="border-left:3px solid #fbbf24;">
+      <h3>🧠 Control Ingestion Agent</h3>
+      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
+        Feed raw regulation text → AI parses into live policies. Add entire frameworks (DORA, HITRUST) with ZERO code changes.
       </p>
+      <div style="margin-top:10px;"><span class="tag tag-amber">Dynamic</span><span class="tag tag-red">Zero Code</span></div>
     </div>
   </div>
-  <div class="slide-num"><span>06</span> / 11</div>
+  <div class="slide-num"><span>06</span> / 10</div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
@@ -340,83 +366,66 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div class="slide" id="slide7">
   <div class="label">Technology Stack</div>
-  <h2 style="margin-bottom:6px;">Enterprise-Grade Tech Stack</h2>
-  <div style="font-size:12px;color:#94a3b8;margin-bottom:14px;">Built on production-ready, enterprise-proven technologies. Zero proprietary lock-in — every component is open-source or industry-standard.</div>
-  <div class="grid-4" style="margin-top:12px;gap:14px;">
-    <div class="card" style="padding:14px;">
-      <h3 style="font-size:13px;">🧠 AI / LLM Layer</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
-        <strong style="color:#e2e8f0;">Llama 3.2</strong> — open-source base model (MIT license)<br>
-        <strong style="color:#e2e8f0;">QLoRA</strong> — efficient fine-tuning (4-bit, single GPU)<br>
-        <strong style="color:#e2e8f0;">Ollama</strong> — local model runtime (no cloud needed)<br>
-        <strong style="color:#e2e8f0;">AWS Bedrock</strong> — Claude for production scale
+  <h2>Enterprise-Grade Tech Stack</h2>
+  <div class="grid-4" style="margin-top:24px;">
+    <div class="card" style="text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">🧠</div>
+      <h3 style="font-size:14px;">AI / LLM</h3>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
+        Llama 3.2 (fine-tuned)<br>QLoRA Training<br>Ollama Runtime<br>AWS Bedrock (Claude)
       </p>
     </div>
-    <div class="card" style="padding:14px;">
-      <h3 style="font-size:13px;">⚙️ Backend Services</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
-        <strong style="color:#e2e8f0;">Spring Boot 3.4</strong> — REST APIs, WebSocket, scheduling<br>
-        <strong style="color:#e2e8f0;">ActiveMQ</strong> — embedded message queue (JMS)<br>
-        <strong style="color:#e2e8f0;">H2 Database</strong> — embedded SQL (zero install)<br>
-        <strong style="color:#e2e8f0;">JPA/Hibernate</strong> — ORM with auto-schema
+    <div class="card" style="text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">⚙️</div>
+      <h3 style="font-size:14px;">Backend</h3>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
+        Spring Boot 3.4<br>ActiveMQ (JMS)<br>H2 Database<br>JPA/Hibernate
       </p>
     </div>
-    <div class="card" style="padding:14px;">
-      <h3 style="font-size:13px;">🕸️ Graph & RAG</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
-        <strong style="color:#e2e8f0;">JGraphT</strong> — compliance knowledge graph engine<br>
-        <strong style="color:#e2e8f0;">Causal Paths</strong> — multi-hop traversal (finding→regulation→penalty)<br>
-        <strong style="color:#e2e8f0;">GraphRAG</strong> — graph-retrieved context enriches LLM<br>
-        <strong style="color:#e2e8f0;">26+ Nodes</strong> — regulations, controls, systems mapped
+    <div class="card" style="text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">🕸️</div>
+      <h3 style="font-size:14px;">Graph / RAG</h3>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
+        JGraphT<br>Causal Path Analysis<br>GraphRAG Retrieval<br>Knowledge Graph
       </p>
     </div>
-    <div class="card" style="padding:14px;">
-      <h3 style="font-size:13px;">🖥️ Dashboard / UI</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
-        <strong style="color:#e2e8f0;">Real-time</strong> — auto-refresh without page reload<br>
-        <strong style="color:#e2e8f0;">5 Views</strong> — Dashboard, Audit, Controls, Drift, Live Scan<br>
-        <strong style="color:#e2e8f0;">Click-to-expand</strong> — panels open as modal for detail<br>
-        <strong style="color:#e2e8f0;">Responsive</strong> — works on any screen size
+    <div class="card" style="text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">🖥️</div>
+      <h3 style="font-size:14px;">Frontend</h3>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
+        Real-time Dashboard<br>Auto-refresh (no reload)<br>5 Interactive Views<br>Click-to-expand Panels
       </p>
     </div>
-    <div class="card" style="padding:14px;">
-      <h3 style="font-size:13px;">🔍 Code Analysis</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
-        <strong style="color:#e2e8f0;">AI Scanner</strong> — LLM reads code and reasons about compliance<br>
-        <strong style="color:#e2e8f0;">Entropy Detection</strong> — finds secrets without keyword matching<br>
-        <strong style="color:#e2e8f0;">File Watcher</strong> — 3-second polling for live changes<br>
-        <strong style="color:#e2e8f0;">Heuristic Fallback</strong> — works even without LLM running
+    <div class="card" style="text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">🔍</div>
+      <h3 style="font-size:14px;">Code Analysis</h3>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
+        AI Scanner (Ollama)<br>Entropy-based secrets<br>SAST integration<br>File System Watcher
       </p>
     </div>
-    <div class="card" style="padding:14px;">
-      <h3 style="font-size:13px;">📡 Event Pipeline</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
-        <strong style="color:#e2e8f0;">Webhooks</strong> — accepts events from any source (Git, CI/CD, ITSM)<br>
-        <strong style="color:#e2e8f0;">JMS Queue</strong> — decouples ingestion from processing<br>
-        <strong style="color:#e2e8f0;">Async Agents</strong> — process events without blocking<br>
-        <strong style="color:#e2e8f0;">Event Store</strong> — full history for audit trail
+    <div class="card" style="text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">📡</div>
+      <h3 style="font-size:14px;">Event Pipeline</h3>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
+        Webhook ingestion<br>JMS message queue<br>Event-driven agents<br>Async processing
       </p>
     </div>
-    <div class="card" style="padding:14px;">
-      <h3 style="font-size:13px;">🏗️ Microservices</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
-        <strong style="color:#e2e8f0;">Gradle Multi-project</strong> — 3 services in one repo<br>
-        <strong style="color:#e2e8f0;">Selective Deploy</strong> — deploy Alpha, Beta, or Gamma independently<br>
-        <strong style="color:#e2e8f0;">Jenkins Pipeline</strong> — parameterized CI/CD<br>
-        <strong style="color:#e2e8f0;">Compliance Gate</strong> — KAVACH checks before deploy
+    <div class="card" style="text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">🏗️</div>
+      <h3 style="font-size:14px;">Microservices</h3>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
+        Gradle Multi-project<br>Alpha/Beta/Gamma<br>Selective Deploy<br>Jenkins Pipeline
       </p>
     </div>
-    <div class="card" style="padding:14px;">
-      <h3 style="font-size:13px;">☁️ Cloud & Infrastructure</h3>
-      <p style="color:#94a3b8;font-size:11px;line-height:1.9;">
-        <strong style="color:#e2e8f0;">AWS Ready</strong> — Bedrock, S3, EC2 for production<br>
-        <strong style="color:#e2e8f0;">Docker / K8s</strong> — containerized, orchestration-ready<br>
-        <strong style="color:#e2e8f0;">Zero External Deps</strong> — runs fully self-contained<br>
-        <strong style="color:#e2e8f0;">Demo Mode</strong> — everything embedded, no install needed
+    <div class="card" style="text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">☁️</div>
+      <h3 style="font-size:14px;">Cloud / Infra</h3>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.8;">
+        AWS (Bedrock, S3)<br>Docker / K8s ready<br>Zero external deps<br>Self-contained demo
       </p>
     </div>
   </div>
-  <div class="slide-num"><span>07</span> / 11</div>
+  <div class="slide-num"><span>07</span> / 10</div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
@@ -617,7 +626,7 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
         </div>
         <div>
           <strong style="color:#a5b4fc;">Graph RAG + Multi-Agent</strong><br>
-          <span style="color:#94a3b8;">6 agents working together with a knowledge graph that knows how regulations connect. One finding triggers a causal chain — no other tool traces impact across SOX + Security + TILA + ECOA + PCI + Contractual simultaneously.</span>
+          <span style="color:#94a3b8;">5 agents working together with a knowledge graph that knows how regulations connect. One finding triggers a causal chain — no other tool traces impact across SOX + Security + TILA + ECOA + PCI + Contractual simultaneously.</span>
         </div>
         <div>
           <strong style="color:#a5b4fc;">Domain-Agnostic / Per-Engagement</strong><br>
@@ -638,66 +647,7 @@ h3 { font-size:22px; font-weight:700; margin-bottom:16px; color:#a5b4fc; }
       </div>
     </div>
   </div>
-  <div class="slide-num"><span>10</span> / 11</div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- SLIDE 11: What's Unique vs SAST/SonarQube -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<div class="slide" id="slide11" style="padding:40px 80px;">
-  <div class="label">What Makes KAVACH Different</div>
-  <h2 style="margin-bottom:6px;">Beyond Code Scanning — Why KAVACH is a New Category</h2>
-  <div style="font-size:13px;color:#94a3b8;margin-bottom:18px;">Existing tools find issues in isolation. KAVACH connects findings to regulations, contracts, penalties, and audit evidence — across every domain, for every client, in real time.</div>
-
-  <div class="grid-2" style="gap:20px;">
-    <div class="card" style="padding:20px;">
-      <h3 style="margin-bottom:12px;font-size:16px;">SonarQube / Checkmarx Says:</h3>
-      <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:14px;font-size:14px;color:#f87171;font-weight:600;text-align:center;">
-        "SQL injection found on line 142"
-      </div>
-      <div style="margin-top:16px;font-size:12px;color:#64748b;text-align:center;">That's it. Fix the bug. No business context.</div>
-
-      <h3 style="margin-top:24px;margin-bottom:12px;font-size:16px;">KAVACH AI Says:</h3>
-      <div style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:10px;padding:14px;font-size:12px;color:#cbd5e1;line-height:2.0;">
-        "This SQL injection simultaneously:<br>
-        <span style="color:#f87171;">1.</span> Violates <strong style="color:#a5b4fc;">PCI-DSS 6.5.1</strong> → blocks deployment<br>
-        <span style="color:#f87171;">2.</span> Triggers <strong style="color:#fbbf24;">MSA §7.2</strong> → 48h SLA starts, $50K penalty<br>
-        <span style="color:#f87171;">3.</span> Requires <strong style="color:#a5b4fc;">SOX ITGC-CM-06</strong> → code review before fix ships<br>
-        <span style="color:#f87171;">4.</span> Needs <strong style="color:#a5b4fc;">client notification</strong> per MSA §14.1<br>
-        <span style="color:#f87171;">5.</span> Auto-generates <strong style="color:#34d399;">audit evidence</strong> for external auditors<br>
-        <span style="color:#f87171;">6.</span> Updates client score: <strong style="color:#f87171;">87% → 72%</strong>"
-      </div>
-    </div>
-
-    <div class="card" style="padding:20px;">
-      <h3 style="margin-bottom:12px;font-size:16px;">Capability Comparison</h3>
-      <table style="width:100%;font-size:12px;color:#94a3b8;border-collapse:collapse;">
-        <tr style="border-bottom:1px solid rgba(100,116,139,0.25);">
-          <th style="text-align:left;padding:7px;color:#64748b;">Capability</th>
-          <th style="text-align:center;padding:7px;color:#f87171;font-size:10px;">SonarQube<br>Checkmarx</th>
-          <th style="text-align:center;padding:7px;color:#f87171;font-size:10px;">Vanta<br>Drata</th>
-          <th style="text-align:center;padding:7px;color:#f87171;font-size:10px;">ServiceNow<br>GRC</th>
-          <th style="text-align:center;padding:7px;color:#34d399;font-size:10px;">KAVACH<br>AI</th>
-        </tr>
-        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Find code vulnerabilities</td><td style="text-align:center;color:#34d399;">Yes</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
-        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Map finding to specific regulation section</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#fbbf24;">Partial</td><td style="text-align:center;color:#fbbf24;">Partial</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
-        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Cross-domain causal reasoning (1 event → 6 domains)</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
-        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Per-client/engagement context (different SLAs)</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#fbbf24;">Manual</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
-        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Trigger contractual SLA & calculate penalty</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
-        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Generate audit evidence automatically (LLM)</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#fbbf24;">Templates</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes (AI)</td></tr>
-        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Block deployment based on compliance policy</td><td style="text-align:center;color:#fbbf24;">Quality only</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
-        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Add new framework without code change</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#fbbf24;">Config</td><td style="text-align:center;color:#34d399;">Yes (AI)</td></tr>
-        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Own LLM (data stays on-premise)</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
-        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Knowledge Graph with causal path traversal</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
-        <tr style="border-bottom:1px solid rgba(100,116,139,0.1);"><td style="padding:6px;">Fair Lending / ECOA / TILA compliance checks</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
-        <tr><td style="padding:6px;">Multi-agent autonomous operation (24/7)</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#f87171;">No</td><td style="text-align:center;color:#34d399;">Yes</td></tr>
-      </table>
-      <div style="margin-top:14px;padding:10px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:8px;font-size:11px;color:#a5b4fc;text-align:center;">
-        SAST tools are <strong>inputs</strong> to KAVACH — they feed findings into our agent pipeline. They're not competitors, they're our data providers.
-      </div>
-    </div>
-  </div>
-  <div class="slide-num"><span>11</span> / 11</div>
+  <div class="slide-num"><span>10</span> / 10</div>
 </div>
 
 </div><!-- end slides -->

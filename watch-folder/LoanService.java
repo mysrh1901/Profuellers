@@ -118,17 +118,17 @@ public class LoanService {
     //   → Insecure HTTP (data in transit)
     // ═══════════════════════════════════════════════════════════════════
 
-    // public String searchLoans(String borrowerName, String status) {
-    //     // CRITICAL: SQL injection — attacker can dump all loan data
-    //     // MSA §7.2: "Critical vulns must be fixed within 48 hours"
-    //     // PENALTY: $50,000 per incident + right to terminate
-    //     String query = "SELECT * FROM LOANS WHERE name = '" + borrowerName
-    //                  + "' AND status = '" + status + "'";
-    //     System.out.println("Query: " + query);
-    //     // Also sending data over unencrypted HTTP
-    //     String endpoint = "http://analytics.internal.com/api/loans";
-    //     return query;
-    // }
+    public String searchLoans(String borrowerName, String status) {
+        // CRITICAL: SQL injection — attacker can dump all loan data
+        // MSA §7.2: "Critical vulns must be fixed within 48 hours"
+        // PENALTY: $50,000 per incident + right to terminate
+        String query = "SELECT * FROM LOANS WHERE name = '" + borrowerName
+                     + "' AND status = '" + status + "'";
+        System.out.println("Query: " + query);
+        // Also sending data over unencrypted HTTP
+        String endpoint = "http://analytics.internal.com/api/loans";
+        return query;
+    }
 
 
     // ═══════════════════════════════════════════════════════════════════

@@ -69,7 +69,7 @@ def slide_num(slide, num):
 s = prs.slides.add_slide(prs.slide_layouts[6]); bg(s); gradient_bar(s)
 txt(s, Inches(1), Inches(0.8), Inches(8), Inches(0.4), "Hexaware Profuellers  |  Agentic Arena 2026", 12, False, PURPLE)
 txt(s, Inches(1), Inches(2.2), Inches(10), Inches(1), "KAVACH AI", 60, True, WHITE)
-txt(s, Inches(1), Inches(3.5), Inches(11), Inches(0.7), "Knowledge-driven Audit, Vulnerability Analysis & Compliance Health", 24, False, LIGHT_PURPLE)
+txt(s, Inches(1), Inches(3.5), Inches(11), Inches(0.7), "Kontinuous Audit & Vulnerability Analysis for Compliant Hardening", 24, False, LIGHT_PURPLE)
 txt(s, Inches(1), Inches(4.5), Inches(10), Inches(0.5), '"One commit. Six domains. Zero breaches."', 16, False, DIM)
 # Tags
 multi(s, Inches(1), Inches(5.5), Inches(11), Inches(0.5), [

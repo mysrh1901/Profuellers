@@ -56,7 +56,7 @@ def multi(slide, l, t, w, h, lines, size=15, color=GRAY):
 # SLIDE 1: Title
 s = prs.slides.add_slide(prs.slide_layouts[6]); bg(s); bar(s)
 txt(s, Inches(1.5), Inches(2.0), Inches(10), Inches(1), "KAVACH AI", 54, True, WHITE, PP_ALIGN.CENTER)
-txt(s, Inches(1.5), Inches(3.3), Inches(10), Inches(0.7), "Knowledge-driven Audit, Vulnerability Analysis & Compliance Health", 26, False, LIGHT_PURPLE, PP_ALIGN.CENTER)
+txt(s, Inches(1.5), Inches(3.3), Inches(10), Inches(0.7), "Kontinuous Audit & Vulnerability Analysis for Compliant Hardening", 26, False, LIGHT_PURPLE, PP_ALIGN.CENTER)
 txt(s, Inches(1.5), Inches(4.3), Inches(10), Inches(0.5), '"One commit. Six domains. Zero breaches."', 18, False, DIM, PP_ALIGN.CENTER)
 txt(s, Inches(1.5), Inches(5.8), Inches(10), Inches(0.4), "Agentic Arena 2026 | Autonomous Security, Compliance & Audit Intelligence", 13, False, DIM, PP_ALIGN.CENTER)
 

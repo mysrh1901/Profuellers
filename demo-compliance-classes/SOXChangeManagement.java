@@ -60,11 +60,11 @@ public class SOXChangeManagement {
      * SOX requires segregation of duties — developer cannot deploy own changes.
      */
     public void updateRateTable(String rateType, double newRate) {
-        // Direct SQL manipulation of production rate table
-        String sql = "UPDATE INTEREST_RATES SET rate_value = " + newRate +
-                     " WHERE rate_type = '" + rateType + "'";
+        // // Direct SQL manipulation of production rate table
+        // String sql = "UPDATE INTEREST_RATES SET rate_value = " + newRate +
+        //              " WHERE rate_type = '" + rateType + "'";
 
-        System.out.println("Executing rate update: " + sql);
+        // System.out.println("Executing rate update: " + sql);
 
         // No approval check, no audit log, no rollback capability
         // This would trigger SOX Material Weakness finding in annual audit

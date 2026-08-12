@@ -1,4 +1,4 @@
-# 🛡️ KAVACH AI — Knowledge-driven Audit, Vulnerability Analysis & Compliance Health
+# 🛡️ KAVACH AI — Kontinuous Audit & Vulnerability Analysis for Compliant Hardening
 
 > **"One commit. Six domains. Zero breaches."**
 

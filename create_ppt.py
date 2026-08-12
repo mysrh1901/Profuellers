@@ -96,7 +96,7 @@ add_text_box(slide, Inches(1.5), Inches(2.0), Inches(10), Inches(1.2),
 
 # Subtitle
 add_text_box(slide, Inches(1.5), Inches(3.2), Inches(10), Inches(0.8),
-             "Knowledge-driven Audit, Vulnerability Analysis & Compliance Health", font_size=28, color=ACCENT_LIGHT)
+             "Kontinuous Audit & Vulnerability Analysis for Compliant Hardening", font_size=28, color=ACCENT_LIGHT)
 
 # Tagline
 add_text_box(slide, Inches(1.5), Inches(4.2), Inches(10), Inches(0.6),
@@ -555,7 +555,7 @@ add_text_box(slide, Inches(1.5), Inches(2.2), Inches(10), Inches(1.2),
              "KAVACH AI", font_size=54, bold=True, color=WHITE, alignment=PP_ALIGN.CENTER)
 
 add_text_box(slide, Inches(1.5), Inches(3.5), Inches(10), Inches(0.8),
-             "Knowledge-driven Audit, Vulnerability Analysis & Compliance Health", font_size=24, color=ACCENT_LIGHT,
+             "Kontinuous Audit & Vulnerability Analysis for Compliant Hardening", font_size=24, color=ACCENT_LIGHT,
              alignment=PP_ALIGN.CENTER)
 
 add_text_box(slide, Inches(1.5), Inches(4.5), Inches(10), Inches(0.6),

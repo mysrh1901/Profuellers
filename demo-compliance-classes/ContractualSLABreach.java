@@ -68,6 +68,7 @@ public class ContractualSLABreach {
                       " ORDER BY origination_date DESC";
 
         System.out.println("Executing loan search: " + query);
+        System.out.println("Executing loan search: " + query);
 
         // An attacker can input: borrowerName = "' OR 1=1; DROP TABLE LOANS; --"
         // This exposes ALL loan data and can destroy the database

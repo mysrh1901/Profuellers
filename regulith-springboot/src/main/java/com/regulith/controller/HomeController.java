@@ -109,7 +109,7 @@ public class HomeController {
         page.append(".info-bar{background:#161b30;border:1px solid #2a2f4a;border-radius:8px;padding:15px 20px;margin-bottom:25px;display:flex;gap:30px;flex-wrap:wrap}");
         page.append(".info-item{text-align:center}.info-val{font-size:1.5em;font-weight:bold;color:#6c63ff}.info-label{font-size:0.75em;color:#888}");
         page.append("</style></head><body>");
-        page.append("<div class='header'><h1>KAVACH AI</h1><p>Knowledge-driven Audit, Vulnerability Analysis & Compliance Health (Spring Boot + ActiveMQ + H2)</p></div>");
+        page.append("<div class='header'><h1>KAVACH AI</h1><p>Kontinuous Audit & Vulnerability Analysis for Compliant Hardening (Spring Boot + ActiveMQ + H2)</p></div>");
         page.append("<div class='container'>");
 
         // Info bar

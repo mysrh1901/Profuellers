@@ -3,11 +3,11 @@ server:
 
 spring:
   application:
-    name: regulith-ai
+    name: kavach-ai
 
   # Embedded H2 Database (no install needed)
   datasource:
-    url: jdbc:h2:mem:regulithdb
+    url: jdbc:h2:mem:kavachdb
     driver-class-name: org.h2.Driver
     username: sa
     password:

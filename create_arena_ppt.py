@@ -69,7 +69,7 @@ for ph in slide.placeholders:
 tb = slide.shapes.add_textbox(Inches(0.9), Inches(4.2), Inches(5.6), Inches(0.5))
 tf = tb.text_frame
 p = tf.paragraphs[0]
-p.text = "Knowledge-driven Audit, Vulnerability Analysis & Compliance Health"
+p.text = "Kontinuous Audit & Vulnerability Analysis for Compliant Hardening"
 p.font.size = Pt(16)
 p.font.color.rgb = GRAY
 
@@ -308,7 +308,7 @@ tb = slide.shapes.add_textbox(Inches(0.9), Inches(3.2), Inches(5.5), Inches(1.5)
 tf = tb.text_frame
 tf.word_wrap = True
 lines = [
-    "Knowledge-driven Audit, Vulnerability Analysis & Compliance Health",
+    "Kontinuous Audit & Vulnerability Analysis for Compliant Hardening",
     "",
     "One commit. Six domains. Zero breaches.",
     "",

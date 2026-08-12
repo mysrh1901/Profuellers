@@ -6,7 +6,7 @@ import org.springframework.jms.annotation.EnableJms;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * KAVACH AI - Knowledge-driven Audit, Vulnerability Analysis & Compliance Health
+ * KAVACH AI - Kontinuous Audit & Vulnerability Analysis for Compliant Hardening
  * 
  * Spring Boot application with embedded ActiveMQ message broker
  * and H2 in-memory database. Zero external dependencies needed.
@@ -23,7 +23,7 @@ public class RegulithApplication {
         System.out.println("""
             
             =====================================================
-              KAVACH AI - Knowledge-driven Audit, Vulnerability
+              KAVACH AI - Kontinuous Audit & Vulnerability Analysis
               Analysis & Compliance Health
               "One commit. Six domains. Zero breaches."
             =====================================================

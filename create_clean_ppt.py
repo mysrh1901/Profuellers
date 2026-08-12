@@ -72,7 +72,7 @@ def arrow(slide, l, t, w, h):
 s = prs.slides.add_slide(prs.slide_layouts[6]); bg(s)
 box(s, Inches(0), Inches(0), Inches(13.333), Inches(0.12), BLUE)
 txt(s, Inches(2), Inches(2.5), Inches(9), Inches(1), "KAVACH AI", 52, True, BLACK, PP_ALIGN.CENTER)
-txt(s, Inches(2), Inches(3.7), Inches(9), Inches(0.6), "Knowledge-driven Audit, Vulnerability Analysis & Compliance Health", 24, False, GRAY, PP_ALIGN.CENTER)
+txt(s, Inches(2), Inches(3.7), Inches(9), Inches(0.6), "Kontinuous Audit & Vulnerability Analysis for Compliant Hardening", 24, False, GRAY, PP_ALIGN.CENTER)
 txt(s, Inches(2), Inches(4.8), Inches(9), Inches(0.5), "One commit. Six domains. Zero breaches.", 18, False, BLUE, PP_ALIGN.CENTER)
 txt(s, Inches(2), Inches(6.2), Inches(9), Inches(0.4), "Agentic Arena 2026", 14, False, GRAY, PP_ALIGN.CENTER)
 
@@ -348,7 +348,7 @@ s = prs.slides.add_slide(prs.slide_layouts[6]); bg(s)
 box(s, Inches(0), Inches(0), Inches(13.333), Inches(0.12), BLUE)
 
 txt(s, Inches(2), Inches(2.2), Inches(9), Inches(0.8), "KAVACH AI", 48, True, BLACK, PP_ALIGN.CENTER)
-txt(s, Inches(2), Inches(3.2), Inches(9), Inches(0.6), "Knowledge-driven Audit, Vulnerability Analysis & Compliance Health", 22, False, GRAY, PP_ALIGN.CENTER)
+txt(s, Inches(2), Inches(3.2), Inches(9), Inches(0.6), "Kontinuous Audit & Vulnerability Analysis for Compliant Hardening", 22, False, GRAY, PP_ALIGN.CENTER)
 
 box(s, Inches(2.5), Inches(4.2), Inches(8.3), Inches(1.5), LIGHT_BLUE, BLUE)
 multi(s, Inches(2.8), Inches(4.4), Inches(7.8), Inches(1.3), [
