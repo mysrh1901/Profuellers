@@ -262,9 +262,117 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:#1a1a2e; color:#e
 </div>
 
 
+<!-- SLIDE 14: Code Flow Diagram -->
+<div class="slide">
+  <div class="slide-label">Code Walkthrough — Overview</div>
+  <h2>How Code Flows Through KAVACH</h2>
+  <div style="font-family:monospace;font-size:14px;color:#cbd5e1;line-height:2.2;background:rgba(15,23,42,0.8);border:1px solid #334155;border-radius:10px;padding:24px;max-width:800px;">
+    <span style="color:#34d399;">YOU</span> edit LoanService.java → save<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    <span style="color:#818cf8;">dashboard.py</span> detects modified file (every 5 sec)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    <span style="color:#818cf8;">ai_scanner.py</span> reads content → finds violations<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    <span style="color:#818cf8;">ai_scanner.py</span> sends HTTP POST to Spring Boot<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    <span style="color:#fbbf24;">WebhookController.java</span> saves event → puts in queue<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    <span style="color:#f87171;">ChainReactorAgent.java</span> picks from queue (automatic)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    <span style="color:#f87171;">CompliancePolicyEngine.java</span> checks 26+ rules<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    <span style="color:#f87171;">AuditNarratorAgent.java</span> writes evidence<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    <span style="color:#34d399;">Dashboard updates</span> — score drops, findings appear
+  </div>
+  <div class="tip">Point to this diagram while explaining. "No human triggers any of this. It's all automatic."</div>
+</div>
+
+<!-- SLIDE 15: Python Files -->
+<div class="slide">
+  <div class="slide-label">Code Walkthrough — Python Layer</div>
+  <h2>Python Files (Dashboard + Scanner)</h2>
+  <div class="pitch" style="font-size:14px;line-height:1.8;">
+    <strong style="color:#818cf8;">1. dashboard.py</strong> — Web server on port 8080<br>
+    <span style="color:#94a3b8;">Every 5 seconds, calls get_live_scan() which scans watch-folder/. Generates fresh HTML with latest findings. JavaScript auto-refreshes without full page reload.</span><br><br>
+    <strong style="color:#818cf8;">2. ai_scanner.py</strong> — AI code analyzer<br>
+    <span style="color:#94a3b8;">Two modes: (1) Ollama running → sends file to our LLM for reasoning. (2) Ollama not running → falls back to regex/entropy detection. After scanning, fires event to Spring Boot API.</span><br><br>
+    <strong style="color:#818cf8;">3. java_scanner.py</strong> — Heuristic fallback scanner<br>
+    <span style="color:#94a3b8;">10 detection rules: SQL injection (string concat), secrets (entropy >3.5), System.out (audit bypass), weak crypto (DES/MD5), SSL bypass, empty catch, command exec, insecure HTTP.</span><br><br>
+    <strong style="color:#818cf8;">4. dashboard_utils.py</strong> — Score calculator<br>
+    <span style="color:#94a3b8;">Takes live findings → computes: overall score, domain scores, risk in $, deployment gate status, trend (STABLE/DEGRADING), audit readiness %. All dynamic based on what scanner finds.</span>
+  </div>
+</div>
+
+<!-- SLIDE 16: Java Files - Agents -->
+<div class="slide">
+  <div class="slide-label">Code Walkthrough — Java Agents</div>
+  <h2>Java Files (Spring Boot Agents)</h2>
+  <div class="pitch" style="font-size:13px;line-height:1.8;">
+    <strong style="color:#f87171;">5. ChainReactorAgent.java</strong> — THE BRAIN<br>
+    <span style="color:#94a3b8;">Listens to ActiveMQ queue (@JmsListener). When event arrives: builds context → calls PolicyEngine.evaluate() → calls GraphRAG → calls AuditNarrator → updates client score. All automatic, no human trigger.</span><br><br>
+    <strong style="color:#fbbf24;">6. CompliancePolicyEngine.java</strong> — Rule Engine (26+ policies)<br>
+    <span style="color:#94a3b8;">Each policy is a data object: {id, domain, trigger, severity, action, blocking}. The evaluate() method loops all policies and checks trigger condition against event context. NOT hardcoded if/else — adding a policy = adding data.</span><br><br>
+    <strong style="color:#34d399;">7. AuditNarratorAgent.java</strong> — Evidence Writer<br>
+    <span style="color:#94a3b8;">Called by Chain Reactor after policy evaluation. Formats event + impacts → sends to LLM → LLM writes professional audit narrative → saves to database.</span><br><br>
+    <strong style="color:#a78bfa;">8. ControlIngestionAgent.java</strong> — Dynamic Policy Creator<br>
+    <span style="color:#94a3b8;">Accepts regulation text via API → sends to LLM → LLM parses into structured policy → adds to live PolicyEngine. No restart. This is how we add DORA/HITRUST with zero code changes.</span><br><br>
+    <strong style="color:#818cf8;">9. OllamaLLMService.java</strong> — Our LLM Interface<br>
+    <span style="color:#94a3b8;">Sends prompts to localhost:11434 (Ollama). The reason() method: takes file content + client context → LLM returns structured findings (DOMAIN, SEVERITY, REGULATION, ACTION).</span>
+  </div>
+</div>
+
+<!-- SLIDE 17: Java Files - Infrastructure -->
+<div class="slide">
+  <div class="slide-label">Code Walkthrough — Infrastructure</div>
+  <h2>Java Files (Infra & Data)</h2>
+  <div class="pitch" style="font-size:14px;line-height:1.9;">
+    <strong style="color:#fbbf24;">10. WebhookController.java</strong> — Event Entry Point<br>
+    <span style="color:#94a3b8;">Accepts POST from any system (Git, Jenkins, Jira, our Python scanner). Saves event to H2 database → publishes to ActiveMQ queue. This is how ANY tool integrates with KAVACH.</span><br><br>
+    <strong style="color:#34d399;">11. FileSystemWatcher.java</strong> — Real-Time Monitor<br>
+    <span style="color:#94a3b8;">@Scheduled every 3 seconds. Checks watch-folder/ for modified files. Reads content → sends to OllamaLLMService → fires event to queue. This is the Spring Boot side of live scanning.</span><br><br>
+    <strong style="color:#a78bfa;">12. GraphRAGService.java</strong> — Knowledge Graph + RAG<br>
+    <span style="color:#94a3b8;">JGraphT graph with nodes (regulations, controls, penalties) and edges (violates, requires, triggers). When finding occurs, traverses 3 hops to find all connected impacts. Passes paths as context to LLM.</span><br><br>
+    <strong style="color:#818cf8;">13. BedrockClaudeService.java</strong> — Cloud LLM (Production)<br>
+    <span style="color:#94a3b8;">Same as Ollama but calls Claude on AWS Bedrock. Used for production scale. Has local fallback if AWS not configured.</span><br><br>
+    <strong style="color:#64748b;">14. Data Models</strong> — ComplianceEvent, ClientEngagement, ChainReactionResult, AuditNarrative<br>
+    <span style="color:#94a3b8;">JPA entities stored in H2 database. Every event, every finding, every narrative is persisted with full audit trail.</span>
+  </div>
+</div>
+
+<!-- SLIDE 18: Summary Table -->
+<div class="slide">
+  <div class="slide-label">Code Walkthrough — Summary</div>
+  <h2>All Classes — Quick Reference</h2>
+  <div style="font-size:12px;overflow-y:auto;max-height:70vh;">
+    <table style="width:100%;border-collapse:collapse;color:#cbd5e1;">
+      <tr style="border-bottom:1px solid #334155;">
+        <th style="text-align:left;padding:8px;color:#818cf8;">Class</th>
+        <th style="text-align:left;padding:8px;color:#818cf8;">Role</th>
+        <th style="text-align:left;padding:8px;color:#818cf8;">One-Line Description</th>
+      </tr>
+      <tr style="border-bottom:1px solid #1e293b;"><td style="padding:6px;">dashboard.py</td><td>Web UI</td><td>Serves dashboard, triggers scan on page load</td></tr>
+      <tr style="border-bottom:1px solid #1e293b;"><td style="padding:6px;">ai_scanner.py</td><td>Code Analyzer</td><td>Reads files, finds violations (AI or heuristic)</td></tr>
+      <tr style="border-bottom:1px solid #1e293b;"><td style="padding:6px;">java_scanner.py</td><td>Pattern Matcher</td><td>10 regex/entropy rules (fallback)</td></tr>
+      <tr style="border-bottom:1px solid #1e293b;"><td style="padding:6px;">dashboard_utils.py</td><td>Data Calculator</td><td>Computes scores, risk $, trends from findings</td></tr>
+      <tr style="border-bottom:1px solid #1e293b;"><td style="padding:6px;color:#f87171;">ChainReactorAgent</td><td style="color:#f87171;">Central Brain</td><td>Picks events from queue, evaluates policies, triggers agents</td></tr>
+      <tr style="border-bottom:1px solid #1e293b;"><td style="padding:6px;color:#fbbf24;">PolicyEngine</td><td style="color:#fbbf24;">Rule Engine</td><td>26+ policies, evaluates triggers dynamically</td></tr>
+      <tr style="border-bottom:1px solid #1e293b;"><td style="padding:6px;color:#34d399;">AuditNarratorAgent</td><td style="color:#34d399;">Evidence Writer</td><td>LLM generates audit narratives</td></tr>
+      <tr style="border-bottom:1px solid #1e293b;"><td style="padding:6px;color:#a78bfa;">ControlIngestionAgent</td><td style="color:#a78bfa;">Policy Creator</td><td>Parses regulation text → live policies (zero code)</td></tr>
+      <tr style="border-bottom:1px solid #1e293b;"><td style="padding:6px;">OllamaLLMService</td><td>Local LLM</td><td>Sends code to our model, gets compliance findings</td></tr>
+      <tr style="border-bottom:1px solid #1e293b;"><td style="padding:6px;">WebhookController</td><td>Event Receiver</td><td>Accepts events from Git/Jenkins/Jira, queues them</td></tr>
+      <tr style="border-bottom:1px solid #1e293b;"><td style="padding:6px;">FileSystemWatcher</td><td>File Monitor</td><td>Polls every 3s, triggers analysis on change</td></tr>
+      <tr style="border-bottom:1px solid #1e293b;"><td style="padding:6px;">GraphRAGService</td><td>Graph Reasoning</td><td>Traverses knowledge graph for causal paths</td></tr>
+      <tr style="border-bottom:1px solid #1e293b;"><td style="padding:6px;">BedrockClaudeService</td><td>Cloud LLM</td><td>AWS Bedrock (Claude) for production</td></tr>
+      <tr><td style="padding:6px;">Data Models (4)</td><td>Database</td><td>Event, Client, Result, Narrative entities</td></tr>
+    </table>
+  </div>
+  <div class="tip" style="margin-top:12px;">Key point: "ChainReactorAgent is the brain. It's triggered automatically by the queue. Nobody calls it manually."</div>
+</div>
+
 </div><!-- end slides -->
 
-<div class="nav">Use ↑↓ Arrow Keys or Scroll | <span>13</span> slides</div>
+<div class="nav">Use ↑↓ Arrow Keys or Scroll | <span>18</span> slides</div>
 
 <script>
 document.addEventListener('keydown', function(e) {
