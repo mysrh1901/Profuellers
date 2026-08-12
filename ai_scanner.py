@@ -103,7 +103,7 @@ def _is_ollama_available() -> bool:
     """Check if Ollama is running."""
     try:
         req = urllib.request.Request("http://localhost:11434/api/tags")
-        with urllib.request.urlopen(req, timeout=3) as resp:
+        with urllib.request.urlopen(req, timeout=2) as resp:
             return resp.status == 200
     except Exception:
         return False
@@ -299,7 +299,7 @@ class AIScanner:
         return all_findings
 
     def _analyze_file(self, file_info: dict) -> List[AIFinding]:
-        """Analyze a single file — AI if available, heuristic fallback."""
+        """Analyze a single file — AI only for recent files, heuristic for old ones."""
         file_path = file_info["path"]
         modified_time = file_info["mtime_str"]
 
@@ -312,7 +312,8 @@ class AIScanner:
         if not content.strip():
             return []
 
-        if self.ollama_available:
+        # Only use AI for recently modified files (saves time on old files)
+        if self.ollama_available and file_info.get("is_recent", False):
             return self._analyze_with_ai(content, file_path, modified_time)
         else:
             return self._analyze_with_heuristic(content, file_path, modified_time)
