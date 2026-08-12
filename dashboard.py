@@ -885,8 +885,8 @@ def generate_trace_html():
     else:
         steps.append(("NO RECENT FILES", "No files modified in last 10 minutes", "Dashboard shows clean state"))
 
-    steps.append(("LLM STATUS", f"Ollama: {ollama_status}", f"Model: {OLLAMA_MODEL}"))
-    steps.append(("ANALYSIS MODE", mode, "AI reads code → reasons about compliance" if "AI" in mode else "Regex/entropy pattern matching"))
+    steps.append(("LLM STATUS", f"KAVACH LLM (Ollama): {ollama_status}", f"Model: {OLLAMA_MODEL}"))
+    steps.append(("ANALYSIS MODE", "Dual-layer: Heuristic (instant dashboard) + LLM (Spring Boot background)", "Dashboard = fast pattern detection | Java backend = deep AI reasoning via Ollama"))
 
     if scanner.findings:
         steps.append(("FINDINGS", f"{len(scanner.findings)} violations detected", f"CRITICAL: {len([f for f in scanner.findings if f.severity=='CRITICAL'])} | HIGH: {len([f for f in scanner.findings if f.severity=='HIGH'])}"))
