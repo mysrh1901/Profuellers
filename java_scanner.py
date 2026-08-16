@@ -325,6 +325,59 @@ class JavaScanner:
                     ["PCI-DSS 3.4", "NIST SP 800-131A", "FIPS 140-2"]
                 ))
 
+            # === DETECTION 11: FDA — Audit Trail Gap (data override without logging) ===
+            if re.search(r'(override|overwrite|update.*result|set.*result|modify.*record)', stripped, re.IGNORECASE) and not stripped.startswith("//"):
+                if not re.search(r'(audit|log|trail|history|record.*change)', stripped, re.IGNORECASE):
+                    file_findings.append(self._make_finding(
+                        filepath, modified_time, line_num, "CRITICAL",
+                        "FDA Audit Trail Violation",
+                        "Data modification without audit trail (21 CFR 11.10b)",
+                        "FDA requires immutable audit trail for all data changes: who, what, when, why, old/new value.",
+                        stripped[:80],
+                        "Add audit logging before any data modification. Record user, timestamp, reason, previous value.",
+                        ["FDA 21CFR11.10(b)", "Data Integrity ALCOA+", "GxP Audit Trail"]
+                    ))
+
+            # === DETECTION 12: FDA — Shared/Generic Account ===
+            if re.search(r'(generic|shared|common|lab_analyst|default_user|admin_shared)', stripped, re.IGNORECASE) and not stripped.startswith("//"):
+                if re.search(r'(user|account|login|credential|auth)', stripped, re.IGNORECASE):
+                    file_findings.append(self._make_finding(
+                        filepath, modified_time, line_num, "CRITICAL",
+                        "FDA Shared Account Violation",
+                        "Generic/shared account detected (21 CFR 11.10c)",
+                        "FDA requires unique accounts per individual. Shared accounts prevent data attribution.",
+                        stripped[:80],
+                        "Replace with individual user accounts. Each person must have unique credentials.",
+                        ["FDA 21CFR11.10(c)", "Data Integrity - Attributable", "GxP Access Control"]
+                    ))
+
+            # === DETECTION 13: FDA — Manual Date/Time Entry (backdating risk) ===
+            if re.search(r'(date|time|timestamp)\s*[=,]', stripped, re.IGNORECASE) and not stripped.startswith("//"):
+                if re.search(r'(manual|input|param|argument|string\s+date)', stripped, re.IGNORECASE):
+                    file_findings.append(self._make_finding(
+                        filepath, modified_time, line_num, "HIGH",
+                        "FDA Data Integrity — Backdating Risk",
+                        "Manual date/time entry allows backdating (ALCOA: Contemporaneous)",
+                        "FDA ALCOA+ requires data to be recorded contemporaneously. Manual date entry enables backdating fraud.",
+                        stripped[:80],
+                        "Use system-generated timestamps only. No manual date entry for GxP records.",
+                        ["FDA 21CFR11 ALCOA+", "Data Integrity - Contemporaneous", "GxP"]
+                    ))
+
+            # === DETECTION 14: FDA — E-Signature Without Verification ===
+            if re.search(r'(sign|signature|approve|release|certif)', stripped, re.IGNORECASE) and not stripped.startswith("//"):
+                if re.search(r'(name|string|param|input)', stripped, re.IGNORECASE):
+                    if not re.search(r'(verify|authenticate|validate|mfa|two.?factor|password)', stripped, re.IGNORECASE):
+                        file_findings.append(self._make_finding(
+                            filepath, modified_time, line_num, "CRITICAL",
+                            "FDA E-Signature Violation",
+                            "Electronic signature without identity verification (21 CFR 11.50)",
+                            "FDA requires e-signatures to be unique to individual with identity verification. No signing without authentication.",
+                            stripped[:80],
+                            "Implement two-factor authentication for signing. Verify identity before accepting signature.",
+                            ["FDA 21CFR11.50", "FDA 21CFR11.100", "GxP E-Signature"]
+                        ))
+
         return file_findings
 
     def _check_hardcoded_secrets(self, line, filepath, modified_time, line_num, findings_list):
