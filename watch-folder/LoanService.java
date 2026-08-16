@@ -2,155 +2,119 @@ package com.mortgage.service;
 
 /**
  * ╔══════════════════════════════════════════════════════════════════╗
- * ║  DEMO FILE — Uncomment blocks one at a time during demo         ║
+ * ║  KAVACH AI — Compliance Demo File                               ║
+ * ║  Uncomment ONE block at a time, save, watch dashboard change    ║
  * ║                                                                  ║
- * ║  Each block triggers a DIFFERENT compliance domain:              ║
- * ║    1. SOX        → Uncomment Block 1                            ║
- * ║    2. SECURITY   → Uncomment Block 2                            ║
- * ║    3. TILA/Reg Z → Uncomment Block 3                            ║
- * ║    4. ECOA       → Uncomment Block 4                            ║
- * ║    5. CONTRACTUAL→ Uncomment Block 5                            ║
- * ║    6. PCI-DSS    → Uncomment Block 6                            ║
- * ║                                                                  ║
- * ║  INSTRUCTIONS:                                                   ║
- * ║    - Uncomment ONE block at a time                              ║
- * ║    - Save the file (Ctrl+S)                                     ║
- * ║    - Dashboard refreshes in 3 seconds with new findings         ║
- * ║    - Show how the Chain Reactor propagates across domains        ║
+ * ║  These are REAL compliance issues — not basic security bugs      ║
+ * ║  SonarQube CANNOT detect these. Only KAVACH can.                ║
  * ╚══════════════════════════════════════════════════════════════════╝
  */
 public class LoanService {
 
-    // ═══════════════════════════════════════════════════════════════════
-    // CLEAN BASELINE — No violations (all clear on dashboard)
-    // ═══════════════════════════════════════════════════════════════════
-
-    public double calculateMonthlyPayment(double principal, double rate, int years) {
-        double monthlyRate = rate / 12.0;
-        int payments = years * 12;
-        return principal * (monthlyRate * Math.pow(1 + monthlyRate, payments))
-                / (Math.pow(1 + monthlyRate, payments) - 1);
+    // ─── CLEAN BASELINE ─────────────────────────────────────────────
+    public double getFixedRate(int creditScore) {
+        if (creditScore >= 750) return 0.0575;
+        if (creditScore >= 700) return 0.0625;
+        return 0.0675;
     }
 
 
     // ═══════════════════════════════════════════════════════════════════
-    // BLOCK 1: SOX — Change to financial system without dual approval
-    // Uncomment below to trigger:
-    //   → SOX ITGC-CM-01 (Dual Approval Required)
-    //   → SOX ITGC-SD-01 (Security Testing Before Release)
-    //   → Audit Trail Gap
+    // BLOCK 1: SOX — Financial Record Override Without Approval
+    // Real issue: Developer can modify loan balance directly
+    // No change ticket, no dual approval, no audit trail
+    // Triggers: ITGC-CM-01, ITGC-CM-02, SOX Section 404
     // ═══════════════════════════════════════════════════════════════════
 
-    // public void adjustInterestRate(String loanId, double newRate) {
-    //     // SOX VIOLATION: Direct modification of financial-significant data
-    //     // No change ticket, no approval, no segregation of duties
-    //     String sql = "UPDATE INTEREST_RATES SET rate_value = " + newRate
-    //                + " WHERE loan_id = '" + loanId + "'";
-    //     System.out.println("Rate changed to: " + newRate + " for loan: " + loanId);
-    //     // This bypasses all SOX controls — Material Weakness finding
+    // public void adjustLoanBalance(String loanId, double newBalance) {
+    //     // Production loan balance changed with no approval workflow
+    //     // SOX requires: change ticket + dual approval + test evidence
+    //     System.out.println("Balance override: loan=" + loanId + " new=$" + newBalance);
+    //     // No audit log, no segregation of duties, no rollback
     // }
 
 
     // ═══════════════════════════════════════════════════════════════════
-    // BLOCK 2: SECURITY — SAST Race Condition + Hardcoded Secret
-    // Uncomment below to trigger:
-    //   → Hardcoded Secret (CRITICAL)
-    //   → System.out bypasses audit (HIGH)
-    //   → Weak Random Number Generator (MEDIUM)
-    //   → Deployment Gate BLOCKED
+    // BLOCK 2: TILA/Reg Z — APR Calculation Using Wrong Day Count
+    // Real issue: Using 360-day year instead of 365 changes APR
+    // Exceeds TILA tolerance of 1/8 of 1% on 30-year loans
+    // Triggers: TILA 12 CFR 1026.22, CFPB enforcement risk
     // ═══════════════════════════════════════════════════════════════════
 
-    // private static final String API_SECRET = "sk-prod-m0rtg@ge!2026#Crit1cal";
-    //
-    // public String generateSessionToken(String borrowerId) {
-    //     java.util.Random rng = new java.util.Random();
-    //     long token = rng.nextLong();
-    //     System.out.println("Token generated for borrower: " + borrowerId + " = " + token);
-    //     return "TOK-" + Math.abs(token);
-    // }
-
-
-    // ═══════════════════════════════════════════════════════════════════
-    // BLOCK 3: TILA / Regulation Z — APR Calculation Error
-    // Uncomment below to trigger:
-    //   → TILA Reg Z tolerance violation (APR off by > 1/8 of 1%)
-    //   → Financial logic change without validation
-    //   → CFPB enforcement risk
-    // ═══════════════════════════════════════════════════════════════════
-
-    // public double calculateAPR(double principal, double rate, int termYears, double fees) {
-    //     // BUG: Integer division truncates precision on 30-year loans
-    //     // APR understated by 0.23% — exceeds TILA 1/8% tolerance
-    //     double totalInterest = (principal * rate * termYears) + fees;
-    //     double apr = totalInterest / principal / termYears; // integer division!
-    //     System.out.println("APR calculated: " + apr + " for principal: " + principal);
-    //     // No tolerance check: |calculated - disclosed| must be < 0.00125
+    // public double calculateAPR(double principal, double rate, int years) {
+    //     // BUG: 360-day year understates APR by 0.19% on 30yr loans
+    //     // TILA tolerance is 0.125% — this EXCEEDS it
+    //     double dailyRate = rate / 360; // Should be /365 for TILA compliance
+    //     double apr = dailyRate * 365 * principal / (principal * years);
+    //     System.out.println("APR calculated: " + apr + " (using 360-day year)");
     //     return apr;
     // }
 
 
     // ═══════════════════════════════════════════════════════════════════
-    // BLOCK 4: Fair Lending (ECOA) — ZIP Code Proxy Discrimination
-    // Uncomment below to trigger:
-    //   → ECOA Regulation B violation (protected class proxy)
-    //   → Disparate impact risk
-    //   → DOJ civil rights enforcement exposure
+    // BLOCK 3: Fair Lending (ECOA) — Pricing Based on Neighborhood
+    // Real issue: Rate adjustment using property location as factor
+    // ZIP-based pricing correlates with race = disparate impact
+    // Triggers: ECOA Reg B, Fair Housing Act, DOJ civil rights
     // ═══════════════════════════════════════════════════════════════════
 
-    // public boolean checkBorrowerEligibility(double income, int creditScore, String zipCode) {
-    //     double dti = income / 5000.0;
-    //     // ECOA VIOLATION: ZIP code is a proxy for race/national origin
-    //     // This effectively implements digital redlining
-    //     if (zipCode.startsWith("100") || zipCode.startsWith("606")) {
-    //         return false; // Denying loans in minority neighborhoods
+    // public double adjustRateByLocation(double baseRate, String propertyZip) {
+    //     // ECOA VIOLATION: property location correlates with race
+    //     // This creates disparate impact on minority borrowers
+    //     if (propertyZip.startsWith("481") || propertyZip.startsWith("606")) {
+    //         baseRate += 0.0125; // 1.25% higher in specific neighborhoods
     //     }
-    //     System.out.println("Eligibility: income=" + income + " zip=" + zipCode + " score=" + creditScore);
-    //     return creditScore >= 620 && dti <= 0.43;
+    //     System.out.println("Rate adjusted for location: " + propertyZip + " rate=" + baseRate);
+    //     return baseRate;
     // }
 
 
     // ═══════════════════════════════════════════════════════════════════
-    // BLOCK 5: CONTRACTUAL — MSA §7.2 SQL Injection (48h SLA / $50K)
-    // Uncomment below to trigger:
-    //   → SQL Injection (CRITICAL) — starts 48-hour SLA clock
-    //   → MSA §7.2 penalty: $50,000 per incident
-    //   → Client termination right activated
-    //   → Insecure HTTP (data in transit)
+    // BLOCK 4: PII Exposure — Borrower SSN Logged to Console
+    // Real issue: Sensitive data written to application logs
+    // Violates GLBA Safeguards Rule + MSA Section 10.2
+    // Triggers: GLBA, CCPA, MSA No-PII-in-Logs clause
     // ═══════════════════════════════════════════════════════════════════
 
-    public String searchLoans(String borrowerName, String status) {
-        // CRITICAL: SQL injection — attacker can dump all loan data
-        // MSA §7.2: "Critical vulns must be fixed within 48 hours"
-        // PENALTY: $50,000 per incident + right to terminate
-        String query = "SELECT * FROM LOANS WHERE name = '" + borrowerName
-                     + "' AND status = '" + status + "'";
-        System.out.println("Query: " + query);
-        // Also sending data over unencrypted HTTP
-        String endpoint = "http://analytics.internal.com/api/loans";
-        return query;
-    }
+    // public void processBorrowerApplication(String ssn, double income, String employer) {
+    //     // VIOLATION: PII in logs — SSN, income visible in Splunk/ELK
+    //     // MSA 10.2: "PII must not appear in application logs"
+    //     // GLBA Safeguards Rule: must protect customer financial data
+    //     System.out.println("Processing: SSN=" + ssn + " income=$" + income + " employer=" + employer);
+    //     // If logs are breached: SSN exposure → identity theft → class action
+    // }
 
 
     // ═══════════════════════════════════════════════════════════════════
-    // BLOCK 6: PCI-DSS — Card Data Handling Violations
-    // Uncomment below to trigger:
-    //   → PCI-DSS 3.2 violation (CVV stored after auth)
-    //   → PCI-DSS 3.4 violation (PAN logged unmasked)
-    //   → PCI-DSS 3.5 violation (DES encryption — broken cipher)
-    //   → PCI-DSS 6.3.2 (no code review before release)
-    //   → Automatic PCI failure — cannot process cards
+    // BLOCK 5: Contractual — Production Credential Hardcoded
+    // Real issue: Database password in source code (extractable from JAR)
+    // MSA Section 9.1 requires all secrets in approved vault
+    // Triggers: MSA 9.1 + MSA 7.2 (48h SLA, $50K penalty)
     // ═══════════════════════════════════════════════════════════════════
 
-    // private String storedCVV;
+    // private static final String PROD_DB_PASS = "Mortg@ge#Pr0d!2026$Live";
     //
-    // public void processPayment(String cardNumber, String cvv, double amount) {
-    //     // PCI VIOLATION: Storing CVV — automatic PCI failure
-    //     this.storedCVV = cvv;
-    //     // PCI VIOLATION: Logging full PAN — must mask (show only first 6 + last 4)
-    //     System.out.println("Payment: card=" + cardNumber + " cvv=" + cvv + " amt=$" + amount);
-    //     // PCI VIOLATION: DES is broken — must use AES-256
-    //     String encrypted = "DES:" + cardNumber.hashCode();
-    //     System.out.println("Encrypted with DES: " + encrypted);
+    // public void connectToLoanDatabase() {
+    //     // MSA VIOLATION: Credential in source — extractable from JAR/git history
+    //     // MSA 9.1: "All credentials in approved vault (Secrets Manager)"
+    //     // If discovered: 48h SLA starts, $50K penalty per MSA 7.2
+    //     System.out.println("Connecting with embedded credential...");
+    // }
+
+
+    // ═══════════════════════════════════════════════════════════════════
+    // BLOCK 6: Data Residency — Sending Loan Data to EU Region
+    // Real issue: US client data replicated to EU endpoint
+    // MSA Section 12.1: "Data must remain within US boundaries"
+    // Triggers: MSA 12.1 (immediate termination right)
+    // ═══════════════════════════════════════════════════════════════════
+
+    // public void replicateToBackup(String loanData) {
+    //     // MSA VIOLATION: US client data sent to EU region
+    //     // MSA 12.1: "All data must remain in us-east-1 or us-west-2"
+    //     // If discovered: client can terminate engagement IMMEDIATELY
+    //     String euEndpoint = "http://backup.eu-west-1.internal.com/replicate";
+    //     System.out.println("Replicating to: " + euEndpoint + " data=" + loanData);
     // }
 
 }
