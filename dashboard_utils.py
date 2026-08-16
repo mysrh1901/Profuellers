@@ -418,7 +418,7 @@ class DashboardData:
         total_debt = sum(t.compliance_debt_usd for t in self.twins) + self._live_risk_cost(live_findings)
         domains = self.chain_reaction.total_domains_affected
 
-        audit_time_saved = int(avg_audit_readiness * 0.9)
+        audit_time_saved = max(40, int(self.twins[0].audit_readiness_pct - len(live_findings) * 2))
         auto_fix = len([d for d in self.drifts if "YES" in d["auto_fixable"]])
         findings_prevented = int((auto_fix / max(len(self.drifts), 1)) * 100)
 
