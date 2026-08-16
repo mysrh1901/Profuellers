@@ -463,23 +463,45 @@ class DashboardData:
         has_weak_crypto = "Weak Cryptography" in finding_categories
         has_ssl = "SSL/TLS Bypass" in finding_categories
 
-        # Map trigger conditions to live finding violations
+        # Collect compliance impacts from all findings
+        all_impacts = set()
+        for f in live_findings:
+            for impact in (f.compliance_impact or []):
+                all_impacts.add(impact.upper())
+        all_impacts_str = " ".join(all_impacts)
+
+        # Map trigger conditions to live finding violations — domain-aware
         def evaluate_status(policy):
+            domain = policy.get("domain", "").upper()
+            controls_ref = policy.get("controls", "").upper()
             tc = policy.get("triggerCondition", "")
-            if "sastHighCount > 0" in tc and (has_critical or has_high):
-                return "VIOLATED"
+
+            # Check if any finding's compliance_impact matches this policy's domain/controls
+            domain_match = False
+            for f in live_findings:
+                f_impacts = " ".join(f.compliance_impact or []).upper()
+                if domain in f_impacts or any(c.strip() in f_impacts for c in controls_ref.split(",")):
+                    domain_match = True
+                    break
+                # Also match by category keywords
+                f_cat = f.category.upper()
+                if "FDA" in f_cat and "FDA" in controls_ref:
+                    domain_match = True
+                    break
+                if "SOX" in f_cat and "SOX" in domain:
+                    domain_match = True
+                    break
+
+            # Specific trigger conditions
             if "secretsDetected" in tc and has_secrets:
                 return "VIOLATED"
-            if "touchesPii" in tc and has_pii:
+            if "sastHighCount > 0" in tc and (has_critical or has_high) and domain_match:
                 return "VIOLATED"
-            if "touchesFinancialLogic" in tc and (has_sql or has_logging):
+
+            # Only violate if finding impacts match this policy's domain
+            if domain_match and (has_critical or has_high):
                 return "VIOLATED"
-            if "dataResidencyViolation" in tc:
-                return "SATISFIED"
-            if "eventType" in tc:
-                # Deployment gates violated if any critical/high
-                if policy.get("blocking") and (has_critical or has_secrets):
-                    return "VIOLATED"
+
             return "SATISFIED"
 
         controls = []
