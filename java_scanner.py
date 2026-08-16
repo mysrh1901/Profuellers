@@ -378,6 +378,32 @@ class JavaScanner:
                             ["FDA 21CFR11.50", "FDA 21CFR11.100", "GxP E-Signature"]
                         ))
 
+            # === DETECTION 15: Fair Lending — ZIP/Location in credit decisions ===
+            if re.search(r'(zip|zipCode|zip_code|postal|location|neighborhood|area)', stripped, re.IGNORECASE) and not stripped.startswith("//"):
+                if re.search(r'(rate|price|elig|deny|reject|approve|score|factor|adjust)', stripped, re.IGNORECASE):
+                    file_findings.append(self._make_finding(
+                        filepath, modified_time, line_num, "CRITICAL",
+                        "Fair Lending — Geographic Discrimination",
+                        "Location/ZIP used in credit decision (ECOA proxy for race)",
+                        "ZIP code correlates with race/national origin. Using it in pricing or eligibility creates disparate impact — violates ECOA.",
+                        stripped[:80],
+                        "Remove geographic factors from credit decisions. Run disparate impact analysis.",
+                        ["ECOA Reg B 12CFR1002.6", "Fair Housing Act", "HMDA", "DOJ Fair Lending"]
+                    ))
+
+            # === DETECTION 16: TILA — Rate/APR calculation with day-count issues ===
+            if re.search(r'(360|365|day.?count|daily.?rate|apr)', stripped, re.IGNORECASE) and not stripped.startswith("//"):
+                if re.search(r'(rate|interest|calc|divide|\/\s*36)', stripped, re.IGNORECASE):
+                    file_findings.append(self._make_finding(
+                        filepath, modified_time, line_num, "HIGH",
+                        "TILA Rate Accuracy Risk",
+                        "APR/rate calculation logic may exceed TILA tolerance (1/8 of 1%)",
+                        "TILA Reg Z requires APR accurate to 0.125%. Day-count method (360 vs 365) can cause tolerance breach on long-term loans.",
+                        stripped[:80],
+                        "Validate APR calculation against TILA tolerance. Use actuarial method per 12 CFR 1026.",
+                        ["TILA 12CFR1026.22", "Reg Z APR Accuracy", "CFPB"]
+                    ))
+
         return file_findings
 
     def _check_hardcoded_secrets(self, line, filepath, modified_time, line_num, findings_list):
