@@ -227,33 +227,26 @@ class DashboardData:
         return html
 
     def get_chain_steps_html(self, live_findings=None):
-        """Chain reaction steps — adds live findings as additional impacts."""
+        """Chain reaction steps — ONLY from live findings (no hardcoded baseline)."""
         live_findings = live_findings or []
         html = ""
 
-        # Baseline chain impacts
-        for impact in self.chain_reaction.impacts[:4]:
-            sev_color = "#ef4444" if impact["severity"] == "CRITICAL" else "#f59e0b" if impact["severity"] == "HIGH" else "#eab308"
-            html += f"""
-            <div class="ch-item">
-                <div class="ch-dot" style="background:{sev_color};box-shadow:0 0 6px {sev_color}"></div>
-                <div class="ch-body">
-                    <span class="ch-domain">{impact['domain']}</span>
-                    <span class="ch-act">{impact['action_required']}</span>
-                </div>
-            </div>"""
+        if not live_findings:
+            return html
 
-        # Add live findings as additional chain impacts (deduplicated by category)
+        # Show live findings as chain reaction impacts (deduplicated by category)
         seen_categories = set()
         for f in live_findings:
             if f.category not in seen_categories:
                 seen_categories.add(f.category)
                 sev_color = "#ef4444" if f.severity == "CRITICAL" else "#f59e0b" if f.severity == "HIGH" else "#eab308"
+                # Use compliance_impact for regulation references
+                reg_ref = f.compliance_impact[0] if f.compliance_impact else f.category
                 html += f"""
             <div class="ch-item">
                 <div class="ch-dot" style="background:{sev_color};box-shadow:0 0 6px {sev_color}"></div>
                 <div class="ch-body">
-                    <span class="ch-domain">LIVE: {f.category}</span>
+                    <span class="ch-domain">{f.category} ({reg_ref})</span>
                     <span class="ch-act">{f.remediation[:55]}</span>
                 </div>
             </div>"""
