@@ -1,0 +1,134 @@
+# ═══════════════════════════════════════════════════════════════════
+# SOX ITGC Controls — Sarbanes-Oxley IT General Controls
+# Source: SOX Section 404, PCAOB AS5
+# ═══════════════════════════════════════════════════════════════════
+# In production: Replace mock validation with real ServiceNow/Jira API calls
+# api_endpoint: https://your-servicenow.com/api/now/table/change_request
+# ═══════════════════════════════════════════════════════════════════
+
+framework: SOX-ITGC
+version: "2024.1"
+applicable_industries: [FINANCIAL_SERVICES, MORTGAGE, INSURANCE, BANKING]
+# api_integration:
+#   provider: ServiceNow
+#   endpoint: https://instance.service-now.com/api/now/table/change_request
+#   auth: Bearer ${SERVICENOW_TOKEN}
+
+controls:
+  - id: ITGC-CM-01
+    domain: CHANGE_MANAGEMENT
+    name: "Normal Change Approval — Business/Technical/CAB"
+    description: "All changes to production require documented business approval, technical review, and CAB sign-off"
+    trigger:
+      event_types: [CODE_COMMIT, DEPLOYMENT]
+      condition: "any code change to production-bound branch"
+    severity: HIGH
+    blocking: true
+    sla: "Before production deployment"
+    evidence_required:
+      - Change request ticket with business justification
+      - Technical review sign-off
+      - CAB meeting minutes or approval
+    validation_rule: "change_ticket_exists AND business_approval AND technical_approval AND cab_approval"
+    # production_api: GET /api/change_requests?number={ticket_id}&state=approved
+
+  - id: ITGC-CM-02
+    domain: CHANGE_MANAGEMENT
+    name: "Segregation of Duties — Dev Cannot Deploy"
+    description: "Developer who writes code cannot be the same person who deploys to production"
+    trigger:
+      event_types: [DEPLOYMENT]
+      condition: "deployer == code_author"
+    severity: CRITICAL
+    blocking: true
+    sla: "At deployment time"
+    evidence_required:
+      - Deployment log showing deployer identity
+      - PR/commit log showing code author
+      - Role matrix confirming separation
+    validation_rule: "deployer_id != author_id"
+    # production_api: GET /api/deployments/{id}/deployer vs GET /api/commits/{sha}/author
+
+  - id: ITGC-CM-03
+    domain: CHANGE_MANAGEMENT
+    name: "Change Testing — UAT/QA Before Production"
+    description: "All changes must pass UAT/QA testing with documented sign-off before production deployment"
+    trigger:
+      event_types: [DEPLOYMENT]
+      condition: "deployment to production environment"
+    severity: HIGH
+    blocking: true
+    sla: "Before production deployment"
+    evidence_required:
+      - Test plan document
+      - UAT execution results
+      - QA sign-off in Jira/ALM
+    validation_rule: "test_plan_exists AND uat_passed AND qa_signoff_date < deploy_date"
+    # production_api: GET /api/jira/issues/{ticket}/transitions?status=QA-Approved
+
+  - id: ITGC-CM-06
+    domain: CHANGE_MANAGEMENT
+    name: "Code Review — Independent Review Before Merge"
+    description: "All code changes must have peer review by someone other than the author before merge"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "merge to main/master branch"
+    severity: HIGH
+    blocking: true
+    sla: "Before merge"
+    evidence_required:
+      - Pull request with at least 1 approval
+      - Reviewer is different from author
+    validation_rule: "pr_approvals >= 1 AND reviewer_id != author_id"
+    # production_api: GET /api/github/pulls/{pr_number}/reviews
+
+  - id: ITGC-SD-01
+    domain: SDLC
+    name: "Security Testing Before Release"
+    description: "SAST/DAST scan must complete with no critical/high findings before production release"
+    trigger:
+      event_types: [DEPLOYMENT]
+      condition: "deployment to production"
+    severity: HIGH
+    blocking: true
+    sla: "Before deployment"
+    evidence_required:
+      - SAST scan report (Checkmarx/Snyk)
+      - Zero critical findings confirmation
+      - High findings remediation evidence
+    validation_rule: "sast_critical_count == 0 AND sast_high_count == 0"
+    # production_api: GET /api/checkmarx/scans/{scan_id}/results?severity=Critical,High
+
+  - id: ITGC-AC-01
+    domain: ACCESS_CONTROL
+    name: "User Provisioning — Manager Approval"
+    description: "Access granted only after documented manager approval"
+    trigger:
+      event_types: [ACCESS_CHANGE]
+      condition: "new access request"
+    severity: HIGH
+    blocking: true
+    sla: "Before access is granted"
+    evidence_required:
+      - Access request ticket
+      - Manager approval record
+      - User access report post-provisioning
+    validation_rule: "access_request_exists AND manager_approved AND provisioning_after_approval"
+    # production_api: GET /api/servicenow/access_requests/{id}?state=approved
+
+  - id: ITGC-AC-03
+    domain: ACCESS_CONTROL
+    name: "Access Removal — Timely Deprovisioning"
+    description: "User access terminated within 4 hours of departure"
+    trigger:
+      event_types: [ACCESS_CHANGE]
+      condition: "employee termination event"
+    severity: CRITICAL
+    blocking: true
+    sla: "Within 4 hours of termination"
+    evidence_required:
+      - HR termination date/time
+      - AD/IAM account disable date/time
+      - Gap analysis (must be < 4 hours)
+    validation_rule: "disable_time - termination_time <= 4_hours"
+    # production_api: GET /api/hr/terminations/{employee_id} vs GET /api/ad/users/{id}/status

@@ -1,0 +1,132 @@
+# ═══════════════════════════════════════════════════════════════════
+# TILA/Reg Z + ECOA/Reg B Controls — Mortgage/Lending Compliance
+# Source: 12 CFR 1026 (TILA), 12 CFR 1002 (ECOA)
+# ═══════════════════════════════════════════════════════════════════
+# In production: Integrate with LOS (Loan Origination System) APIs
+# api_endpoint: https://your-los.com/api/v2/compliance/
+# ═══════════════════════════════════════════════════════════════════
+
+framework: TILA-ECOA
+version: "2024.1"
+applicable_industries: [MORTGAGE, CONSUMER_LENDING, BANKING]
+# api_integration:
+#   provider: Encompass/LOS
+#   endpoint: https://encompass.ellieMAE.com/api/v3/loans/
+#   auth: Bearer ${LOS_TOKEN}
+
+controls:
+  - id: TILA-APR-01
+    domain: REGULATORY
+    name: "APR Calculation Accuracy — 1/8 of 1%"
+    description: "Annual Percentage Rate must be accurate within 1/8 of 1 percent (0.125%)"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "code modifies APR/rate calculation logic"
+    severity: CRITICAL
+    blocking: true
+    sla: "Before production deployment"
+    evidence_required:
+      - APR calculation test results
+      - Tolerance validation (|calculated - disclosed| < 0.00125)
+      - Regression test against known loan scenarios
+    validation_rule: "apr_tolerance_check_passed AND regression_tests_passed"
+    penalty: "CFPB enforcement action + borrower restitution"
+    # production_api: GET /api/los/loans/{id}/apr_validation
+
+  - id: TILA-ARM-01
+    domain: REGULATORY
+    name: "ARM Adjustment Notice — 210 Days"
+    description: "Adjustable-rate mortgage rate changes require 210-day advance notice to borrower"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "ARM rate adjustment logic modified"
+    severity: HIGH
+    blocking: true
+    sla: "Before deployment"
+    evidence_required:
+      - Notice generation logic verified
+      - 210-day timeline enforcement
+      - Payment change disclosure included
+    validation_rule: "notice_trigger_exists AND timeline_210_days AND payment_disclosure_included"
+
+  - id: TILA-RESPA-01
+    domain: REGULATORY
+    name: "Fee Tolerance — Loan Estimate vs Closing Disclosure"
+    description: "Closing fees cannot exceed Loan Estimate by more than 10% (zero tolerance for some)"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "fee calculation logic modified"
+    severity: HIGH
+    blocking: true
+    sla: "Before deployment"
+    evidence_required:
+      - Fee comparison LE vs CD
+      - Zero-tolerance fees validated
+      - 10% tolerance fees within bounds
+    validation_rule: "zero_tolerance_fees_match AND variable_fees_within_10_percent"
+    penalty: "Lender absorbs excess + CFPB action"
+
+  - id: ECOA-PROXY-01
+    domain: FAIR_LENDING
+    name: "No Protected Class Proxies in Decisions"
+    description: "Credit decisions must not use ZIP code, school, or other proxies for race/national origin"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "eligibility/pricing logic uses ZIP code, age, or gender-correlated factors"
+    severity: CRITICAL
+    blocking: true
+    sla: "Before deployment"
+    evidence_required:
+      - Code review for proxy variables
+      - Disparate impact analysis results
+      - Model risk documentation
+    validation_rule: "no_zip_in_decision AND no_age_penalty AND no_income_source_discrimination"
+    penalty: "DOJ civil rights action + CFPB consent order + borrower restitution"
+
+  - id: ECOA-DI-01
+    domain: FAIR_LENDING
+    name: "Disparate Impact Testing Required"
+    description: "Any change to pricing or eligibility models requires disparate impact analysis"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "pricing or eligibility logic modified AND fair_lending_applicable"
+    severity: HIGH
+    blocking: true
+    sla: "Before production deployment"
+    evidence_required:
+      - Statistical analysis against protected classes
+      - Adverse impact ratio calculation
+      - Business necessity justification if impact found
+    validation_rule: "disparate_impact_test_completed AND adverse_ratio < threshold"
+    # production_api: GET /api/fair-lending/analysis/{model_id}/results
+
+  - id: ECOA-AGE-01
+    domain: FAIR_LENDING
+    name: "Age Non-Discrimination"
+    description: "Cannot use age as a negative factor in credit decisions (ECOA exception for elderly credit scoring)"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "borrower age used in pricing or eligibility"
+    severity: CRITICAL
+    blocking: true
+    sla: "Immediate"
+    evidence_required:
+      - Code review confirming no age-based penalty
+      - If age used: actuarial justification required
+    validation_rule: "no_age_penalty_in_pricing AND no_age_denial_factor"
+
+  - id: HMDA-RPT-01
+    domain: REGULATORY
+    name: "HMDA Data Reporting"
+    description: "All mortgage applications must be reported with demographic data per HMDA requirements"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "application intake or decision logic modified"
+    severity: MEDIUM
+    blocking: false
+    sla: "Annual reporting deadline"
+    evidence_required:
+      - HMDA data fields captured correctly
+      - Demographic data collection verified
+      - LAR (Loan Application Register) accuracy
+    validation_rule: "hmda_fields_present AND demographic_collection_compliant"

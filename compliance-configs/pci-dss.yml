@@ -1,0 +1,139 @@
+# ═══════════════════════════════════════════════════════════════════
+# PCI-DSS Controls — Payment Card Industry Data Security Standard
+# Source: PCI DSS v4.0 (March 2024)
+# ═══════════════════════════════════════════════════════════════════
+# In production: Integrate with Qualys/Tenable for scan results
+# api_endpoint: https://qualysapi.qualys.com/api/2.0/fo/scan/
+# ═══════════════════════════════════════════════════════════════════
+
+framework: PCI-DSS
+version: "4.0"
+applicable_industries: [FINANCIAL_SERVICES, RETAIL, ECOMMERCE, PAYMENT_PROCESSING]
+# api_integration:
+#   provider: Qualys
+#   endpoint: https://qualysapi.qualys.com/api/2.0/fo/scan/
+#   auth: Basic ${QUALYS_CREDENTIALS}
+
+controls:
+  - id: PCI-3.2
+    domain: SECURITY
+    name: "Sensitive Authentication Data — No CVV Storage"
+    description: "Do not store CVV/CVC2/CID after authorization, even if encrypted"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "code stores or references CVV/CVC variable after auth flow"
+    severity: CRITICAL
+    blocking: true
+    sla: "Immediate"
+    evidence_required:
+      - Code review confirming no CVV storage
+      - Data flow diagram showing CVV lifecycle
+    validation_rule: "no_cvv_storage_pattern AND no_cvv_database_column"
+    # production_api: GET /api/code-scan/results?pattern=cvv_storage
+
+  - id: PCI-3.4
+    domain: SECURITY
+    name: "PAN Masking — Render Unreadable"
+    description: "Primary Account Number must be masked (show only first 6 + last 4 digits)"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "code logs or displays card numbers"
+    severity: CRITICAL
+    blocking: true
+    sla: "Immediate"
+    evidence_required:
+      - No full PAN in logs, UI, or reports
+      - Masking function applied before display/storage
+    validation_rule: "no_full_pan_in_logs AND masking_function_applied"
+
+  - id: PCI-3.5
+    domain: SECURITY
+    name: "Strong Cryptography — AES-256 Minimum"
+    description: "Card data at rest must be encrypted with strong algorithms (AES-256, not DES/MD5)"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "code uses DES, MD5, SHA-1, RC4 for card data"
+    severity: CRITICAL
+    blocking: true
+    sla: "Before deployment"
+    evidence_required:
+      - Encryption algorithm audit
+      - Key management documentation
+    validation_rule: "no_weak_crypto_for_card_data AND key_rotation_policy_exists"
+
+  - id: PCI-4.1
+    domain: SECURITY
+    name: "Encryption in Transit — TLS 1.2+"
+    description: "Card data transmitted over networks must use TLS 1.2 or higher"
+    trigger:
+      event_types: [CODE_COMMIT, INFRA_CHANGE]
+      condition: "HTTP used instead of HTTPS for card data endpoints"
+    severity: CRITICAL
+    blocking: true
+    sla: "Immediate"
+    evidence_required:
+      - SSL/TLS configuration audit
+      - No HTTP endpoints handling card data
+    validation_rule: "all_card_endpoints_https AND tls_version >= 1.2"
+    # production_api: GET /api/qualys/ssl-scan/{domain}
+
+  - id: PCI-6.3.2
+    domain: SECURITY
+    name: "Code Review Before Release"
+    description: "Manual or automated code review required before production release for card-handling code"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "code in cardholder data environment"
+    severity: HIGH
+    blocking: true
+    sla: "Before deployment"
+    evidence_required:
+      - PR approval by security-trained reviewer
+      - SAST scan completion
+    validation_rule: "pr_approved AND sast_scan_completed AND no_critical_findings"
+
+  - id: PCI-6.5
+    domain: SECURITY
+    name: "Secure Coding — OWASP Top 10"
+    description: "Code must be free of common vulnerabilities (injection, XSS, broken auth, etc.)"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "SAST finds OWASP Top 10 vulnerability"
+    severity: HIGH
+    blocking: true
+    sla: "Before deployment"
+    evidence_required:
+      - SAST scan report
+      - Zero critical OWASP findings
+    validation_rule: "sast_owasp_critical == 0 AND sast_owasp_high == 0"
+    # production_api: GET /api/checkmarx/projects/{id}/results?category=OWASP
+
+  - id: PCI-8.3
+    domain: ACCESS_CONTROL
+    name: "MFA for Cardholder Data Environment"
+    description: "Multi-factor authentication required for all access to cardholder data environment"
+    trigger:
+      event_types: [ACCESS_CHANGE]
+      condition: "access to CDE without MFA"
+    severity: CRITICAL
+    blocking: true
+    sla: "Immediate"
+    evidence_required:
+      - MFA configuration for all CDE users
+      - No exceptions without documented risk acceptance
+    validation_rule: "mfa_enabled_for_all_cde_users"
+
+  - id: PCI-10.2
+    domain: AUDIT
+    name: "Audit Trail — Log All Card Data Access"
+    description: "Log all individual user access to cardholder data with timestamp and identity"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "code accesses card data without audit logging"
+    severity: HIGH
+    blocking: false
+    sla: "Before deployment"
+    evidence_required:
+      - Audit logging enabled for all card data access
+      - Log includes: who, what, when, from where
+    validation_rule: "audit_logging_enabled AND log_fields_complete"

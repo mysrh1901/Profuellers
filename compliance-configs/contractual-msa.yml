@@ -1,0 +1,132 @@
+# ═══════════════════════════════════════════════════════════════════
+# Contractual / MSA Controls — Client-Specific SLA Requirements
+# Source: Master Service Agreement between Hexaware & Client
+# ═══════════════════════════════════════════════════════════════════
+# In production: Each client has their own MSA config loaded per engagement
+# api_endpoint: https://your-clm.com/api/contracts/{engagement_id}/obligations
+# ═══════════════════════════════════════════════════════════════════
+
+framework: CONTRACTUAL-MSA
+version: "2024.1"
+applicable_industries: [ALL]
+# api_integration:
+#   provider: Icertis/Agiloft (Contract Lifecycle Management)
+#   endpoint: https://clm.hexaware.com/api/contracts/{id}/obligations
+#   auth: Bearer ${CLM_TOKEN}
+
+controls:
+  - id: MSA-7.2
+    domain: CONTRACTUAL
+    name: "Critical Vulnerability Remediation SLA"
+    description: "All critical security vulnerabilities must be remediated within 48 hours of discovery"
+    trigger:
+      event_types: [CODE_COMMIT, SCAN_RESULT]
+      condition: "critical vulnerability detected in client's codebase"
+    severity: CRITICAL
+    blocking: true
+    sla: "48 hours from discovery"
+    penalty: "$50,000 per incident + right to terminate engagement"
+    evidence_required:
+      - Vulnerability discovery timestamp
+      - Remediation completion timestamp
+      - Gap must be <= 48 hours
+    validation_rule: "remediation_time - discovery_time <= 48_hours"
+    # production_api: GET /api/vulnerabilities/{id}/timeline
+
+  - id: MSA-7.3
+    domain: CONTRACTUAL
+    name: "High Vulnerability Remediation SLA"
+    description: "High severity vulnerabilities must be remediated within 7 days"
+    trigger:
+      event_types: [CODE_COMMIT, SCAN_RESULT]
+      condition: "high vulnerability detected"
+    severity: HIGH
+    blocking: false
+    sla: "7 days from discovery"
+    penalty: "$10,000 per incident after SLA breach"
+    evidence_required:
+      - Discovery timestamp
+      - Remediation plan within 24 hours
+      - Fix deployed within 7 days
+    validation_rule: "remediation_time - discovery_time <= 7_days"
+
+  - id: MSA-8.3
+    domain: CONTRACTUAL
+    name: "Encryption in Transit — TLS 1.2+"
+    description: "All data transmitted between systems must be encrypted using TLS 1.2 or higher"
+    trigger:
+      event_types: [CODE_COMMIT, INFRA_CHANGE]
+      condition: "HTTP endpoint detected OR TLS < 1.2"
+    severity: CRITICAL
+    blocking: true
+    sla: "Immediate"
+    evidence_required:
+      - SSL/TLS scan of all endpoints
+      - No HTTP for data transmission
+    validation_rule: "no_http_data_endpoints AND tls_minimum_1.2"
+
+  - id: MSA-9.1
+    domain: CONTRACTUAL
+    name: "Credential Management — No Hardcoding"
+    description: "All credentials must be stored in approved vault (AWS Secrets Manager, HashiCorp Vault)"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "hardcoded credential detected in source code"
+    severity: CRITICAL
+    blocking: true
+    sla: "Immediate"
+    evidence_required:
+      - No secrets in source code
+      - Vault integration documented
+      - Secret rotation policy
+    validation_rule: "no_hardcoded_secrets AND vault_integration_verified"
+
+  - id: MSA-10.2
+    domain: CONTRACTUAL
+    name: "No PII in Application Logs"
+    description: "Personally identifiable information must not appear in application logs or debug output"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "PII (SSN, income, account number) logged"
+    severity: HIGH
+    blocking: true
+    sla: "Before deployment"
+    evidence_required:
+      - Log audit showing no PII
+      - PII masking function implemented
+      - Log review automation
+    validation_rule: "no_pii_in_logs AND masking_function_active"
+
+  - id: MSA-12.1
+    domain: CONTRACTUAL
+    name: "Data Residency — Geographic Restriction"
+    description: "All client data must remain within specified geographic boundaries (US-only for US clients, EU-only for EU clients)"
+    trigger:
+      event_types: [INFRA_CHANGE]
+      condition: "data replication or storage configured outside specified region"
+    severity: CRITICAL
+    blocking: true
+    sla: "Immediate — contract termination trigger"
+    penalty: "Immediate termination right per MSA"
+    evidence_required:
+      - AWS/Azure region audit
+      - No cross-region replication
+      - Data flow diagram
+    validation_rule: "all_storage_in_approved_region AND no_cross_region_replication"
+    # production_api: GET /api/aws/config/resources?region!=approved_regions
+
+  - id: MSA-14.1
+    domain: CONTRACTUAL
+    name: "Client Notification — Production Changes"
+    description: "Client must be notified 48 hours before production changes to their systems"
+    trigger:
+      event_types: [DEPLOYMENT]
+      condition: "production deployment planned"
+    severity: MEDIUM
+    blocking: false
+    sla: "48 hours before deployment"
+    evidence_required:
+      - Client notification email/ticket
+      - Sent at least 48 hours before deploy
+      - Client acknowledgment (if required)
+    validation_rule: "notification_sent AND notification_time <= deploy_time - 48_hours"
