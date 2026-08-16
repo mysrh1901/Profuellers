@@ -287,16 +287,24 @@ class AIScanner:
                 f.is_recent = file_info.get("is_recent", False)
             all_findings.extend(findings)
 
-        self.findings = all_findings
+        # Deduplicate: keep only first finding per (file, category) pair
+        seen = set()
+        deduped = []
+        for f in all_findings:
+            key = (f.file_path, f.category)
+            if key not in seen:
+                seen.add(key)
+                deduped.append(f)
+        self.findings = deduped
 
         # Fire events to Spring Boot backend for full agent pipeline
-        if all_findings:
+        if deduped:
             _fire_event_to_backend(
-                all_findings[0].file_path if all_findings else "",
-                all_findings
+                deduped[0].file_path if deduped else "",
+                deduped
             )
 
-        return all_findings
+        return deduped
 
     def _analyze_file(self, file_info: dict) -> List[AIFinding]:
         """Analyze a single file — always use heuristic for dashboard speed.
