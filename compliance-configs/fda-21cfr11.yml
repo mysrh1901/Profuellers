@@ -1,0 +1,215 @@
+# ═══════════════════════════════════════════════════════════════════
+# FDA 21 CFR Part 11 — Electronic Records & Electronic Signatures
+# Source: FDA 21 CFR Part 11 (Pharma/Life Sciences/Medical Devices)
+# Applicable to: Thermo Fisher, Pfizer, J&J, Abbott, Roche, Merck
+# ═══════════════════════════════════════════════════════════════════
+# This regulation governs ANY computerized system used in:
+#   - Drug testing (LIMS, lab systems)
+#   - Clinical trials (EDC systems)
+#   - Manufacturing (MES, batch records)
+#   - Quality management (QMS)
+#   - Drug safety (pharmacovigilance)
+#
+# In production: Integrate with Veeva Vault, LIMS, SAP QM APIs
+# api_endpoint: https://your-veeva.com/api/v1/documents/
+# ═══════════════════════════════════════════════════════════════════
+
+framework: FDA-21CFR11
+version: "2024.1"
+applicable_industries: [PHARMA, BIOTECH, MEDICAL_DEVICES, LIFE_SCIENCES, CRO]
+# api_integration:
+#   provider: Veeva Vault / LabWare LIMS
+#   endpoint: https://veeva.thermofisher.com/api/v24.1/
+#   auth: Bearer ${VEEVA_TOKEN}
+
+controls:
+  - id: CFR11-11.10a
+    domain: AUDIT
+    name: "System Validation — IQ/OQ/PQ Required"
+    description: "Systems must be validated for intended use via Installation, Operational, and Performance Qualification"
+    trigger:
+      event_types: [CODE_COMMIT, DEPLOYMENT]
+      condition: "any change to GxP-regulated system"
+    severity: CRITICAL
+    blocking: true
+    sla: "Before production use"
+    evidence_required:
+      - Validation plan document
+      - IQ protocol and results
+      - OQ protocol and results
+      - PQ protocol and results
+      - Validation summary report
+    validation_rule: "validation_plan_exists AND iq_completed AND oq_completed AND pq_completed"
+    penalty: "FDA Warning Letter / Form 483 observation / product recall risk"
+    # production_api: GET /api/veeva/documents?type=validation_report&system={system_id}
+
+  - id: CFR11-11.10b
+    domain: AUDIT
+    name: "Audit Trail — Complete & Unalterable"
+    description: "System must maintain secure, computer-generated audit trail of all changes to electronic records"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "modification to data entry, edit, or delete logic in regulated system"
+    severity: CRITICAL
+    blocking: true
+    sla: "Before deployment"
+    evidence_required:
+      - Audit trail captures: who, what, when, why, old value, new value
+      - Audit trail cannot be modified or deleted by users
+      - Audit trail retained for record lifecycle
+    validation_rule: "audit_trail_enabled AND immutable AND captures_all_fields AND retention_policy_set"
+    penalty: "FDA 483 / data integrity finding"
+
+  - id: CFR11-11.10c
+    domain: SECURITY
+    name: "System Access Controls — Authority Checks"
+    description: "System must limit access to authorized individuals. No shared accounts."
+    trigger:
+      event_types: [CODE_COMMIT, ACCESS_CHANGE]
+      condition: "shared account detected OR access without role assignment"
+    severity: HIGH
+    blocking: true
+    sla: "Before deployment"
+    evidence_required:
+      - Unique user accounts (no shared/generic)
+      - Role-based access control implemented
+      - Access rights aligned with job responsibilities
+    validation_rule: "no_shared_accounts AND rbac_implemented AND roles_match_job_function"
+    # production_api: GET /api/lims/users?type=shared (should return 0)
+
+  - id: CFR11-11.10d
+    domain: SECURITY
+    name: "Device/Session Controls"
+    description: "Systems must have automatic logoff after inactivity and limit login attempts"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "session management logic modified"
+    severity: MEDIUM
+    blocking: false
+    sla: "Before deployment"
+    evidence_required:
+      - Session timeout configured (typically 15 min for GxP)
+      - Account lockout after failed attempts
+      - Session logging
+    validation_rule: "session_timeout <= 15_min AND lockout_after_5_attempts"
+
+  - id: CFR11-11.10e
+    domain: CHANGE_MANAGEMENT
+    name: "Change Control — Documented and Approved"
+    description: "All system changes must follow documented change control procedure with approval"
+    trigger:
+      event_types: [CODE_COMMIT, DEPLOYMENT]
+      condition: "any change to validated GxP system"
+    severity: CRITICAL
+    blocking: true
+    sla: "Before deployment"
+    evidence_required:
+      - Change request with impact assessment
+      - QA approval
+      - Regression testing evidence
+      - Updated validation documentation
+    validation_rule: "change_request_exists AND qa_approved AND regression_tested AND validation_updated"
+    penalty: "System no longer considered validated — cannot be used for GxP"
+    # production_api: GET /api/trackwise/change_controls/{id}?status=approved
+
+  - id: CFR11-11.10g
+    domain: SECURITY
+    name: "Operational System Checks — Data Integrity"
+    description: "Systems must verify data integrity and detect unauthorized changes"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "data storage, calculation, or transfer logic modified"
+    severity: HIGH
+    blocking: true
+    sla: "Before deployment"
+    evidence_required:
+      - Checksums or hash verification for critical data
+      - Input validation rules
+      - Data backup verification
+    validation_rule: "data_integrity_checks_present AND input_validation_active AND backup_verified"
+
+  - id: CFR11-11.50
+    domain: SECURITY
+    name: "Electronic Signature — Unique to Individual"
+    description: "Electronic signatures must be unique, not reused, and linked to one individual"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "e-signature implementation modified"
+    severity: CRITICAL
+    blocking: true
+    sla: "Before deployment"
+    evidence_required:
+      - E-signature linked to single individual
+      - Cannot be delegated or shared
+      - Includes meaning of signature (approved, reviewed, etc.)
+    validation_rule: "esig_unique_per_user AND esig_not_shared AND esig_includes_meaning"
+
+  - id: CFR11-11.70
+    domain: SECURITY
+    name: "Signature/Record Linking"
+    description: "Electronic signatures must be linked to their respective electronic records permanently"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "record-signature relationship modified"
+    severity: HIGH
+    blocking: true
+    sla: "Before deployment"
+    evidence_required:
+      - Signature cannot be separated from record
+      - Cannot be copied to falsify another record
+      - Tamper-evident linking
+    validation_rule: "signature_linked_to_record AND link_immutable AND tamper_evident"
+
+  - id: CFR11-11.100
+    domain: SECURITY
+    name: "Electronic Signature Components"
+    description: "E-signatures based on two distinct components (e.g., user ID + password, or biometric)"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "authentication for signing modified"
+    severity: HIGH
+    blocking: true
+    sla: "Before deployment"
+    evidence_required:
+      - Two-factor for signing actions
+      - Consecutive signings re-enter at least one component
+      - First-time signing enters both components
+    validation_rule: "two_factor_signing AND consecutive_reentry AND first_signing_full_auth"
+
+  - id: CFR11-DI-01
+    domain: AUDIT
+    name: "Data Integrity — ALCOA+ Principles"
+    description: "All GxP data must be Attributable, Legible, Contemporaneous, Original, Accurate (+ Complete, Consistent, Enduring, Available)"
+    trigger:
+      event_types: [CODE_COMMIT]
+      condition: "data capture, storage, or reporting logic modified"
+    severity: CRITICAL
+    blocking: true
+    sla: "Before deployment"
+    evidence_required:
+      - Data attributable to a person (who)
+      - Timestamps are contemporaneous (when)
+      - Original records preserved
+      - Accuracy verified via validation
+    validation_rule: "data_attributable AND timestamps_contemporaneous AND originals_preserved AND accuracy_validated"
+    penalty: "FDA Warning Letter / product recall / criminal prosecution for data fraud"
+    # production_api: GET /api/lims/data-integrity/audit?system={system_id}
+
+  - id: CFR11-CSV-01
+    domain: CHANGE_MANAGEMENT
+    name: "Computer System Validation (CSV) Lifecycle"
+    description: "Systems must follow GAMP5 lifecycle: requirements → design → build → test → release → maintain"
+    trigger:
+      event_types: [CODE_COMMIT, DEPLOYMENT]
+      condition: "any modification to validated computer system"
+    severity: HIGH
+    blocking: true
+    sla: "Documentation before release"
+    evidence_required:
+      - User Requirements Specification (URS)
+      - Functional Specification (FS)
+      - Design Specification (DS)
+      - Test protocols (IQ/OQ/PQ)
+      - Traceability matrix
+    validation_rule: "urs_exists AND fs_exists AND test_protocols_executed AND traceability_complete"
+    # production_api: GET /api/veeva/documents?category=CSV&system={system_id}&lifecycle_stage=approved
